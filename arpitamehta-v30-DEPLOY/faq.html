@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  arpitamehta.co  |  SITE VERSION 29  |  2026-08-10
+  ============================================================
+  FAQ. Long-form answers plus FAQPage structured data.
+
+  This is a full-site release. Every page in this deploy is
+  stamped SITE VERSION 29 so the folder can be identified at a
+  glance after it is uploaded to Netlify. Per-page history that
+  predates v27 lives in /_context/CHANGELOG.md, not here.
+
+  WHAT CHANGED IN v29 (accent colour + body font locked in)
+    - Accent colour changed from Warm Cognac (#A05B3E) to Deep Rose
+      (#9C5A4C) across all 11 pages: --brown, --rose, --rose-d (hover,
+      now #7F493E) in every :root block, plus 6 hardcoded instances in
+      assessment.html's Presence Quotient PDF export that a CSS
+      variable sweep alone would have missed.
+    - Body font changed from Inter to DM Sans across all 11 pages:
+      Google Fonts link and every 'Inter' font-family reference
+      swapped. Cormorant Garamond (headings, weight 500) is unchanged.
+    - Full automated contrast re-audit after both changes (walks every
+      visible text node, resolves effective background through the
+      ancestor chain, computes WCAG contrast against the correct
+      threshold for its font size/weight): zero failures across all
+      11 pages.
+  ------------------------------------------------------------
+  WHAT CHANGED IN v28.4 (formats line + robustness fix)
+    - The "formats" line (licensed cohort / one to one / online) was
+      different lengths on all 4 programmes (Social Table had an extra
+      sentence, The Debut was phrased differently), so each box ended
+      up a different height even though internal alignment was fixed
+      in v28.3. All 4 formats lines are now byte-identical; the extra
+      details (brides and couples chapter, campus workshops) moved
+      into each programme's own body copy instead.
+    - .covers now carries flex:1 with centered content instead of a
+      fixed height, so if a copy column is ever taller than the image
+      (longer paragraphs, wrapped CTAs), the covers panel absorbs the
+      extra height and stays flush with the bottom of the box, rather
+      than leaving a dead gap. Verified: all 4 boxes internally align
+      correctly even when total box height still varies slightly
+      between cards due to natural copy-length differences.
+  ------------------------------------------------------------
+  WHAT CHANGED IN v28.3 (all four programme cards boxed)
+    - All four programme cards on services.html wrapped in their own
+      bordered .prog-box, matching the AI section's treatment. Fixes
+      a real alignment bug: the two columns previously used
+      align-items:start with no shared bottom edge, so the text
+      column's CTA row and the image+"Work Covers" column ended at
+      different heights, especially when a CTA button's label wrapped
+      to two lines.
+    - .prog-grid now uses align-items:stretch, .prog-intro is a flex
+      column at height:100%, and .prog-ctas has margin-top:auto, so
+      the CTA row always sits flush with the bottom of the taller
+      image+covers column regardless of copy length.
+    - Box tint alternates ivory/linen between the four cards (same
+      alternation as before, now carried by the box instead of the
+      bare section background), so they stay individually
+      distinguishable while scrolling.
+  ------------------------------------------------------------
+  WHAT CHANGED IN v28.2 (AI section alignment)
+    - AI for Branding & Business on services.html wrapped in one
+      bordered box (.ai-box) around all 3 columns, instead of the
+      columns floating loose on the section background. Reinforces
+      that this is a distinct, private offer, not a fourth licensed
+      programme.
+    - Image and note box locked to equal height and vertically
+      centred against the copy column, instead of top-aligned with
+      the note box trailing below a shorter image.
+  ------------------------------------------------------------
+  WHAT CHANGED IN v28.1 (same-day fixes)
+    - AI for Branding & Business on services.html rebuilt as a true
+      3-column editorial grid (copy | image | "How It Is Offered"
+      note), replacing the earlier 2-column version.
+    - Homepage tab title corrected to "Arpita Mehta | Presence
+      Consultant, Delhi" (name first, was title-first before).
+    - Nav wordmark (name + title/city next to the logo) reduced in
+      size at every breakpoint. It was overflowing on narrow phone
+      widths where the hamburger nav is active.
+  ------------------------------------------------------------
+  WHAT CHANGED IN v28 (typography and colour system)
+    - Programme cards on services.html rebuilt as a two-column
+      editorial grid (copy+CTAs left, native-ratio image + "The
+      Work Covers" right), replacing the earlier white-space-heavy
+      layout. AI for Branding & Business section structure kept
+      as-is per explicit instruction, only top-aligned.
+    - Full palette and heading font swap: Playfair Display and
+      Jost replaced with Cormorant Garamond (headings) and Inter
+      (body) across all 11 pages, driven by the brand board's
+      colour palette with pre-verified WCAG contrast ratios.
+    - Heading colour corrected from an initial near-black
+      (#171108) to a warm, still-AAA-compliant dark brown
+      (#2A1F14) after review - no jet black anywhere on the site.
+    - All headings, including the homepage hero, unified to a
+      single weight (500) so hierarchy comes from size alone,
+      not from mixing weights between the hero and section
+      headings.
+    - Full automated contrast re-audit after the palette swap
+      found and fixed 3 categories of accent-colour-as-text
+      failures (numerals/labels, footer text, one hardcoded
+      hex) - zero contrast failures across all 11 pages.
+  ------------------------------------------------------------
+  WHAT CHANGED IN v27 (full-site audit)
+    - Responsive nav rebuilt. The hamburger menu now starts at
+    900px instead of 680px, and the wordmark hides between
+    901-1160px. Before this, the primary "Request a Call"
+    button was cut off the right edge of the screen on iPad
+    portrait (768px) and at 1024px, so the main conversion
+    CTA was unreachable on tablets and small laptops.
+  - Footer logo no longer squashes. A global img{max-width:100%}
+    was compressing it against a fixed height, distorting the
+    logo by about 18% at tablet width. Now object-fit:contain.
+  - Copy audit: no em dashes, en dashes or HTML dash entities
+    anywhere in visitor-facing text. No repeated words, double
+    spaces, spacing before punctuation or placeholder text.
+  - Same pillar contradiction fixed in both the visible answer
+    and the FAQPage structured data.
+  - Footer corrected to AI for Branding & Business.
+  ------------------------------------------------------------
+  HOUSE RULES for whoever edits this next
+  1. Bump SITE VERSION on every page in the same release, and
+     add the change to /_context/CHANGELOG.md before deploying.
+  2. Never reuse an image filename for new content. Netlify's
+     CDN and browsers cache by filename, so a changed image
+     under an old name can keep serving the stale version.
+     Add -v2, -v3 and update every reference.
+  3. Images live in /images/<page>/ . Keep that structure.
+  4. No em dashes in visitor-facing copy. Use commas or colons.
+  5. Deploy with "Deploy project without cache" on Netlify.
+  ============================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' cdnjs.cloudflare.com assets.calendly.com www.googletagmanager.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com assets.calendly.com; font-src fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://docs.google.com https://api.anthropic.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; frame-src https://calendly.com">
+
+
+<!-- Google Analytics 4: replace G-XXXXXXXXXX with your Measurement ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-XXXXXXXXXX', { anonymize_ip: true });
+window.amTrack = function(name, params){ try{ gtag('event', name, params || {}); }catch(e){} };
+</script>
+
+<title>Frequently Asked Questions | Arpita Mehta, Delhi</title>
+<meta name="description" content="Questions about presence consulting, image, executive presence, The Debut, The Social Table and how to begin with Arpita Mehta in Delhi. Answered honestly.">
+<link rel="canonical" href="https://arpitamehta.co/faq.html">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://arpitamehta.co/faq.html">
+<meta property="og:title" content="Frequently Asked Questions | Arpita Mehta, Delhi">
+<meta property="og:description" content="Every question people ask before working with Arpita Mehta, answered honestly. From what presence consulting actually is to how to begin.">
+<meta property="og:image" content="https://arpitamehta.co/images/shared/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Frequently Asked Questions | Arpita Mehta, Delhi">
+<meta name="twitter:description" content="Every question people ask before working with Arpita Mehta, answered honestly.">
+<meta name="twitter:image" content="https://arpitamehta.co/images/shared/logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "FAQPage",
+      "@id": "https://arpitamehta.co/faq.html",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a presence consultant?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A presence consultant works on the gap between who you are and how the world currently sees you. The work covers image, executive presence, social culture and AI for branding and business, because these things together are what a room actually reads when it reads you. Most people address one of them at a time with different professionals. This practice integrates all of them, because the rooms you walk into test all of them simultaneously." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this just image consulting or styling?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Image is one of four pillars, not the whole practice. A stylist chooses clothes. This practice builds a visual identity, then layers executive presence, social fluency and strategic personal positioning on top of it. The result is not a better wardrobe. It is a person the room reads differently." }
+        },
+        {
+          "@type": "Question",
+          "name": "Who does Arpita typically work with?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Executives, founders, managers, brides, homemakers, graduates, doctors, lawyers, pilots, teachers, diplomats and people entering a new chapter of any kind. The common thread is not an industry or a life stage. It is a gap between who they are and how the world currently sees them, and the decision to close it." }
+        },
+        {
+          "@type": "Question",
+          "name": "I am not a corporate professional. Is this still relevant for me?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Completely. Presence is not a corporate skill, it is a life skill. The work is equally relevant for someone preparing for an arranged introduction, a bride entering a new family and social circle, a homemaker returning to professional life, a graduate entering their first job, or anyone who feels the gap between how they are seen and who they actually are. Any room, any context." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the Presence Quotient?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The Presence Quotient is a sixteen-question self assessment that measures four dimensions: image, executive presence, social culture and distinction. It produces a score out of one hundred, a band name, and a private four-page PDF scorecard that names your strongest dimension, your most significant gap, and what Arpita would prioritise if she were beginning with you. It is the fastest way to understand where your presence actually stands before any conversation." }
+        },
+        {
+          "@type": "Question",
+          "name": "How accurate is the Presence Quotient?",
+          "acceptedAnswer": { "@type": "Answer", "text": "It is self-reported, so it is as honest as you are. Most people find that answering carefully produces a result that matches what they have privately suspected for some time. It is designed to name things, not flatter them. If a result surprises you, that surprise itself is useful information." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I start working with Arpita?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Two ways. The Presence Quotient gives you a private scorecard and a clear starting point before any conversation. A fifteen-minute discovery call, booked and paid online, is a direct conversation about where you are and whether the practice is the right fit. The in-person session, thirty minutes in Delhi, is the most efficient entry point for those who are ready to begin immediately." }
+        },
+        {
+          "@type": "Question",
+          "name": "What does the discovery call involve?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Fifteen minutes, online. A direct conversation about where you are, what you are trying to change, and whether Arpita's practice is the right fit for that change. No pitch, no pressure. If it is not the right fit, she will say so. The fee is Rs. 339." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the in-person session?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Thirty minutes with Arpita in Delhi, face to face. The most honest way to understand how you are currently read and where the work would begin. It is not a consultation for a programme you may or may not purchase. It is a session in its own right. The fee is Rs. 4,499." }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the four licensed programmes?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The Presence Edit (image consulting), The Executive Edge (executive presence), The Social Table (wine, dining and social culture) and The Debut (campus to corporate) are Arpita's four licensed programmes. Each runs as a structured cohort with fixed seats, launched approximately twice a year." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I find out about the next cohort?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Write to presence.arpitamehta@gmail.com naming the programme you are interested in, and you will receive the details, dates and enrolment information for the next available cohort." }
+        },
+        {
+          "@type": "Question",
+          "name": "What if I want something more personal or customised?",
+          "acceptedAnswer": { "@type": "Answer", "text": "That is what one to one presence consulting is for. It is fully customised: a combination of image consulting, executive presence work and soft skills modules such as vocal and verbal communication or emotional intelligence, built around exactly what you need, on your own timeline, independent of the licensed programme calendar." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I know whether to wait for a licensed programme or begin one to one?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The Presence Quotient or a discovery call usually answers this. If your gap is broad and you have time, a licensed programme is a structured, cohort-based way to work through it. If you want to begin now, or your need is specific, one to one consulting starts immediately and is shaped entirely around you." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the work done in person or online?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Both. In-person sessions are in Delhi. Online sessions are available for clients anywhere. Some work, such as detailed image consulting and table fluency training, is best done in person. Other modules translate fully to video. The structure is decided based on what produces the best result for each client." }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you work with clients outside Delhi?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Online sessions are available for clients across India and internationally. For in-person work outside Delhi, the details are discussed on the discovery call based on the scope of the engagement." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is The Debut and who is it for?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The Debut is the campus to corporate programme, designed for graduates and freshers navigating the first year of professional life. It covers interview presence, professional image, workplace etiquette and first-impression fluency. It runs as a one-to-one programme, group cohorts, campus workshops for institutions, and online. Parents who want to invest in a child's professional launch before the degree finishes often initiate the conversation." }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you do corporate or team training?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. As a certified Train the Trainer and soft skills facilitator, Arpita designs group training for corporates, colleges and schools on presence topics such as executive presence and business dining culture, and on soft skills more broadly: communication, emotional intelligence, public speaking and team dynamics. The session is built around where the group actually needs the work. Enquiries can be sent to presence.arpitamehta@gmail.com with the group size and context." }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you offer soft skills training beyond presence consulting?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Arpita is a certified Train the Trainer and soft skills facilitator, and works with corporates, colleges, schools and individuals on soft skills topics of any kind: communication, emotional intelligence, public speaking, team dynamics and more. These sessions are designed around what the group or individual actually needs, independent of the four licensed programmes." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the AI for Branding and Business service?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A separate, private service for small business owners and aspiring entrepreneurs who want to build their brand, marketing and business using AI, the way Arpita built her own practice. It is not a licensed cohort programme. It is offered strictly one to one, in a very limited number of slots, because the work is specific to each business." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this relevant for people preparing for an arranged marriage or a first meeting?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Very much so. The way you present, carry yourself and conduct a first social meeting is a form of presence, and it is learnable. The work in this context covers how you enter and hold a room, how you dress for a meeting that matters, how you conduct conversation with composure and warmth, and how you come across as yourself rather than a nervous version of yourself." }
+        },
+        {
+          "@type": "Question",
+          "name": "I am a homemaker who wants to reclaim her professional identity. Is this the right place?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. The return to visible professional or social life after a period of stepping back is one of the most meaningful transitions this practice works with. The gap is real, the nervousness is completely understandable, and the work is the same as it is for anyone: understanding how you are currently read, and building the image, presence and fluency that matches who you actually are now." }
+        },
+        {
+          "@type": "Question",
+          "name": "I am already senior and well-established. Is there still value here?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Often the most. Senior professionals are the ones most likely to have a gap they cannot see from the inside, because nobody around them has the standing or the reason to name it. The work at this level is typically precise: one or two specific signals that are quietly costing rooms, addressed directly." }
+        },
+        {
+          "@type": "Question",
+          "name": "What results do clients see?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The results are specific to each person's gap and context, which is why no generic claim is made here. What clients consistently describe is a shift in how rooms receive them: being listened to more closely, being taken more seriously, and feeling, for the first time, that how they are seen matches who they are. Some get the promotion. Some get the client. Some simply stop dreading the rooms they used to shrink in." }
+        },
+        {
+          "@type": "Question",
+          "name": "How quickly do results appear?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Some signals shift in the first session. A change in pace of speech, a new posture, a wardrobe decision made with intention rather than habit: these are felt immediately. The deeper changes, the ones that hold under pressure and in unfamiliar rooms, take longer, because they require rehearsal until they are automatic. Sustainable change is the goal, not a performance that fades by the following Tuesday." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is presence something you are born with or something you can learn?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Learned. Entirely. The people who seem to have been born with it were, in almost every case, born into environments that taught it early: families with strong social codes, schools with high expectations, cultures where presentation was taken seriously. Everyone else was simply waiting for the right teacher. The practice exists for exactly that." }
+        },
+        {
+          "@type": "Question",
+          "name": "I feel self-conscious about working on my appearance or presence. Is that normal?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Completely normal, and worth naming. Most people have been told at some point that caring about these things is shallow or vain. The reframe that changes everything: you are not trying to become someone else. You are removing everything that distracts from who you already are. The work is not about performance. It is about alignment." }
+        },
+        {
+          "@type": "Question",
+          "name": "Will this change who I am?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. It will change how clearly who you are comes through. Presence work at its best does not add a layer. It removes the ones that have been obscuring you: the nervous habits, the unconsidered wardrobe, the social awkwardness that makes rooms underestimate you. What is left is more you, not less." }
+        },
+        {
+          "@type": "Question",
+          "name": "What makes this practice different from a regular coach or stylist?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Most coaches work on mindset. Most stylists work on clothes. Most etiquette consultants work on rules. This practice works on all of it simultaneously, because the room experiences all of it simultaneously. The integration is the differentiator, and it comes from over ten years in marketing, a WSET qualification in wines, an engineering background and the specific ability to see how all four signals combine into a single impression." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I know if I am ready?",
+          "acceptedAnswer": { "@type": "Answer", "text": "If you are reading this page, you probably already know. The question is usually not readiness. It is the decision to stop waiting for someone to hand you the thing that was never going to be handed to you. The discovery call exists to make the first step as low-friction as possible." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is what we discuss kept private?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Completely. Every engagement is private by design. Arpita does not discuss clients, does not reference client work publicly and does not use client outcomes as case studies. The discretion is not a policy. It is the only way the work is possible." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I contact Arpita?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The fastest route is a discovery call or the in-person session, both bookable directly. For corporate enquiries or specific questions before booking, write to presence.arpitamehta@gmail.com. She reads everything." }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://arpitamehta.co/" },
+        { "@type": "ListItem", "position": 2, "name": "FAQ", "item": "https://arpitamehta.co/faq.html" }
+      ]
+    }
+  ]
+}
+</script>
+
+<style>
+:root{
+  /* Arpita Mehta brand palette. Contrast verified on both surfaces.
+     Decorative tones (--gold, --parchment, --border) must never carry body text. */
+  --linen:#F8F4EE;      /* Warm Ivory Beige, page background            */
+  --ivory:#FBF7F3;      /* Soft Cream, surfaces and panels              */
+  --parchment:#DED4CA;  /* Blush Beige, light rules                     */
+  --border:#DED4CA;     /* Blush Beige, borders and rules               */
+  --panel:#C2B5A8;      /* Warm Taupe, panels and dividers, decorative  */
+  --ink:#2A1F14;        /* Deep Brown, headings            14.7:1 on bg   */
+  --taupe:#3D2F1D;      /* Espresso, body text           11.8:1 on bg   */
+  --taupe-lt:#6B5D50;   /* Secondary text, small labels   5.8:1 on bg   */
+  --brown:#9C5A4C;      /* Warm Cognac, accents and links 4.7:1 on bg   */
+  --rose:#9C5A4C;       /* Warm Cognac, primary button    5.2:1 white   */
+  --rose-d:#7F493E;     /* Cognac hover                   6.5:1 white   */
+  --gold:#AE957E;       /* Muted Rose-Taupe, decorative only            */
+  --white:#FFFFFF;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--linen); color:var(--ink);
+  font-family:'DM Sans',sans-serif; font-weight:400; font-size:1.05rem;
+  line-height:1.7; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+@view-transition{navigation:auto}
+::view-transition-old(root),::view-transition-new(root){animation-duration:200ms}
+h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.18;color:var(--ink)}
+h1 em,h2 em{font-style:italic;color:var(--brown)}
+img{max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+.eyebrow{
+  font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--taupe-lt);font-weight:400;
+  display:flex;align-items:center;gap:14px;margin-bottom:18px;
+}
+.eyebrow::before{content:"";width:34px;height:1px;background:var(--gold)}
+section{padding:96px 0}
+
+#cursor{
+  position:fixed;top:0;left:0;width:12px;height:12px;border-radius:50%;
+  background:var(--gold);pointer-events:none;z-index:9999;opacity:0;
+  transform:translate(-50%,-50%);mix-blend-mode:multiply;
+  transition:width .25s,height .25s,opacity .3s;
+}
+@media (pointer:coarse){#cursor{display:none}}
+
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:14px 0;background:rgba(247,242,235,.96);border-bottom:1px solid var(--border);
+  transition:transform .3s;backdrop-filter:blur(8px);
+}
+nav.hidden{transform:translateY(-100%)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:18px}
+.nav-logo{display:flex;align-items:center;gap:13px}
+.nav-logo img{height:56px;width:auto;display:block}
+.nav-wordmark{display:flex;flex-direction:column;line-height:1.3}
+.nav-wordmark .nm{font-family:'Cormorant Garamond',serif;font-size:1.12rem;font-weight:500;color:var(--ink);white-space:nowrap}
+.nav-wordmark .ti{font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--taupe-lt);white-space:nowrap}
+@media(max-width:680px){
+  .nav-logo img{height:44px}
+  .nav-wordmark .nm{font-size:.96rem}
+  .nav-wordmark .ti{font-size:.46rem;letter-spacing:.08em}
+}
+@media(max-width:360px){.nav-wordmark .ti{display:none}}
+.nav-links{display:flex;align-items:center;gap:26px;list-style:none;white-space:nowrap}
+.nav-links a{font-size:1rem;font-weight:400;letter-spacing:.04em;color:var(--taupe);transition:color .2s;white-space:nowrap}
+.nav-links a:hover{color:var(--brown)}
+.menu-btn{display:none;background:none;border:none;cursor:pointer;padding:6px}
+@media(max-width:1160px) and (min-width:901px){.nav-wordmark{display:none}.nav-links{gap:20px}}
+.menu-btn span{display:block;width:24px;height:1.5px;background:var(--ink);margin:6px 0;transition:transform .3s,opacity .3s}
+@media(max-width:900px){
+  .nav-links{
+    position:fixed;inset:0;background:var(--linen);flex-direction:column;
+    justify-content:center;gap:26px;transform:translateX(100%);transition:transform .35s;
+  }
+  .nav-links.open{transform:none}
+  .nav-links a{font-size:1.1rem}
+  .menu-btn{display:block;z-index:1001}
+  .menu-btn.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+  .menu-btn.open span:nth-child(2){opacity:0}
+  .menu-btn.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+}
+.cta{
+  display:inline-block;background:var(--rose);color:var(--white);
+  font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:400;
+  letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--rose);
+  padding:16px 34px;cursor:pointer;transition:background .25s,border-color .25s;
+}
+.cta:hover{background:var(--rose-d);border-color:var(--rose-d)}
+.cta.ghost{background:transparent;color:var(--brown);border-color:var(--border)}
+.cta.ghost:hover{background:var(--ivory);color:var(--brown)}
+.nav-cta{padding:12px 22px;font-size:.8rem;white-space:nowrap}
+
+.page-hero{padding:200px 0 70px;border-bottom:1px solid var(--border)}
+.page-hero h1{font-size:clamp(2.2rem,4.8vw,3.6rem);max-width:820px}
+.page-hero .lede{max-width:600px;margin-top:22px;font-size:1.1rem;color:var(--taupe)}
+
+/* FAQ layout */
+.faq-body{padding:80px 0}
+.faq-layout{display:grid;grid-template-columns:220px 1fr;gap:80px;align-items:start}
+.faq-nav{position:sticky;top:110px}
+.faq-nav ul{list-style:none}
+.faq-nav li{margin-bottom:4px}
+.faq-nav a{
+  display:block;font-size:.8rem;letter-spacing:.06em;color:var(--taupe-lt);
+  padding:7px 12px;border-left:2px solid transparent;transition:color .2s,border-color .2s;
+}
+.faq-nav a:hover,.faq-nav a.active{color:var(--brown);border-left-color:var(--gold)}
+.faq-nav .nav-group{font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--taupe-lt);padding:18px 12px 6px;font-weight:400}
+
+/* accordion */
+.faq-group{margin-bottom:56px}
+.faq-group-title{
+  font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:var(--ink);
+  margin-bottom:6px;padding-bottom:16px;border-bottom:1px solid var(--border);
+}
+.faq-item{border-bottom:1px solid var(--parchment)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{
+  width:100%;background:none;border:none;text-align:left;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:start;gap:20px;
+  padding:22px 0;font-family:'DM Sans',sans-serif;font-size:1.02rem;
+  font-weight:400;color:var(--ink);line-height:1.5;
+}
+.faq-q:hover{color:var(--brown)}
+.faq-icon{
+  flex-shrink:0;width:22px;height:22px;border:1px solid var(--border);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  margin-top:2px;transition:background .2s,border-color .2s;
+}
+.faq-icon::before{content:"+";font-size:.9rem;color:var(--taupe-lt);line-height:1;transition:transform .3s,color .2s}
+.faq-item.open .faq-icon{background:var(--gold);border-color:var(--gold)}
+.faq-item.open .faq-icon::before{transform:rotate(45deg);color:var(--white)}
+.faq-a{
+  max-height:0;overflow:hidden;
+  transition:max-height .45s cubic-bezier(.22,.8,.3,1),padding .3s;
+}
+.faq-a-inner{padding:0 0 24px;color:var(--taupe);font-size:.98rem;max-width:68ch;line-height:1.75}
+.faq-item.open .faq-a{max-height:400px}
+
+/* CTA band */
+.cta-band{background:var(--ivory);border-top:1px solid var(--border);border-bottom:1px solid var(--border);text-align:center}
+.cta-band h2{font-size:clamp(1.8rem,3.5vw,2.6rem);max-width:700px;margin:0 auto 18px}
+.cta-band p{max-width:520px;margin:0 auto 34px;color:var(--taupe)}
+.cta-band .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
+.foot-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.4rem,2.8vw,2rem);max-width:760px;margin-bottom:64px;color:var(--ivory);line-height:1.5;cursor:default}
+.foot-quote .w{transition:color .4s ease}
+.foot-quote:hover .w{color:var(--gold)}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;margin-bottom:64px}
+.foot-grid h4{font-family:'DM Sans',sans-serif;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--panel);margin-bottom:20px;font-weight:400}
+.foot-grid ul{list-style:none}
+.foot-grid li{margin-bottom:12px}
+.foot-grid a{font-size:.92rem;color:var(--parchment);transition:color .2s}
+.foot-grid a:hover{color:var(--gold)}
+.foot-brand p{font-size:.92rem;color:var(--panel);max-width:300px;margin-top:16px}
+.foot-base{border-top:1px solid rgba(212,196,174,.18);padding-top:28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.78rem;color:var(--panel)}
+
+.panel-overlay{position:fixed;inset:0;background:rgba(44,32,24,.45);opacity:0;pointer-events:none;transition:opacity .35s;z-index:1500}
+.panel-overlay.open{opacity:1;pointer-events:auto}
+.panel{position:fixed;top:0;right:0;bottom:0;width:min(520px,100%);background:var(--linen);z-index:1600;transform:translateX(100%);transition:transform .45s cubic-bezier(.22,.8,.3,1);display:flex;flex-direction:column;border-left:1px solid var(--border)}
+.panel.open{transform:translateX(0)}
+.panel-head{display:flex;align-items:center;justify-content:space-between;padding:22px 28px;border-bottom:1px solid var(--border)}
+.panel-head .t{font-family:'Cormorant Garamond',serif;font-size:1.2rem}
+.panel-close{background:none;border:none;font-size:1.6rem;color:var(--taupe);cursor:pointer;line-height:1;padding:4px 8px}
+.panel-opts{padding:24px 22px;display:flex;flex-direction:column;gap:16px;overflow-y:auto}
+.p-opt{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 22px;background:var(--ivory);border:1px solid var(--border)}
+.p-opt .d-title{font-family:'Cormorant Garamond',serif;font-size:1.08rem;color:var(--ink)}
+.p-opt .d-sub{font-size:.8rem;color:var(--taupe-lt);margin-top:3px}
+.p-right{text-align:right;flex-shrink:0}
+.d-price{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--brown);margin-bottom:10px}
+.d-cta{padding:11px 20px;font-size:.68rem}
+.panel-note{font-size:.86rem;color:var(--taupe);padding:6px 4px;line-height:1.7}
+
+.rv{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:860px){.faq-layout{grid-template-columns:1fr}.faq-nav{display:none}.foot-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:680px){
+  section{padding:68px 0}.page-hero{padding:160px 0 48px}
+  .nav-links{position:fixed;inset:0;background:var(--linen);flex-direction:column;justify-content:center;gap:26px;transform:translateX(100%);transition:transform .35s}
+  .nav-links.open{transform:none}
+  .nav-links a{font-size:1.1rem}
+  .menu-btn{display:block;z-index:1001}
+  .menu-btn.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+  .menu-btn.open span:nth-child(2){opacity:0}
+  .menu-btn.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+  .foot-grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}
+  .rv{opacity:1 !important;transform:none !important}
+  .faq-item.open .faq-a{max-height:none}
+  #cursor{display:none !important}
+}
+.lead-overlay{position:fixed;inset:0;background:rgba(44,32,24,.5);opacity:0;pointer-events:none;transition:opacity .3s;z-index:1800;display:flex;align-items:center;justify-content:center;padding:20px}
+.lead-overlay.open{opacity:1;pointer-events:auto}
+.lead-modal{
+  background:var(--linen);border:1px solid var(--border);max-width:420px;width:100%;
+  padding:40px 36px;transform:translateY(20px);transition:transform .35s;
+  max-height:90vh;overflow-y:auto;
+}
+.lead-overlay.open .lead-modal{transform:translateY(0)}
+.lead-modal h3{font-size:1.3rem;margin-bottom:8px}
+.lead-modal .sub{font-size:.9rem;color:var(--taupe);margin-bottom:24px}
+.lead-modal label{display:block;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--taupe-lt);margin-bottom:6px;margin-top:16px}
+.lead-modal input,.lead-modal select,.lead-modal textarea{
+  width:100%;padding:12px 14px;border:1px solid var(--border);background:var(--white);
+  font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--ink);font-weight:400;
+}
+.lead-modal select{appearance:none;cursor:pointer}
+.lead-modal textarea{resize:vertical;min-height:90px;font-size:.92rem}
+.lead-modal input:focus,.lead-modal select:focus,.lead-modal textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
+.lead-modal .submit-row{display:flex;gap:12px;align-items:center;margin-top:26px}
+.lead-modal .cta{padding:13px 28px;font-size:.74rem}
+.lead-close{background:none;border:none;font-size:1.5rem;color:var(--taupe);cursor:pointer;line-height:1;float:right;padding:0 4px}
+.lead-success{display:none;text-align:center;padding:10px 0}
+.lead-success.show{display:block}
+.lead-success .seal{margin:0 auto 16px}
+.lead-success h3{margin-bottom:10px}
+.lead-success p{font-size:.92rem;color:var(--taupe)}
+</style>
+</head>
+<body>
+
+<div id="cursor" aria-hidden="true"></div>
+
+<nav id="nav">
+  <div class="wrap nav-inner">
+    <a class="nav-logo" href="index.html">
+      <img src="images/shared/monogram.png" height="44" alt="Arpita Mehta monogram" fetchpriority="high" style="width:auto;display:block"/>
+      <span class="nav-wordmark"><span class="nm">Arpita Mehta</span><span class="ti">Presence Consultant, Delhi</span></span>
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Programmes</a></li>
+      <li><a href="assessment.html">The Presence Quotient</a></li>
+      <li><a href="blog/index.html">Journal</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><button class="cta nav-cta" data-calendly>Request a Call</button></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">Questions</p>
+    <h1>Every question people ask <em>before they begin.</em></h1>
+    <p class="lede">Answered honestly. If something is not here, write to presence.arpitamehta@gmail.com. She reads everything.</p>
+  </div>
+</header>
+
+<section class="faq-body">
+  <div class="wrap faq-layout">
+
+    <!-- sidebar nav -->
+    <nav class="faq-nav" aria-label="FAQ categories">
+      <ul>
+        <li><span class="nav-group">The Practice</span></li>
+        <li><a href="#the-practice">What is presence consulting</a></li>
+        <li><a href="#who-it-is-for">Who it is for</a></li>
+        <li><span class="nav-group">Getting Started</span></li>
+        <li><a href="#how-to-begin">How to begin</a></li>
+        <li><a href="#the-programmes">Programmes &amp; consulting</a></li>
+        <li><span class="nav-group">The Work</span></li>
+        <li><a href="#the-work">Results and process</a></li>
+        <li><a href="#the-person">The personal questions</a></li>
+      </ul>
+    </nav>
+
+    <!-- accordion -->
+    <div>
+
+      <div class="faq-group rv" id="the-practice">
+        <h2 class="faq-group-title">The practice</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What is a presence consultant?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">A presence consultant works on the gap between who you are and how the world currently sees you. The work covers image, executive presence, social culture and AI for branding and business, because these things together are what a room actually reads when it reads you. Most people address one of them at a time with different professionals. This practice integrates all of them, because the rooms you walk into test all of them simultaneously.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Is this just image consulting or styling?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Image is one of four pillars, not the whole practice. A stylist chooses clothes. This practice builds a visual identity, then layers executive presence, social fluency and strategic personal positioning on top. The result is not a better wardrobe. It is a person the room reads differently.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What makes this different from a coach, a stylist or an etiquette consultant?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Most coaches work on mindset. Most stylists work on clothes. Most etiquette consultants work on rules. This practice works on all of it simultaneously, because the room experiences all of it simultaneously. The integration is the differentiator, and it comes from over ten years in marketing, a WSET qualification in wines, an engineering background and the specific ability to see how all four signals combine into a single impression.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Do you offer soft skills training beyond presence consulting?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Yes. Arpita is a certified Train the Trainer and soft skills facilitator, and works with corporates, colleges, schools and individuals on soft skills topics of any kind: communication, emotional intelligence, public speaking, team dynamics and more. These sessions are designed around what the group or individual actually needs, independent of the four licensed programmes.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What is the AI for Branding and Business service?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">A separate, private service for small business owners and aspiring entrepreneurs who want to build their brand, marketing and business using AI, the way Arpita built her own practice. It is not a licensed cohort programme. It is offered strictly one to one, in a very limited number of slots, because the work is specific to each business. Mention it on the discovery call, or write to presence.arpitamehta@gmail.com.</p></div>
+        </div>
+      </div>
+
+      <div class="faq-group rv" id="who-it-is-for">
+        <h2 class="faq-group-title">Who it is for</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Who does Arpita typically work with?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Executives, founders, managers, brides, homemakers, graduates, doctors, lawyers, pilots, teachers, diplomats and people entering a new chapter of any kind. The common thread is not an industry or a life stage. It is a gap between who they are and how the world currently sees them, and the decision to close it.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">I am not a corporate professional. Is this still relevant for me?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Completely. Presence is not a corporate skill, it is a life skill. The work is equally relevant for someone preparing for an arranged introduction, a bride entering a new family and social circle, a homemaker returning to visible life, a graduate entering their first job, or anyone who feels the gap between how they are seen and who they actually are. Any room, any context.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Is this relevant for preparing for an arranged marriage or a first social meeting?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Very much so. How you carry yourself in a first meeting is a form of presence, and it is learnable. The work covers entering and holding a room, dressing for a meeting that matters, conducting conversation with composure and warmth, and coming across as yourself rather than a nervous version of yourself.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">I am already senior and well-established. Is there still value here?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Often the most. Senior professionals are the ones most likely to have a gap they cannot see from the inside, because nobody around them has the standing or the reason to name it. The work at this level is typically precise: one or two specific signals that are quietly costing rooms, addressed directly.</p></div>
+        </div>
+
+<div class="faq-item">
+          <button class="faq-q" aria-expanded="false">I am a homemaker wanting to reclaim my professional or social identity. Is this the right place?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Yes. The return to visible professional or social life after stepping back is one of the most meaningful transitions this practice works with. The gap is real, the nervousness is completely understandable, and the work is the same as it is for anyone: understanding how you are currently read, and building the image, presence and fluency that matches who you are now.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Do you work with men?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Yes. The work is for anyone with a gap between who they are and how the world sees them. Wardrobe architecture, executive presence and social fluency have no gender. Many of the most significant transformations in the practice have been with men navigating high-stakes professional rooms, social introductions or a new chapter.</p></div>
+        </div>
+      </div>
+
+      <div class="faq-group rv" id="how-to-begin">
+        <h2 class="faq-group-title">How to begin</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What is the Presence Quotient and should I start there?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">The Presence Quotient is a sixteen-question assessment that measures four dimensions: image, executive presence, social culture and distinction. It produces a score out of one hundred, a band and a private four-page PDF scorecard naming your biggest gap and what Arpita would prioritise if she were beginning with you. It is the fastest way to understand where you stand before any conversation, and most people find the result uncomfortably accurate.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">How accurate is the Presence Quotient?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">It is self-reported, so it is as honest as you are. Most people find that answering carefully produces a result that matches what they have privately suspected for some time. It is designed to name things, not flatter them. If a result surprises you, that surprise itself is useful information.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What does the discovery call involve?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Fifteen minutes, online, from anywhere. A direct conversation about where you are, what you want to change and whether the practice is the right fit. No pitch, no pressure. If it is not the right fit, she will say so. The fee is Rs. 339.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What is the in-person session?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Thirty minutes with Arpita in Delhi, face to face. The most direct way to understand how you are currently read and where the work would begin. It is a session in its own right, not a consultation attached to a programme. The fee is Rs. 4,499.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Do you work with clients outside Delhi?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Yes. Online sessions are available for clients across India and internationally. For in-person work outside Delhi, the scope and logistics are discussed on the discovery call.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Do you do corporate or team training?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Yes. As a certified Train the Trainer and soft skills facilitator, Arpita designs group training for corporates, colleges and schools on presence topics such as executive presence and business dining culture, and on soft skills more broadly: communication, emotional intelligence, public speaking and team dynamics. The session is built around where the group actually needs the work. Write to presence.arpitamehta@gmail.com with the group size and context.</p></div>
+        </div>
+      </div>
+
+      <div class="faq-group rv" id="the-programmes">
+        <h2 class="faq-group-title">The programmes</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What are the four licensed programmes?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">The Presence Edit (image consulting), The Executive Edge (executive presence), The Social Table (wine, dining and social culture) and The Debut (campus to corporate) are Arpita's four licensed programmes. Each runs as a structured cohort with fixed seats, launched approximately twice a year.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">How do I find out about the next cohort?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Write to presence.arpitamehta@gmail.com naming the programme you are interested in, and you will receive the details, dates and enrolment information for the next available cohort.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What if I want something more personal or customised?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">That is what one to one presence consulting is for. It is fully customised: a combination of image consulting, executive presence work and soft skills modules such as vocal and verbal communication or emotional intelligence, built around exactly what you need, on your own timeline, independent of the licensed programme calendar.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">How do I know whether to wait for a licensed programme or begin one to one?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">The Presence Quotient or a discovery call usually answers this. If your gap is broad and you have time, a licensed programme is a structured, cohort-based way to work through it. If you want to begin now, or your need is specific, one to one consulting starts immediately and is shaped entirely around you.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What is The Debut and who is it for?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">The Debut is the campus to corporate licensed programme for graduates and freshers in the first chapter of professional life. It covers interview presence, professional image, workplace etiquette and first-impression fluency, and runs as a structured cohort approximately twice a year. For ongoing or individual campus to corporate work outside that calendar, one to one consulting or a college workshop is the route. Parents who want to invest in a child's launch often initiate the conversation.</p></div>
+        </div>
+      </div>
+
+      <div class="faq-group rv" id="the-work">
+        <h2 class="faq-group-title">Results and process</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What results do clients see?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">The results are specific to each person's gap and context, which is why no generic claim is made here. What clients consistently describe is a shift in how rooms receive them: being listened to more closely, being taken more seriously, and feeling that how they are seen finally matches who they are. Some get the promotion. Some get the client. Some simply stop dreading the rooms they used to shrink in.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">How quickly does change happen?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Some signals shift in the first session. A change in voice pace, a new posture, a wardrobe decision made with intention rather than habit: these are felt immediately. The deeper changes, the ones that hold under pressure and in unfamiliar rooms, take longer. Sustainable change is the goal, not a performance that fades by the following week.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Is the work done in person or online?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Both. In-person sessions are in Delhi. Online sessions are available for clients anywhere. Some work, such as detailed image consulting and table fluency training, is best done in person. Other modules translate fully to video. The format is decided based on what produces the best result for each client.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Is what we discuss kept private?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Completely. Every engagement is private by design. Arpita does not discuss clients, does not reference client work publicly and does not use client outcomes as case studies. The discretion is not a policy. It is the only way the work is possible.</p></div>
+        </div>
+      </div>
+
+      <div class="faq-group rv" id="the-person">
+        <h2 class="faq-group-title">The personal questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Is presence something you are born with or something you can learn?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Learned. Entirely. The people who seem to have been born with it were, in almost every case, born into environments that taught it early: families with strong social codes, schools with high expectations, cultures where presentation was taken seriously. Everyone else was simply waiting for the right teacher. This practice exists for exactly that.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">I feel self-conscious about working on my appearance or presence. Is that normal?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Completely normal, and worth naming. Most people have been told at some point that caring about these things is shallow. The reframe that changes everything: you are not trying to become someone else. You are removing everything that distracts from who you already are. The work is not performance. It is alignment.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Will this change who I am?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">No. It will change how clearly who you are comes through. Presence work at its best does not add a layer. It removes the ones that have been obscuring you: the nervous habits, the unconsidered wardrobe, the social awkwardness that makes rooms underestimate you. What is left is more you, not less.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">How do I know if I am ready?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">If you are reading this page, you probably already know. The question is usually not readiness. It is the decision to stop waiting for something that was never going to be handed to you. The discovery call exists to make the first step as low-friction as possible.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">How do I contact Arpita?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">The fastest route is a discovery call or the in-person session, both bookable directly on this site. For corporate enquiries or specific questions before booking, write to <a href="mailto:presence.arpitamehta@gmail.com" style="color:var(--rose-d)">presence.arpitamehta@gmail.com</a>. She reads everything.</p></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band">
+  <div class="wrap rv">
+    <p class="eyebrow" style="justify-content:center">Still Have Questions</p>
+    <h2>The fastest answer is a fifteen-minute call. <em>Or a sixteen-question score.</em></h2>
+    <p>Both tell you more than this page can.</p>
+    <div class="btns">
+      <button class="cta" data-calendly>Book the Discovery Call</button>
+      <a class="cta ghost" href="assessment.html">Take the Presence Quotient</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="foot-quote" id="footQuote">The most powerful thing you can learn is how to walk into any room and be unforgettable, for the right reasons.</p>
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="images/shared/logo.png" alt="Arpita Mehta, Presence Consultant, Delhi" style="height:46px;width:auto;max-width:100%;object-fit:contain;object-position:left center;filter:brightness(0) invert(.92)" loading="lazy">
+        <p>Image, executive presence, social culture and AI for branding and business. One private practice in Delhi. In person in Delhi, online wherever you are.</p>
+      </div>
+      <div>
+        <h4>Practice</h4>
+        <ul>
+          <li><a href="about.html">About Arpita</a></li>
+          <li><a href="services.html">Programmes</a></li>
+          <li><a href="assessment.html">The Presence Quotient</a></li>
+          <li><a href="resources.html">Free Guide</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Journal</h4>
+        <ul>
+          <li><a href="blog/executive-presence-guide.html">Executive Presence</a></li>
+          <li><a href="blog/image-confidence-guide.html">Image and Confidence</a></li>
+          <li><a href="blog/campus-to-corporate.html">Campus to Corporate</a></li>
+          <li><a href="blog/wine-etiquette-india.html">Wine Etiquette</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><button class="cta-link" data-enquiry="General Enquiry" style="background:none;border:none;padding:0;font-size:.92rem;color:var(--parchment);cursor:pointer;font-family:'DM Sans',sans-serif;text-align:left">Send an Enquiry</button></li>
+          <li><a href="mailto:presence.arpitamehta@gmail.com">presence.arpitamehta@gmail.com</a></li>
+          <li><a href="https://www.linkedin.com/in/arpitamehta279" rel="noopener" target="_blank">LinkedIn</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>&copy; <span id="yr">2026</span> Arpita Mehta. All rights reserved. The Presence Quotient, programme frameworks and all materials on this site are proprietary intellectual property.</span>
+      <span>Presence Consultant, Delhi</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ GENERAL ENQUIRY MODAL ============ -->
+<div class="lead-overlay" id="enquiryOverlay">
+  <div class="lead-modal">
+    <button class="lead-close" id="enquiryClose" aria-label="Close">&times;</button>
+    <div id="enquiryFormWrap">
+      <h3>Send an Enquiry</h3>
+      <p class="sub">Tell Arpita what you're interested in. This goes directly to her, and you'll hear back by email.</p>
+      <form id="enquiryForm">
+        <label for="enq-name">Name</label>
+        <input type="text" id="enq-name" name="name" required autocomplete="name">
+        <label for="enq-email">Email</label>
+        <input type="email" id="enq-email" name="email" required autocomplete="email">
+        <label for="enq-phone">Phone</label>
+        <input type="tel" id="enq-phone" name="phone" required autocomplete="tel">
+        <label for="enq-type">What's this about?</label>
+        <select id="enq-type" name="type">
+          <option>General Enquiry</option>
+          <option>The Presence Edit (Cohort)</option>
+          <option>The Executive Edge (Cohort)</option>
+          <option>The Social Table (Cohort)</option>
+          <option>The Debut (Cohort)</option>
+          <option>One to One Presence Consulting</option>
+          <option>Soft Skills & Corporate Training</option>
+          <option>AI for Branding & Business</option>
+          <option>Corporate Group Training</option>
+        </select>
+        <label for="enq-message">Your message (optional)</label>
+        <textarea id="enq-message" name="message" placeholder="Anything you'd like Arpita to know before replying."></textarea>
+        <div class="submit-row">
+          <button type="submit" class="cta">Send Enquiry</button>
+        </div>
+      </form>
+    </div>
+    <div class="lead-success" id="enquirySuccess">
+      <img src="images/shared/monogram.png" alt="Arpita Mehta" style="width:60px;height:60px;display:block;border-radius:50%">
+      <h3>Thank you</h3>
+      <p>Your enquiry has been sent. Arpita typically replies within one to two working days.</p>
+    </div>
+  </div>
+</div>
+
+<div class="panel-overlay" id="panelOverlay"></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-label="Book a call with Arpita">
+  <div class="panel-head">
+    <span class="t">Begin Here</span>
+    <button class="panel-close" id="panelClose" aria-label="Close booking panel">&times;</button>
+  </div>
+  <div class="panel-opts">
+    <div class="p-opt">
+      <div>
+        <p class="d-title">The Discovery Call</p>
+        <p class="d-sub">Fifteen minutes, online, from anywhere in the world.</p>
+      </div>
+      <div class="p-right">
+        <p class="d-price">&#8377;339</p>
+        <button class="cta d-cta" data-pay="discovery">Reserve</button>
+      </div>
+    </div>
+    <div class="p-opt">
+      <div>
+        <p class="d-title">The In Person Session</p>
+        <p class="d-sub">Thirty minutes with Arpita, face to face in Delhi.</p>
+      </div>
+      <div class="p-right">
+        <p class="d-price">&#8377;4,499</p>
+        <button class="cta d-cta" data-pay="inperson">Reserve</button>
+      </div>
+    </div>
+    <p class="panel-note">Payment confirms your booking, and you choose your slot on the very next screen. Joining from outside Delhi, or outside India? Begin with the discovery call. Every engagement is designed around where you are.</p>
+  </div>
+</aside>
+
+<script>
+(function(){
+"use strict";
+var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.getElementById("yr").textContent = new Date().getFullYear();
+
+/* sticky nav */
+var nav = document.getElementById("nav"), lastY = 0;
+window.addEventListener("scroll", function(){
+  var y = window.scrollY;
+  if (y > lastY + 14 && y > 220) nav.classList.add("hidden");
+  else if (y < lastY) nav.classList.remove("hidden");
+  lastY = y;
+}, {passive:true});
+
+/* mobile menu */
+var menuBtn = document.getElementById("menuBtn"), navLinks = document.getElementById("navLinks");
+menuBtn.addEventListener("click", function(){
+  var open = navLinks.classList.toggle("open");
+  menuBtn.classList.toggle("open", open);
+  menuBtn.setAttribute("aria-expanded", open);
+});
+navLinks.addEventListener("click", function(e){
+  if (e.target.tagName === "A" || e.target.tagName === "BUTTON"){
+    navLinks.classList.remove("open"); menuBtn.classList.remove("open");
+  }
+});
+
+/* accordion */
+document.querySelectorAll(".faq-q").forEach(function(btn){
+  btn.addEventListener("click", function(){
+    var item = this.closest(".faq-item");
+    var wasOpen = item.classList.contains("open");
+    // close all in this group
+    item.closest(".faq-group").querySelectorAll(".faq-item").forEach(function(i){
+      i.classList.remove("open");
+      i.querySelector(".faq-q").setAttribute("aria-expanded","false");
+    });
+    if (!wasOpen){
+      item.classList.add("open");
+      this.setAttribute("aria-expanded","true");
+    }
+  });
+});
+
+/* sidebar active on scroll */
+var groups = document.querySelectorAll(".faq-group");
+var navLinks2 = document.querySelectorAll(".faq-nav a");
+window.addEventListener("scroll", function(){
+  var mid = window.scrollY + window.innerHeight * 0.4;
+  groups.forEach(function(g){
+    var top = g.offsetTop, bot = top + g.offsetHeight;
+    if (mid >= top && mid < bot){
+      navLinks2.forEach(function(a){ a.classList.remove("active"); });
+      var match = document.querySelector('.faq-nav a[href="#'+g.id+'"]');
+      if (match) match.classList.add("active");
+    }
+  });
+}, {passive:true});
+
+/* reveals */
+var revObs = new IntersectionObserver(function(entries){
+  entries.forEach(function(en){
+    if (en.isIntersecting){ en.target.classList.add("in"); revObs.unobserve(en.target); }
+  });
+}, {threshold: 0.1});
+document.querySelectorAll(".rv").forEach(function(el){ revObs.observe(el); });
+
+/* magnetic cursor */
+if (!reduced && window.matchMedia("(pointer: fine)").matches){
+  var cur = document.getElementById("cursor"), mx = 0, my = 0, cx = 0, cy = 0;
+  document.addEventListener("mousemove", function(e){
+    mx = e.clientX; my = e.clientY; cur.style.opacity = 1;
+    var t = e.target.closest(".cta, .faq-q");
+    if (t){
+      var r = t.getBoundingClientRect();
+      mx += (r.left + r.width / 2 - mx) * 0.2;
+      my += (r.top + r.height / 2 - my) * 0.2;
+      cur.style.width = "26px"; cur.style.height = "26px";
+    } else { cur.style.width = "12px"; cur.style.height = "12px"; }
+  });
+  document.addEventListener("mouseleave", function(){ cur.style.opacity = 0; });
+  (function lerp(){
+    cx += (mx - cx) * 0.18; cy += (my - cy) * 0.18;
+    cur.style.left = cx + "px"; cur.style.top = cy + "px";
+    requestAnimationFrame(lerp);
+  })();
+}
+
+/* footer gold wave */
+var fq = document.getElementById("footQuote");
+var fw = fq.textContent.trim().split(/\s+/);
+fq.textContent = "";
+fw.forEach(function(w, i){
+  var s = document.createElement("span");
+  s.className = "w"; s.style.transitionDelay = (i * 40) + "ms";
+  s.textContent = w; fq.appendChild(s); fq.appendChild(document.createTextNode(" "));
+});
+
+/* booking panel */
+var panel = document.getElementById("panel"), overlay = document.getElementById("panelOverlay");
+var PAY_LINKS = { discovery:"YOUR_RAZORPAY_DISCOVERY_LINK", inperson:"YOUR_RAZORPAY_INPERSON_LINK" };
+function openPanel(){ panel.classList.add("open"); overlay.classList.add("open"); document.body.style.overflow="hidden"; }
+function closePanel(){ panel.classList.remove("open"); overlay.classList.remove("open"); document.body.style.overflow=""; }
+document.querySelectorAll("[data-calendly]").forEach(function(b){ b.addEventListener("click", function(){ if(window.amTrack) amTrack("booking_panel_open", {page: location.pathname}); openPanel(); }); });
+document.querySelectorAll("[data-pay]").forEach(function(b){ b.addEventListener("click", function(){ if(window.amTrack) amTrack("payment_click", {option: b.dataset.pay}); window.open(PAY_LINKS[b.dataset.pay], "_blank", "noopener"); }); });
+document.getElementById("panelClose").addEventListener("click", closePanel);
+overlay.addEventListener("click", closePanel);
+document.addEventListener("keydown", function(e){ if(e.key==="Escape") closePanel(); }); document.addEventListener("keydown", function(e){ if (e.key==="Escape") closeEnquiry(); });
+/* ============ GENERAL ENQUIRY MODAL ============ */
+var ENQUIRY_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSfi0a-qHiSgcVllmtYjZdPEyxvdo2I2Ydisp46C-QvYeO273w/formResponse";
+var ENQUIRY_MESSAGE_ENTRY = "YOUR_ENQUIRY_MESSAGE_ENTRY_ID";
+var ENQUIRY_SOURCE_ENTRY = "YOUR_ENQUIRY_SOURCE_ENTRY_ID";
+var enquiryOverlay = document.getElementById("enquiryOverlay"),
+    enquiryFormWrap = document.getElementById("enquiryFormWrap"),
+    enquirySuccess = document.getElementById("enquirySuccess"),
+    enquiryForm = document.getElementById("enquiryForm"),
+    enquiryType = document.getElementById("enq-type");
+
+function openEnquiry(type){
+  if (type) enquiryType.value = type;
+  enquiryFormWrap.style.display = "";
+  enquirySuccess.classList.remove("show");
+  enquiryForm.reset();
+  if (type) enquiryType.value = type;
+  enquiryOverlay.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closeEnquiry(){
+  enquiryOverlay.classList.remove("open");
+  document.body.style.overflow = "";
+}
+document.querySelectorAll("[data-enquiry]").forEach(function(b){
+  b.addEventListener("click", function(){ openEnquiry(b.dataset.enquiry); });
+});
+document.getElementById("enquiryClose").addEventListener("click", closeEnquiry);
+enquiryOverlay.addEventListener("click", function(e){ if (e.target === enquiryOverlay) closeEnquiry(); });
+
+enquiryForm.addEventListener("submit", function(e){
+  e.preventDefault();
+  var name = document.getElementById("enq-name").value;
+  var email = document.getElementById("enq-email").value;
+  var phone = document.getElementById("enq-phone").value;
+  var type = enquiryType.value;
+  var message = document.getElementById("enq-message").value;
+
+  var body = new URLSearchParams();
+  body.append("entry.479034743", name);
+  body.append("entry.548561860", email);
+  body.append("entry.1982097609", phone);
+  body.append("entry.680222901", "Enquiry: " + type);
+  body.append(ENQUIRY_SOURCE_ENTRY, location.pathname + (document.title ? " (" + document.title.split("|")[0].trim() + ")" : ""));
+  if (message) body.append(ENQUIRY_MESSAGE_ENTRY, message);
+
+  fetch(ENQUIRY_FORM_ACTION, { method:"POST", mode:"no-cors",
+    headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: body.toString()
+  }).catch(function(){});
+
+  if (window.amTrack) amTrack("generate_lead", {source:"enquiry", type: type, page: location.pathname});
+
+  enquiryFormWrap.style.display = "none";
+  enquirySuccess.classList.add("show");
+});
+
+})();
+</script>
+</body>
+</html>
