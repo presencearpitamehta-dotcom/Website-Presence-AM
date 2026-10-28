@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  arpitamehta.co  |  SITE VERSION 29  |  2026-08-10
+  ============================================================
+  ABOUT. Arpita's story, four disciplines line, three entry
+  points (discovery call / in person / assessment).
+
+  This is a full-site release. Every page in this deploy is
+  stamped SITE VERSION 29 so the folder can be identified at a
+  glance after it is uploaded to Netlify. Per-page history that
+  predates v27 lives in /_context/CHANGELOG.md, not here.
+
+  WHAT CHANGED IN v29 (accent colour + body font locked in)
+    - Accent colour changed from Warm Cognac (#A05B3E) to Deep Rose
+      (#9C5A4C) across all 11 pages: --brown, --rose, --rose-d (hover,
+      now #7F493E) in every :root block, plus 6 hardcoded instances in
+      assessment.html's Presence Quotient PDF export that a CSS
+      variable sweep alone would have missed.
+    - Body font changed from Inter to DM Sans across all 11 pages:
+      Google Fonts link and every 'Inter' font-family reference
+      swapped. Cormorant Garamond (headings, weight 500) is unchanged.
+    - Full automated contrast re-audit after both changes (walks every
+      visible text node, resolves effective background through the
+      ancestor chain, computes WCAG contrast against the correct
+      threshold for its font size/weight): zero failures across all
+      11 pages.
+  ------------------------------------------------------------
+  WHAT CHANGED IN v28.4 (formats line + robustness fix)
+    - The "formats" line (licensed cohort / one to one / online) was
+      different lengths on all 4 programmes (Social Table had an extra
+      sentence, The Debut was phrased differently), so each box ended
+      up a different height even though internal alignment was fixed
+      in v28.3. All 4 formats lines are now byte-identical; the extra
+      details (brides and couples chapter, campus workshops) moved
+      into each programme's own body copy instead.
+    - .covers now carries flex:1 with centered content instead of a
+      fixed height, so if a copy column is ever taller than the image
+      (longer paragraphs, wrapped CTAs), the covers panel absorbs the
+      extra height and stays flush with the bottom of the box, rather
+      than leaving a dead gap. Verified: all 4 boxes internally align
+      correctly even when total box height still varies slightly
+      between cards due to natural copy-length differences.
+  ------------------------------------------------------------
+  WHAT CHANGED IN v28.3 (all four programme cards boxed)
+    - All four programme cards on services.html wrapped in their own
+      bordered .prog-box, matching the AI section's treatment. Fixes
+      a real alignment bug: the two columns previously used
+      align-items:start with no shared bottom edge, so the text
+      column's CTA row and the image+"Work Covers" column ended at
+      different heights, especially when a CTA button's label wrapped
+      to two lines.
+    - .prog-grid now uses align-items:stretch, .prog-intro is a flex
+      column at height:100%, and .prog-ctas has margin-top:auto, so
+      the CTA row always sits flush with the bottom of the taller
+      image+covers column regardless of copy length.
+    - Box tint alternates ivory/linen between the four cards (same
+      alternation as before, now carried by the box instead of the
+      bare section background), so they stay individually
+      distinguishable while scrolling.
+  ------------------------------------------------------------
+  WHAT CHANGED IN v28.2 (AI section alignment)
+    - AI for Branding & Business on services.html wrapped in one
+      bordered box (.ai-box) around all 3 columns, instead of the
+      columns floating loose on the section background. Reinforces
+      that this is a distinct, private offer, not a fourth licensed
+      programme.
+    - Image and note box locked to equal height and vertically
+      centred against the copy column, instead of top-aligned with
+      the note box trailing below a shorter image.
+  ------------------------------------------------------------
+  WHAT CHANGED IN v28.1 (same-day fixes)
+    - AI for Branding & Business on services.html rebuilt as a true
+      3-column editorial grid (copy | image | "How It Is Offered"
+      note), replacing the earlier 2-column version.
+    - Homepage tab title corrected to "Arpita Mehta | Presence
+      Consultant, Delhi" (name first, was title-first before).
+    - Nav wordmark (name + title/city next to the logo) reduced in
+      size at every breakpoint. It was overflowing on narrow phone
+      widths where the hamburger nav is active.
+  ------------------------------------------------------------
+  WHAT CHANGED IN v28 (typography and colour system)
+    - Programme cards on services.html rebuilt as a two-column
+      editorial grid (copy+CTAs left, native-ratio image + "The
+      Work Covers" right), replacing the earlier white-space-heavy
+      layout. AI for Branding & Business section structure kept
+      as-is per explicit instruction, only top-aligned.
+    - Full palette and heading font swap: Playfair Display and
+      Jost replaced with Cormorant Garamond (headings) and Inter
+      (body) across all 11 pages, driven by the brand board's
+      colour palette with pre-verified WCAG contrast ratios.
+    - Heading colour corrected from an initial near-black
+      (#171108) to a warm, still-AAA-compliant dark brown
+      (#2A1F14) after review - no jet black anywhere on the site.
+    - All headings, including the homepage hero, unified to a
+      single weight (500) so hierarchy comes from size alone,
+      not from mixing weights between the hero and section
+      headings.
+    - Full automated contrast re-audit after the palette swap
+      found and fixed 3 categories of accent-colour-as-text
+      failures (numerals/labels, footer text, one hardcoded
+      hex) - zero contrast failures across all 11 pages.
+  ------------------------------------------------------------
+  WHAT CHANGED IN v27 (full-site audit)
+    - Responsive nav rebuilt. The hamburger menu now starts at
+    900px instead of 680px, and the wordmark hides between
+    901-1160px. Before this, the primary "Request a Call"
+    button was cut off the right edge of the screen on iPad
+    portrait (768px) and at 1024px, so the main conversion
+    CTA was unreachable on tablets and small laptops.
+  - Footer logo no longer squashes. A global img{max-width:100%}
+    was compressing it against a fixed height, distorting the
+    logo by about 18% at tablet width. Now object-fit:contain.
+  - Copy audit: no em dashes, en dashes or HTML dash entities
+    anywhere in visitor-facing text. No repeated words, double
+    spaces, spacing before punctuation or placeholder text.
+  - Footer and social share text corrected to AI for Branding &
+    Business as the fourth discipline.
+  - Removed dead CSS left over from the deleted "Beyond the
+    Practice", "Four disciplines" grid and "short version" card.
+  - Portrait slot is locked to 4:5 and waiting on the real photo.
+  ------------------------------------------------------------
+  HOUSE RULES for whoever edits this next
+  1. Bump SITE VERSION on every page in the same release, and
+     add the change to /_context/CHANGELOG.md before deploying.
+  2. Never reuse an image filename for new content. Netlify's
+     CDN and browsers cache by filename, so a changed image
+     under an old name can keep serving the stale version.
+     Add -v2, -v3 and update every reference.
+  3. Images live in /images/<page>/ . Keep that structure.
+  4. No em dashes in visitor-facing copy. Use commas or colons.
+  5. Deploy with "Deploy project without cache" on Netlify.
+  ============================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' cdnjs.cloudflare.com assets.calendly.com www.googletagmanager.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com assets.calendly.com; font-src fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://docs.google.com https://api.anthropic.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; frame-src https://calendly.com">
+
+
+<!-- Google Analytics 4: replace G-XXXXXXXXXX with your Measurement ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-XXXXXXXXXX', { anonymize_ip: true });
+window.amTrack = function(name, params){ try{ gtag('event', name, params || {}); }catch(e){} };
+</script>
+
+<title>About Arpita Mehta | Presence Consultant Delhi</title>
+<meta name="description" content="Arpita Mehta spent over ten years in marketing studying why some people are believed and others overlooked. Now she closes that gap for her clients in Delhi.">
+<link rel="canonical" href="https://arpitamehta.co/about.html">
+
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://arpitamehta.co/about.html">
+<meta property="og:title" content="About Arpita Mehta | Presence Consultant Delhi">
+<meta property="og:description" content="The thing nobody teaches you is how to walk into a room and be believed. The story behind one of the few practices in India that integrates image, presence, social culture and AI.">
+<meta property="og:image" content="https://arpitamehta.co/images/shared/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="About Arpita Mehta | Presence Consultant Delhi">
+<meta name="twitter:description" content="The story behind one of the few practices in India that integrates image, executive presence, social culture and AI for branding and business.">
+<meta name="twitter:image" content="https://arpitamehta.co/images/shared/logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "AboutPage",
+      "@id": "https://arpitamehta.co/about.html",
+      "url": "https://arpitamehta.co/about.html",
+      "name": "About Arpita Mehta, Presence Consultant, Delhi",
+      "mainEntity": { "@id": "https://arpitamehta.co/#person" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://arpitamehta.co/#person",
+      "name": "Arpita Mehta",
+      "jobTitle": "Presence Consultant",
+      "url": "https://arpitamehta.co/about.html",
+      "email": "presence.arpitamehta@gmail.com",
+      "address": { "@type": "PostalAddress", "addressLocality": "Delhi", "addressCountry": "IN" },
+      "sameAs": ["https://www.linkedin.com/in/arpitamehta279"],
+      "hasCredential": [
+        { "@type": "EducationalOccupationalCredential", "name": "WSET Level 1 Award in Wines" },
+        { "@type": "EducationalOccupationalCredential", "name": "Engineering degree" }
+      ],
+      "knowsAbout": ["Image consulting", "Executive presence", "Social etiquette", "Wine and dining culture", "Personal branding", "Consumer behaviour", "Soft skills training", "AI for branding and business"]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://arpitamehta.co/" },
+        { "@type": "ListItem", "position": 2, "name": "About", "item": "https://arpitamehta.co/about.html" }
+      ]
+    }
+  ]
+}
+</script>
+
+<style>
+:root{
+  /* Arpita Mehta brand palette. Contrast verified on both surfaces.
+     Decorative tones (--gold, --parchment, --border) must never carry body text. */
+  --linen:#F8F4EE;      /* Warm Ivory Beige, page background            */
+  --ivory:#FBF7F3;      /* Soft Cream, surfaces and panels              */
+  --parchment:#DED4CA;  /* Blush Beige, light rules                     */
+  --border:#DED4CA;     /* Blush Beige, borders and rules               */
+  --panel:#C2B5A8;      /* Warm Taupe, panels and dividers, decorative  */
+  --ink:#2A1F14;        /* Deep Brown, headings            14.7:1 on bg   */
+  --taupe:#3D2F1D;      /* Espresso, body text           11.8:1 on bg   */
+  --taupe-lt:#6B5D50;   /* Secondary text, small labels   5.8:1 on bg   */
+  --brown:#9C5A4C;      /* Warm Cognac, accents and links 4.7:1 on bg   */
+  --rose:#9C5A4C;       /* Warm Cognac, primary button    5.2:1 white   */
+  --rose-d:#7F493E;     /* Cognac hover                   6.5:1 white   */
+  --gold:#AE957E;       /* Muted Rose-Taupe, decorative only            */
+  --white:#FFFFFF;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--linen); color:var(--ink);
+  font-family:'DM Sans',sans-serif; font-weight:400; font-size:1.05rem;
+  line-height:1.7; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+@view-transition{navigation:auto}
+::view-transition-old(root),::view-transition-new(root){animation-duration:200ms}
+h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.18;color:var(--ink)}
+h1 em,h2 em,h3 em{font-style:italic;color:var(--brown)}
+img{max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+.eyebrow{
+  font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--taupe-lt);font-weight:400;
+  display:flex;align-items:center;gap:14px;margin-bottom:18px;
+}
+.eyebrow::before{content:"";width:34px;height:1px;background:var(--gold)}
+section{padding:96px 0}
+
+#cursor{
+  position:fixed;top:0;left:0;width:12px;height:12px;border-radius:50%;
+  background:var(--gold);pointer-events:none;z-index:9999;opacity:0;
+  transform:translate(-50%,-50%);mix-blend-mode:multiply;
+  transition:width .25s,height .25s,opacity .3s;
+}
+@media (pointer:coarse){#cursor{display:none}}
+
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:14px 0;background:rgba(247,242,235,.96);border-bottom:1px solid var(--border);
+  transition:transform .3s;backdrop-filter:blur(8px);
+}
+nav.hidden{transform:translateY(-100%)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:18px}
+.nav-logo{display:flex;align-items:center;gap:13px}
+.nav-logo img{height:56px;width:auto;display:block}
+.nav-wordmark{display:flex;flex-direction:column;line-height:1.3}
+.nav-wordmark .nm{font-family:'Cormorant Garamond',serif;font-size:1.12rem;font-weight:500;color:var(--ink);white-space:nowrap}
+.nav-wordmark .ti{font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--taupe-lt);white-space:nowrap}
+@media(max-width:680px){
+  .nav-logo img{height:44px}
+  .nav-wordmark .nm{font-size:.96rem}
+  .nav-wordmark .ti{font-size:.46rem;letter-spacing:.08em}
+}
+@media(max-width:360px){.nav-wordmark .ti{display:none}}
+.nav-links{display:flex;align-items:center;gap:26px;list-style:none;white-space:nowrap}
+.nav-links a{font-size:1rem;font-weight:400;letter-spacing:.04em;color:var(--taupe);transition:color .2s;white-space:nowrap}
+.nav-links a:hover{color:var(--brown)}
+.menu-btn{display:none;background:none;border:none;cursor:pointer;padding:6px}
+@media(max-width:1160px) and (min-width:901px){.nav-wordmark{display:none}.nav-links{gap:20px}}
+.menu-btn span{display:block;width:24px;height:1.5px;background:var(--ink);margin:6px 0;transition:transform .3s,opacity .3s}
+@media(max-width:900px){
+  .nav-links{
+    position:fixed;inset:0;background:var(--linen);flex-direction:column;
+    justify-content:center;gap:26px;transform:translateX(100%);transition:transform .35s;
+  }
+  .nav-links.open{transform:none}
+  .nav-links a{font-size:1.1rem}
+  .menu-btn{display:block;z-index:1001}
+  .menu-btn.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+  .menu-btn.open span:nth-child(2){opacity:0}
+  .menu-btn.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+}
+
+.cta{
+  display:inline-block;background:var(--rose);color:var(--white);
+  font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:400;
+  letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--rose);
+  padding:16px 34px;cursor:pointer;transition:background .25s,border-color .25s;
+}
+.cta:hover{background:var(--rose-d);border-color:var(--rose-d)}
+.cta.ghost{background:transparent;color:var(--brown);border-color:var(--border)}
+.cta.ghost:hover{background:var(--ivory);color:var(--brown)}
+.nav-cta{padding:12px 22px;font-size:.8rem;white-space:nowrap}
+
+/* page hero */
+.page-hero{padding:200px 0 80px}
+.page-hero h1{font-size:clamp(2.2rem,4.8vw,3.6rem);max-width:880px}
+.page-hero .lede{max-width:620px;margin-top:26px;font-size:1.12rem;color:var(--taupe)}
+
+/* story */
+.story{padding-top:0}
+.story-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:72px;align-items:start}
+.story-side{position:sticky;top:120px}
+.story-copy p{color:var(--taupe);margin-bottom:22px;max-width:62ch}
+.story-copy p:first-of-type::first-letter{
+  font-family:'Cormorant Garamond',serif;font-size:3.4em;float:left;
+  line-height:.85;padding:6px 12px 0 0;color:var(--brown);
+}
+.pullquote{
+  border-left:2px solid var(--gold);padding:8px 0 8px 28px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.35rem;
+  color:var(--brown);line-height:1.5;margin:34px 0;
+}
+.story-side{position:sticky;top:120px}
+.monogram{
+  width:150px;height:150px;border:1px solid var(--gold);border-radius:50%;
+  display:none;align-items:center;justify-content:center;margin:0 auto 30px;
+  font-family:'Cormorant Garamond',serif;font-size:3.2rem;color:var(--brown);
+}
+.portrait{
+  display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;margin:0 0 30px;
+  border:1px solid var(--border);
+}
+
+/* foundations */
+.foundations{background:var(--ivory);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.sec-head{max-width:680px;margin-bottom:56px}
+.sec-head h2{font-size:clamp(1.9rem,3.6vw,2.7rem)}
+.beyond-card .n{font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--taupe-lt);margin-bottom:14px}
+
+/* how she works */
+.engage-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.engage{background:var(--ivory);border:1px solid var(--border);padding:40px 34px}
+.engage .n{font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;color:var(--taupe-lt);margin-bottom:16px}
+.engage h3{font-size:1.3rem;margin-bottom:12px}
+.engage p{font-size:.94rem;color:var(--taupe)}
+.engage .price{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--brown);margin-top:18px}
+
+/* pq band */
+.pq-band{text-align:center}
+.pq-band h2{font-size:clamp(2rem,4vw,3rem);max-width:760px;margin:0 auto 20px}
+.pq-band p{max-width:560px;margin:0 auto 36px;color:var(--taupe)}
+
+footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
+.foot-quote{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(1.4rem,2.8vw,2rem);max-width:760px;margin-bottom:64px;
+  color:var(--ivory);line-height:1.5;cursor:default;
+}
+.foot-quote .w{transition:color .4s ease}
+.foot-quote:hover .w{color:var(--gold)}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;margin-bottom:64px}
+.foot-grid h4{font-family:'DM Sans',sans-serif;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--panel);margin-bottom:20px;font-weight:400}
+.foot-grid ul{list-style:none}
+.foot-grid li{margin-bottom:12px}
+.foot-grid a{font-size:.92rem;color:var(--parchment);transition:color .2s}
+.foot-grid a:hover{color:var(--gold)}
+.foot-brand p{font-size:.92rem;color:var(--panel);max-width:300px;margin-top:16px}
+.foot-base{border-top:1px solid rgba(212,196,174,.18);padding-top:28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.78rem;color:var(--panel)}
+
+.panel-overlay{position:fixed;inset:0;background:rgba(44,32,24,.45);opacity:0;pointer-events:none;transition:opacity .35s;z-index:1500}
+.panel-overlay.open{opacity:1;pointer-events:auto}
+.panel{
+  position:fixed;top:0;right:0;bottom:0;width:min(520px,100%);
+  background:var(--linen);z-index:1600;transform:translateX(100%);
+  transition:transform .45s cubic-bezier(.22,.8,.3,1);
+  display:flex;flex-direction:column;border-left:1px solid var(--border);
+}
+.panel.open{transform:translateX(0)}
+.panel-head{display:flex;align-items:center;justify-content:space-between;padding:22px 28px;border-bottom:1px solid var(--border)}
+.panel-head .t{font-family:'Cormorant Garamond',serif;font-size:1.2rem}
+.panel-close{background:none;border:none;font-size:1.6rem;color:var(--taupe);cursor:pointer;line-height:1;padding:4px 8px}
+.panel-opts{padding:24px 22px;display:flex;flex-direction:column;gap:16px;overflow-y:auto}
+.p-opt{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+  padding:22px 22px;background:var(--ivory);border:1px solid var(--border);
+}
+.p-opt .d-title{font-family:'Cormorant Garamond',serif;font-size:1.08rem;color:var(--ink)}
+.p-opt .d-sub{font-size:.8rem;color:var(--taupe-lt);margin-top:3px}
+.p-right{text-align:right;flex-shrink:0}
+.d-price{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--brown);margin-bottom:10px}
+.d-cta{padding:11px 20px;font-size:.68rem}
+.panel-note{font-size:.86rem;color:var(--taupe);padding:6px 4px;line-height:1.7}
+
+.rv{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:980px){
+  .story-grid{grid-template-columns:1fr}
+  .story-side{position:static}
+  .found-grid{grid-template-columns:1fr 1fr}
+  .beyond-grid{grid-template-columns:1fr}
+  .engage-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:680px){
+  section{padding:68px 0}
+  .page-hero{padding:160px 0 56px}
+  .nav-links{
+    position:fixed;inset:0;background:var(--linen);flex-direction:column;
+    justify-content:center;gap:26px;transform:translateX(100%);transition:transform .35s;
+  }
+  .nav-links.open{transform:none}
+  .nav-links a{font-size:1.1rem}
+  .menu-btn{display:block;z-index:1001}
+  .menu-btn.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+  .menu-btn.open span:nth-child(2){opacity:0}
+  .menu-btn.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+  .found-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}
+  .rv{opacity:1 !important;transform:none !important}
+  #cursor{display:none !important}
+}
+.lead-overlay{position:fixed;inset:0;background:rgba(44,32,24,.5);opacity:0;pointer-events:none;transition:opacity .3s;z-index:1800;display:flex;align-items:center;justify-content:center;padding:20px}
+.lead-overlay.open{opacity:1;pointer-events:auto}
+.lead-modal{
+  background:var(--linen);border:1px solid var(--border);max-width:420px;width:100%;
+  padding:40px 36px;transform:translateY(20px);transition:transform .35s;
+  max-height:90vh;overflow-y:auto;
+}
+.lead-overlay.open .lead-modal{transform:translateY(0)}
+.lead-modal h3{font-size:1.3rem;margin-bottom:8px}
+.lead-modal .sub{font-size:.9rem;color:var(--taupe);margin-bottom:24px}
+.lead-modal label{display:block;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--taupe-lt);margin-bottom:6px;margin-top:16px}
+.lead-modal input,.lead-modal select,.lead-modal textarea{
+  width:100%;padding:12px 14px;border:1px solid var(--border);background:var(--white);
+  font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--ink);font-weight:400;
+}
+.lead-modal select{appearance:none;cursor:pointer}
+.lead-modal textarea{resize:vertical;min-height:90px;font-size:.92rem}
+.lead-modal input:focus,.lead-modal select:focus,.lead-modal textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
+.lead-modal .submit-row{display:flex;gap:12px;align-items:center;margin-top:26px}
+.lead-modal .cta{padding:13px 28px;font-size:.74rem}
+.lead-close{background:none;border:none;font-size:1.5rem;color:var(--taupe);cursor:pointer;line-height:1;float:right;padding:0 4px}
+.lead-success{display:none;text-align:center;padding:10px 0}
+.lead-success.show{display:block}
+.lead-success .seal{margin:0 auto 16px}
+.lead-success h3{margin-bottom:10px}
+.lead-success p{font-size:.92rem;color:var(--taupe)}
+</style>
+</head>
+<body>
+
+<div id="cursor" aria-hidden="true"></div>
+
+<nav id="nav">
+  <div class="wrap nav-inner">
+    <a class="nav-logo" href="index.html">
+      <img src="images/shared/monogram.png" height="44" alt="Arpita Mehta monogram" fetchpriority="high" style="width:auto;display:block"/>
+      <span class="nav-wordmark"><span class="nm">Arpita Mehta</span><span class="ti">Presence Consultant, Delhi</span></span>
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Programmes</a></li>
+      <li><a href="assessment.html">The Presence Quotient</a></li>
+      <li><a href="blog/index.html">Journal</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><button class="cta nav-cta" data-calendly>Request a Call</button></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ PAGE HERO ============ -->
+<header class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">The Consultant</p>
+    <h1>The thing nobody teaches you is how to walk into a room and <em>be believed.</em></h1>
+    <p class="lede">Arpita Mehta, presence consultant, Delhi. This is the story of why that sentence became a practice.</p>
+  </div>
+</header>
+
+<!-- ============ STORY ============ -->
+<section class="story">
+  <div class="wrap story-grid">
+    <div class="story-copy rv">
+      <p>Arpita Mehta noticed it early. Two people with identical credentials, identical preparation. One got the deal, the promotion, the room. The other did not. And the difference was never the work. It was always the presence.</p>
+      <p>She spent over ten years in marketing studying exactly that gap: why some people feel premium and others do not, why some brands command loyalty at a price point and others cannot give it away, why the same idea lands differently depending on who delivers it. At some point she stopped applying those insights to brands and started applying them to people.</p>
+      <p>Now she works with founders, executives, brides, homemakers, and early-career professionals. What they share is not a problem. It is a gap between who they are and how the world currently sees them. Arpita closes it.</p>
+      <blockquote class="pullquote">"The most powerful thing you can learn is how to walk into any room and be unforgettable, for the right reasons."</blockquote>
+      <p>Her practice covers image, executive presence, social culture, and AI for branding and business. It is one of the few in the country that genuinely integrates all of it, because she has not just studied these things, she has lived them. She holds a WSET Level 1 in wines, trained as an engineer, and came up through marketing where her entire job was understanding why people choose what they choose. Her clients arrive accomplished. They leave unforgettable.</p>
+    </div>
+    <aside class="story-side rv">
+      <img src="images/about/portrait.jpg" width="1200" height="1500" alt="Arpita Mehta, presence consultant, Delhi" class="portrait" loading="lazy"
+           onerror="this.style.display='none';document.getElementById('mono').style.display='flex'">
+      <img src="images/shared/monogram.png" id="mono" alt="Arpita Mehta" style="display:none;width:260px;height:260px;border-radius:50%;object-fit:cover">
+    </aside>
+  </div>
+</section>
+
+<!-- ============ FOUNDATIONS (condensed — full breakdown lives on Programmes) ============ -->
+<section class="foundations" style="padding:56px 0">
+  <div class="wrap">
+    <p class="rv" style="max-width:760px;color:var(--taupe);font-size:1.08rem">Her practice rests on four disciplines: image, executive presence, social culture and AI for branding and business, because the rooms you walk into test all four at once, not one at a time.</p>
+  </div>
+</section>
+
+<!-- ============ HOW TO BEGIN ============ -->
+<section>
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="eyebrow">How to Begin</p>
+      <h2>Three doors. <em>All of them open.</em></h2>
+    </div>
+    <div class="engage-grid rv">
+      <div class="engage">
+        <p class="n">Online, From Anywhere</p>
+        <h3>The Discovery Call</h3>
+        <p>Fifteen minutes, online. A conversation about where you are, where you intend to be, and whether the practice is the right bridge between the two.</p>
+        <p class="price">&#8377;339</p>
+        <button class="cta ghost" data-calendly style="margin-top:18px">Reserve the Call</button>
+      </div>
+      <div class="engage">
+        <p class="n">In Person, Delhi</p>
+        <h3>The In Person Session</h3>
+        <p>Thirty minutes with Arpita, face to face in Delhi. The fastest way to be read honestly, and to know exactly where the work begins.</p>
+        <p class="price">&#8377;4,499</p>
+        <button class="cta" data-calendly style="margin-top:18px">Reserve the Session</button>
+      </div>
+      <div class="engage">
+        <p class="n">Self Guided</p>
+        <h3>The Presence Quotient</h3>
+        <p>Sixteen questions, a score out of one hundred, and a private four page scorecard naming exactly where Arpita would begin with you.</p>
+        <a class="cta ghost" href="assessment.html" style="margin-top:22px">Take the Assessment</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PQ BAND ============ -->
+<section class="pq-band" style="padding-top:0">
+  <div class="wrap rv">
+    <p class="eyebrow" style="justify-content:center">Before You Go</p>
+    <h2>You have read her story. <em>Now read your own.</em></h2>
+    <p>The Presence Quotient measures the four dimensions her practice is built on, and tells you which one is quietly costing you rooms.</p>
+    <a class="cta" href="assessment.html">Take the Presence Quotient</a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <p class="foot-quote" id="footQuote">The most powerful thing you can learn is how to walk into any room and be unforgettable, for the right reasons.</p>
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="images/shared/logo.png" alt="Arpita Mehta, Presence Consultant, Delhi" style="height:46px;width:auto;max-width:100%;object-fit:contain;object-position:left center;filter:brightness(0) invert(.92)" loading="lazy">
+        <p>Image, executive presence, social culture and AI for branding and business. One private practice in Delhi. In person across Delhi NCR, and across India and worldwide on request.</p>
+      </div>
+      <div>
+        <h4>Practice</h4>
+        <ul>
+          <li><a href="about.html">About Arpita</a></li>
+          <li><a href="services.html">Programmes</a></li>
+          <li><a href="assessment.html">The Presence Quotient</a></li>
+          <li><a href="resources.html">Free Guide</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Journal</h4>
+        <ul>
+          <li><a href="blog/executive-presence-guide.html">Executive Presence</a></li>
+          <li><a href="blog/image-confidence-guide.html">Image and Confidence</a></li>
+          <li><a href="blog/campus-to-corporate.html">Campus to Corporate</a></li>
+          <li><a href="blog/wine-etiquette-india.html">Wine Etiquette</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><button class="cta-link" data-enquiry="General Enquiry" style="background:none;border:none;padding:0;font-size:.92rem;color:var(--parchment);cursor:pointer;font-family:'DM Sans',sans-serif;text-align:left">Send an Enquiry</button></li>
+          <li><a href="mailto:presence.arpitamehta@gmail.com">presence.arpitamehta@gmail.com</a></li>
+          <li><a href="https://www.linkedin.com/in/arpitamehta279" rel="noopener" target="_blank">LinkedIn</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>&copy; <span id="yr">2026</span> Arpita Mehta. All rights reserved. The Presence Quotient, programme frameworks and all materials on this site are proprietary intellectual property.</span>
+      <span>Presence Consultant, Delhi</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ BOOKING PANEL ============ -->
+<!-- ============ GENERAL ENQUIRY MODAL ============ -->
+<div class="lead-overlay" id="enquiryOverlay">
+  <div class="lead-modal">
+    <button class="lead-close" id="enquiryClose" aria-label="Close">&times;</button>
+    <div id="enquiryFormWrap">
+      <h3>Send an Enquiry</h3>
+      <p class="sub">Tell Arpita what you're interested in. This goes directly to her, and you'll hear back by email.</p>
+      <form id="enquiryForm">
+        <label for="enq-name">Name</label>
+        <input type="text" id="enq-name" name="name" required autocomplete="name">
+        <label for="enq-email">Email</label>
+        <input type="email" id="enq-email" name="email" required autocomplete="email">
+        <label for="enq-phone">Phone</label>
+        <input type="tel" id="enq-phone" name="phone" required autocomplete="tel">
+        <label for="enq-type">What's this about?</label>
+        <select id="enq-type" name="type">
+          <option>General Enquiry</option>
+          <option>The Presence Edit (Cohort)</option>
+          <option>The Executive Edge (Cohort)</option>
+          <option>The Social Table (Cohort)</option>
+          <option>The Debut (Cohort)</option>
+          <option>One to One Presence Consulting</option>
+          <option>Soft Skills & Corporate Training</option>
+          <option>AI for Branding & Business</option>
+          <option>Corporate Group Training</option>
+        </select>
+        <label for="enq-message">Your message (optional)</label>
+        <textarea id="enq-message" name="message" placeholder="Anything you'd like Arpita to know before replying."></textarea>
+        <div class="submit-row">
+          <button type="submit" class="cta">Send Enquiry</button>
+        </div>
+      </form>
+    </div>
+    <div class="lead-success" id="enquirySuccess">
+      <img src="images/shared/monogram.png" alt="Arpita Mehta" style="width:60px;height:60px;display:block;border-radius:50%">
+      <h3>Thank you</h3>
+      <p>Your enquiry has been sent. Arpita typically replies within one to two working days.</p>
+    </div>
+  </div>
+</div>
+
+<div class="panel-overlay" id="panelOverlay"></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-label="Book a call with Arpita">
+  <div class="panel-head">
+    <span class="t">Begin Here</span>
+    <button class="panel-close" id="panelClose" aria-label="Close booking panel">&times;</button>
+  </div>
+  <div class="panel-opts">
+    <div class="p-opt">
+      <div>
+        <p class="d-title">The Discovery Call</p>
+        <p class="d-sub">Fifteen minutes, online, from anywhere in the world.</p>
+      </div>
+      <div class="p-right">
+        <p class="d-price">&#8377;339</p>
+        <button class="cta d-cta" data-pay="discovery">Reserve</button>
+      </div>
+    </div>
+    <div class="p-opt">
+      <div>
+        <p class="d-title">The In Person Session</p>
+        <p class="d-sub">Thirty minutes with Arpita, face to face in Delhi.</p>
+      </div>
+      <div class="p-right">
+        <p class="d-price">&#8377;4,499</p>
+        <button class="cta d-cta" data-pay="inperson">Reserve</button>
+      </div>
+    </div>
+    <p class="panel-note">Payment confirms your booking, and you choose your slot on the very next screen. Joining from outside Delhi, or outside India? Begin with the discovery call. Every engagement is designed around where you are.</p>
+  </div>
+</aside>
+
+<script>
+(function(){
+"use strict";
+var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+document.getElementById("yr").textContent = new Date().getFullYear();
+
+/* sticky nav: hide on fast scroll down, reappear on scroll up */
+var nav = document.getElementById("nav"), lastY = 0;
+window.addEventListener("scroll", function(){
+  var y = window.scrollY;
+  if (y > lastY + 14 && y > 220) nav.classList.add("hidden");
+  else if (y < lastY) nav.classList.remove("hidden");
+  lastY = y;
+}, {passive:true});
+
+/* mobile menu */
+var menuBtn = document.getElementById("menuBtn"), navLinks = document.getElementById("navLinks");
+menuBtn.addEventListener("click", function(){
+  var open = navLinks.classList.toggle("open");
+  menuBtn.classList.toggle("open", open);
+  menuBtn.setAttribute("aria-expanded", open);
+});
+navLinks.addEventListener("click", function(e){
+  if (e.target.tagName === "A" || e.target.tagName === "BUTTON"){
+    navLinks.classList.remove("open"); menuBtn.classList.remove("open");
+  }
+});
+
+/* reveals */
+var revObs = new IntersectionObserver(function(entries){
+  entries.forEach(function(en){
+    if (en.isIntersecting){ en.target.classList.add("in"); revObs.unobserve(en.target); }
+  });
+}, {threshold: 0.15});
+document.querySelectorAll(".rv").forEach(function(el){ revObs.observe(el); });
+
+/* magnetic cursor */
+if (!reduced && window.matchMedia("(pointer: fine)").matches){
+  var cur = document.getElementById("cursor"), mx = 0, my = 0, cx = 0, cy = 0;
+  document.addEventListener("mousemove", function(e){
+    mx = e.clientX; my = e.clientY; cur.style.opacity = 1;
+    var t = e.target.closest(".cta");
+    if (t){
+      var r = t.getBoundingClientRect();
+      mx += (r.left + r.width / 2 - mx) * 0.25;
+      my += (r.top + r.height / 2 - my) * 0.25;
+      cur.style.width = "26px"; cur.style.height = "26px";
+    } else { cur.style.width = "12px"; cur.style.height = "12px"; }
+  });
+  document.addEventListener("mouseleave", function(){ cur.style.opacity = 0; });
+  (function lerp(){
+    cx += (mx - cx) * 0.18; cy += (my - cy) * 0.18;
+    cur.style.left = cx + "px"; cur.style.top = cy + "px";
+    requestAnimationFrame(lerp);
+  })();
+}
+
+/* footer quote gold wave */
+var fq = document.getElementById("footQuote");
+var fw = fq.textContent.trim().split(/\s+/);
+fq.textContent = "";
+fw.forEach(function(w, i){
+  var s = document.createElement("span");
+  s.className = "w";
+  s.style.transitionDelay = (i * 40) + "ms";
+  s.textContent = w;
+  fq.appendChild(s);
+  fq.appendChild(document.createTextNode(" "));
+});
+
+/* booking panel */
+var panel = document.getElementById("panel"),
+    overlay = document.getElementById("panelOverlay");
+var PAY_LINKS = {
+  discovery: "YOUR_RAZORPAY_DISCOVERY_LINK",
+  inperson:  "YOUR_RAZORPAY_INPERSON_LINK"
+};
+function openPanel(){
+  panel.classList.add("open");
+  overlay.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closePanel(){
+  panel.classList.remove("open");
+  overlay.classList.remove("open");
+  document.body.style.overflow = "";
+}
+document.querySelectorAll("[data-calendly]").forEach(function(b){ b.addEventListener("click", function(){ if(window.amTrack) amTrack("booking_panel_open", {page: location.pathname}); openPanel(); }); });
+document.querySelectorAll("[data-pay]").forEach(function(b){
+  b.addEventListener("click", function(){ if(window.amTrack) amTrack("payment_click", {option: b.dataset.pay}); window.open(PAY_LINKS[b.dataset.pay], "_blank", "noopener"); });
+});
+document.getElementById("panelClose").addEventListener("click", closePanel);
+overlay.addEventListener("click", closePanel);
+document.addEventListener("keydown", function(e){ if (e.key === "Escape") closePanel(); }); document.addEventListener("keydown", function(e){ if (e.key==="Escape") closeEnquiry(); });
+/* ============ GENERAL ENQUIRY MODAL ============ */
+var ENQUIRY_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSfi0a-qHiSgcVllmtYjZdPEyxvdo2I2Ydisp46C-QvYeO273w/formResponse";
+var ENQUIRY_MESSAGE_ENTRY = "YOUR_ENQUIRY_MESSAGE_ENTRY_ID";
+var ENQUIRY_SOURCE_ENTRY = "YOUR_ENQUIRY_SOURCE_ENTRY_ID";
+var enquiryOverlay = document.getElementById("enquiryOverlay"),
+    enquiryFormWrap = document.getElementById("enquiryFormWrap"),
+    enquirySuccess = document.getElementById("enquirySuccess"),
+    enquiryForm = document.getElementById("enquiryForm"),
+    enquiryType = document.getElementById("enq-type");
+
+function openEnquiry(type){
+  if (type) enquiryType.value = type;
+  enquiryFormWrap.style.display = "";
+  enquirySuccess.classList.remove("show");
+  enquiryForm.reset();
+  if (type) enquiryType.value = type;
+  enquiryOverlay.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closeEnquiry(){
+  enquiryOverlay.classList.remove("open");
+  document.body.style.overflow = "";
+}
+document.querySelectorAll("[data-enquiry]").forEach(function(b){
+  b.addEventListener("click", function(){ openEnquiry(b.dataset.enquiry); });
+});
+document.getElementById("enquiryClose").addEventListener("click", closeEnquiry);
+enquiryOverlay.addEventListener("click", function(e){ if (e.target === enquiryOverlay) closeEnquiry(); });
+
+enquiryForm.addEventListener("submit", function(e){
+  e.preventDefault();
+  var name = document.getElementById("enq-name").value;
+  var email = document.getElementById("enq-email").value;
+  var phone = document.getElementById("enq-phone").value;
+  var type = enquiryType.value;
+  var message = document.getElementById("enq-message").value;
+
+  var body = new URLSearchParams();
+  body.append("entry.479034743", name);
+  body.append("entry.548561860", email);
+  body.append("entry.1982097609", phone);
+  body.append("entry.680222901", "Enquiry: " + type);
+  body.append(ENQUIRY_SOURCE_ENTRY, location.pathname + (document.title ? " (" + document.title.split("|")[0].trim() + ")" : ""));
+  if (message) body.append(ENQUIRY_MESSAGE_ENTRY, message);
+
+  fetch(ENQUIRY_FORM_ACTION, { method:"POST", mode:"no-cors",
+    headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: body.toString()
+  }).catch(function(){});
+
+  if (window.amTrack) amTrack("generate_lead", {source:"enquiry", type: type, page: location.pathname});
+
+  enquiryFormWrap.style.display = "none";
+  enquirySuccess.classList.add("show");
+});
+
+})();
+</script>
+</body>
+</html>

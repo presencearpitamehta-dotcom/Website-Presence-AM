@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  arpitamehta.co  |  SITE VERSION 29  |  2026-08-10
+  ============================================================
+  THE PRESENCE QUOTIENT. 16-question self assessment, scores
+  four dimensions: Image, Executive Presence, Social Culture,
+  Distinction. Note: this tool's 4th dimension is Distinction,
+  which is deliberately NOT the same as the 4th practice
+  pillar (AI for Branding & Business). Do not "align" them.
+
+  This is a full-site release. Every page in this deploy is
+  stamped SITE VERSION 29 so the folder can be identified at a
+  glance after it is uploaded to Netlify. Per-page history that
+  predates v27 lives in /_context/CHANGELOG.md, not here.
+
+  WHAT CHANGED IN v29 (accent colour + body font locked in)
+    - Accent colour changed from Warm Cognac (#A05B3E) to Deep Rose
+      (#9C5A4C) across all 11 pages: --brown, --rose, --rose-d (hover,
+      now #7F493E) in every :root block, plus 6 hardcoded instances in
+      assessment.html's Presence Quotient PDF export that a CSS
+      variable sweep alone would have missed.
+    - Body font changed from Inter to DM Sans across all 11 pages:
+      Google Fonts link and every 'Inter' font-family reference
+      swapped. Cormorant Garamond (headings, weight 500) is unchanged.
+    - Full automated contrast re-audit after both changes (walks every
+      visible text node, resolves effective background through the
+      ancestor chain, computes WCAG contrast against the correct
+      threshold for its font size/weight): zero failures across all
+      11 pages.
+  ------------------------------------------------------------
+  WHAT CHANGED IN v28.4 (formats line + robustness fix)
+    - The "formats" line (licensed cohort / one to one / online) was
+      different lengths on all 4 programmes (Social Table had an extra
+      sentence, The Debut was phrased differently), so each box ended
+      up a different height even though internal alignment was fixed
+      in v28.3. All 4 formats lines are now byte-identical; the extra
+      details (brides and couples chapter, campus workshops) moved
+      into each programme's own body copy instead.
+    - .covers now carries flex:1 with centered content instead of a
+      fixed height, so if a copy column is ever taller than the image
+      (longer paragraphs, wrapped CTAs), the covers panel absorbs the
+      extra height and stays flush with the bottom of the box, rather
+      than leaving a dead gap. Verified: all 4 boxes internally align
+      correctly even when total box height still varies slightly
+      between cards due to natural copy-length differences.
+  ------------------------------------------------------------
+  WHAT CHANGED IN v28.3 (all four programme cards boxed)
+    - All four programme cards on services.html wrapped in their own
+      bordered .prog-box, matching the AI section's treatment. Fixes
+      a real alignment bug: the two columns previously used
+      align-items:start with no shared bottom edge, so the text
+      column's CTA row and the image+"Work Covers" column ended at
+      different heights, especially when a CTA button's label wrapped
+      to two lines.
+    - .prog-grid now uses align-items:stretch, .prog-intro is a flex
+      column at height:100%, and .prog-ctas has margin-top:auto, so
+      the CTA row always sits flush with the bottom of the taller
+      image+covers column regardless of copy length.
+    - Box tint alternates ivory/linen between the four cards (same
+      alternation as before, now carried by the box instead of the
+      bare section background), so they stay individually
+      distinguishable while scrolling.
+  ------------------------------------------------------------
+  WHAT CHANGED IN v28.2 (AI section alignment)
+    - AI for Branding & Business on services.html wrapped in one
+      bordered box (.ai-box) around all 3 columns, instead of the
+      columns floating loose on the section background. Reinforces
+      that this is a distinct, private offer, not a fourth licensed
+      programme.
+    - Image and note box locked to equal height and vertically
+      centred against the copy column, instead of top-aligned with
+      the note box trailing below a shorter image.
+  ------------------------------------------------------------
+  WHAT CHANGED IN v28.1 (same-day fixes)
+    - AI for Branding & Business on services.html rebuilt as a true
+      3-column editorial grid (copy | image | "How It Is Offered"
+      note), replacing the earlier 2-column version.
+    - Homepage tab title corrected to "Arpita Mehta | Presence
+      Consultant, Delhi" (name first, was title-first before).
+    - Nav wordmark (name + title/city next to the logo) reduced in
+      size at every breakpoint. It was overflowing on narrow phone
+      widths where the hamburger nav is active.
+  ------------------------------------------------------------
+  WHAT CHANGED IN v28 (typography and colour system)
+    - Programme cards on services.html rebuilt as a two-column
+      editorial grid (copy+CTAs left, native-ratio image + "The
+      Work Covers" right), replacing the earlier white-space-heavy
+      layout. AI for Branding & Business section structure kept
+      as-is per explicit instruction, only top-aligned.
+    - Full palette and heading font swap: Playfair Display and
+      Jost replaced with Cormorant Garamond (headings) and Inter
+      (body) across all 11 pages, driven by the brand board's
+      colour palette with pre-verified WCAG contrast ratios.
+    - Heading colour corrected from an initial near-black
+      (#171108) to a warm, still-AAA-compliant dark brown
+      (#2A1F14) after review - no jet black anywhere on the site.
+    - All headings, including the homepage hero, unified to a
+      single weight (500) so hierarchy comes from size alone,
+      not from mixing weights between the hero and section
+      headings.
+    - Full automated contrast re-audit after the palette swap
+      found and fixed 3 categories of accent-colour-as-text
+      failures (numerals/labels, footer text, one hardcoded
+      hex) - zero contrast failures across all 11 pages.
+  ------------------------------------------------------------
+  WHAT CHANGED IN v27 (full-site audit)
+    - Responsive nav rebuilt. The hamburger menu now starts at
+    900px instead of 680px, and the wordmark hides between
+    901-1160px. Before this, the primary "Request a Call"
+    button was cut off the right edge of the screen on iPad
+    portrait (768px) and at 1024px, so the main conversion
+    CTA was unreachable on tablets and small laptops.
+  - Footer logo no longer squashes. A global img{max-width:100%}
+    was compressing it against a fixed height, distorting the
+    logo by about 18% at tablet width. Now object-fit:contain.
+  - Copy audit: no em dashes, en dashes or HTML dash entities
+    anywhere in visitor-facing text. No repeated words, double
+    spaces, spacing before punctuation or placeholder text.
+  - Footer corrected to AI for Branding & Business. The
+    assessment's own four dimensions are unchanged.
+  ------------------------------------------------------------
+  HOUSE RULES for whoever edits this next
+  1. Bump SITE VERSION on every page in the same release, and
+     add the change to /_context/CHANGELOG.md before deploying.
+  2. Never reuse an image filename for new content. Netlify's
+     CDN and browsers cache by filename, so a changed image
+     under an old name can keep serving the stale version.
+     Add -v2, -v3 and update every reference.
+  3. Images live in /images/<page>/ . Keep that structure.
+  4. No em dashes in visitor-facing copy. Use commas or colons.
+  5. Deploy with "Deploy project without cache" on Netlify.
+  ============================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' cdnjs.cloudflare.com assets.calendly.com www.googletagmanager.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com assets.calendly.com; font-src fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://docs.google.com https://api.anthropic.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; frame-src https://calendly.com">
+
+
+<!-- Google Analytics 4: replace G-XXXXXXXXXX with your Measurement ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-XXXXXXXXXX', { anonymize_ip: true });
+window.amTrack = function(name, params){ try{ gtag('event', name, params || {}); }catch(e){} };
+</script>
+
+<title>The Presence Quotient | Free Assessment by Arpita Mehta</title>
+<meta name="description" content="Take the Presence Quotient: 16 questions, a score out of 100, and a private scorecard naming the dimension quietly costing you rooms. By Arpita Mehta, Delhi.">
+<link rel="canonical" href="https://arpitamehta.co/assessment.html">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://arpitamehta.co/assessment.html">
+<meta property="og:title" content="The Presence Quotient | Free Assessment by Arpita Mehta">
+<meta property="og:description" content="IQ got you hired. EQ got you promoted. PQ is why some people run the room. Sixteen questions, a score out of 100, a private scorecard.">
+<meta property="og:image" content="https://arpitamehta.co/images/shared/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Presence Quotient | Free Assessment by Arpita Mehta">
+<meta name="twitter:description" content="Sixteen questions. A score out of 100. A private scorecard naming exactly where your presence leaks.">
+<meta name="twitter:image" content="https://arpitamehta.co/images/shared/logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Quiz",
+      "@id": "https://arpitamehta.co/assessment.html",
+      "name": "The Presence Quotient",
+      "description": "A sixteen-question self assessment measuring image, executive presence, social culture and personal distinction, producing a score out of 100 and a private scorecard.",
+      "url": "https://arpitamehta.co/assessment.html",
+      "author": { "@id": "https://arpitamehta.co/#person" },
+      "publisher": { "@id": "https://arpitamehta.co/#business" },
+      "educationalAlignment": {
+        "@type": "AlignmentObject",
+        "alignmentType": "assesses",
+        "targetName": "Personal presence across image, executive presence, social culture and distinction"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://arpitamehta.co/" },
+        { "@type": "ListItem", "position": 2, "name": "The Presence Quotient", "item": "https://arpitamehta.co/assessment.html" }
+      ]
+    }
+  ]
+}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+:root{
+  /* Arpita Mehta brand palette. Contrast verified on both surfaces.
+     Decorative tones (--gold, --parchment, --border) must never carry body text. */
+  --linen:#F8F4EE;      /* Warm Ivory Beige, page background            */
+  --ivory:#FBF7F3;      /* Soft Cream, surfaces and panels              */
+  --parchment:#DED4CA;  /* Blush Beige, light rules                     */
+  --border:#DED4CA;     /* Blush Beige, borders and rules               */
+  --panel:#C2B5A8;      /* Warm Taupe, panels and dividers, decorative  */
+  --ink:#2A1F14;        /* Deep Brown, headings            14.7:1 on bg   */
+  --taupe:#3D2F1D;      /* Espresso, body text           11.8:1 on bg   */
+  --taupe-lt:#6B5D50;   /* Secondary text, small labels   5.8:1 on bg   */
+  --brown:#9C5A4C;      /* Warm Cognac, accents and links 4.7:1 on bg   */
+  --rose:#9C5A4C;       /* Warm Cognac, primary button    5.2:1 white   */
+  --rose-d:#7F493E;     /* Cognac hover                   6.5:1 white   */
+  --gold:#AE957E;       /* Muted Rose-Taupe, decorative only            */
+  --white:#FFFFFF;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--linen); color:var(--ink);
+  font-family:'DM Sans',sans-serif; font-weight:400; font-size:1.05rem;
+  line-height:1.7; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+@view-transition{navigation:auto}
+::view-transition-old(root),::view-transition-new(root){animation-duration:200ms}
+h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.18;color:var(--ink)}
+h1 em,h2 em,h3 em{font-style:italic;color:var(--brown)}
+img{max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+.eyebrow{
+  font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--taupe-lt);font-weight:400;
+  display:flex;align-items:center;gap:14px;margin-bottom:18px;
+}
+.eyebrow::before{content:"";width:34px;height:1px;background:var(--gold)}
+section{padding:96px 0}
+
+#cursor{
+  position:fixed;top:0;left:0;width:12px;height:12px;border-radius:50%;
+  background:var(--gold);pointer-events:none;z-index:9999;opacity:0;
+  transform:translate(-50%,-50%);mix-blend-mode:multiply;
+  transition:width .25s,height .25s,opacity .3s;
+}
+@media (pointer:coarse){#cursor{display:none}}
+
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:14px 0;background:rgba(247,242,235,.96);border-bottom:1px solid var(--border);
+  transition:transform .3s;backdrop-filter:blur(8px);
+}
+nav.hidden{transform:translateY(-100%)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:18px}
+.nav-logo{display:flex;align-items:center;gap:13px}
+.nav-logo img{height:56px;width:auto;display:block}
+.nav-wordmark{display:flex;flex-direction:column;line-height:1.3}
+.nav-wordmark .nm{font-family:'Cormorant Garamond',serif;font-size:1.12rem;font-weight:500;color:var(--ink);white-space:nowrap}
+.nav-wordmark .ti{font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--taupe-lt);white-space:nowrap}
+@media(max-width:680px){
+  .nav-logo img{height:44px}
+  .nav-wordmark .nm{font-size:.96rem}
+  .nav-wordmark .ti{font-size:.46rem;letter-spacing:.08em}
+}
+@media(max-width:360px){.nav-wordmark .ti{display:none}}
+.nav-links{display:flex;align-items:center;gap:26px;list-style:none;white-space:nowrap}
+.nav-links a{font-size:1rem;font-weight:400;letter-spacing:.04em;color:var(--taupe);transition:color .2s;white-space:nowrap}
+.nav-links a:hover{color:var(--brown)}
+.menu-btn{display:none;background:none;border:none;cursor:pointer;padding:6px}
+@media(max-width:1160px) and (min-width:901px){.nav-wordmark{display:none}.nav-links{gap:20px}}
+.menu-btn span{display:block;width:24px;height:1.5px;background:var(--ink);margin:6px 0;transition:transform .3s,opacity .3s}
+@media(max-width:900px){
+  .nav-links{
+    position:fixed;inset:0;background:var(--linen);flex-direction:column;
+    justify-content:center;gap:26px;transform:translateX(100%);transition:transform .35s;
+  }
+  .nav-links.open{transform:none}
+  .nav-links a{font-size:1.1rem}
+  .menu-btn{display:block;z-index:1001}
+  .menu-btn.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+  .menu-btn.open span:nth-child(2){opacity:0}
+  .menu-btn.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+}
+.cta{
+  display:inline-block;background:var(--rose);color:var(--white);
+  font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:400;
+  letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--rose);
+  padding:16px 34px;cursor:pointer;transition:background .25s,border-color .25s;
+}
+.cta:hover{background:var(--rose-d);border-color:var(--rose-d)}
+.cta.ghost{background:transparent;color:var(--brown);border-color:var(--border)}
+.cta.ghost:hover{background:var(--ivory);color:var(--brown)}
+.cta:disabled{opacity:.4;cursor:not-allowed}
+.nav-cta{padding:12px 22px;font-size:.8rem;white-space:nowrap}
+
+footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
+.foot-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.4rem,2.8vw,2rem);max-width:760px;margin-bottom:64px;color:var(--ivory);line-height:1.5;cursor:default}
+.foot-quote .w{transition:color .4s ease}
+.foot-quote:hover .w{color:var(--gold)}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;margin-bottom:64px}
+.foot-grid h4{font-family:'DM Sans',sans-serif;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--panel);margin-bottom:20px;font-weight:400}
+.foot-grid ul{list-style:none}
+.foot-grid li{margin-bottom:12px}
+.foot-grid a{font-size:.92rem;color:var(--parchment);transition:color .2s}
+.foot-grid a:hover{color:var(--gold)}
+.foot-brand p{font-size:.92rem;color:var(--panel);max-width:300px;margin-top:16px}
+.foot-base{border-top:1px solid rgba(212,196,174,.18);padding-top:28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.78rem;color:var(--panel)}
+
+.panel-overlay{position:fixed;inset:0;background:rgba(44,32,24,.45);opacity:0;pointer-events:none;transition:opacity .35s;z-index:1500}
+.panel-overlay.open{opacity:1;pointer-events:auto}
+.panel{position:fixed;top:0;right:0;bottom:0;width:min(520px,100%);background:var(--linen);z-index:1600;transform:translateX(100%);transition:transform .45s cubic-bezier(.22,.8,.3,1);display:flex;flex-direction:column;border-left:1px solid var(--border)}
+.panel.open{transform:translateX(0)}
+.panel-head{display:flex;align-items:center;justify-content:space-between;padding:22px 28px;border-bottom:1px solid var(--border)}
+.panel-head .t{font-family:'Cormorant Garamond',serif;font-size:1.2rem}
+.panel-close{background:none;border:none;font-size:1.6rem;color:var(--taupe);cursor:pointer;line-height:1;padding:4px 8px}
+.panel-opts{padding:24px 22px;display:flex;flex-direction:column;gap:16px;overflow-y:auto}
+.p-opt{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 22px;background:var(--ivory);border:1px solid var(--border)}
+.p-opt .d-title{font-family:'Cormorant Garamond',serif;font-size:1.08rem;color:var(--ink)}
+.p-opt .d-sub{font-size:.8rem;color:var(--taupe-lt);margin-top:3px}
+.p-right{text-align:right;flex-shrink:0}
+.d-price{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--brown);margin-bottom:10px}
+.d-cta{padding:11px 20px;font-size:.68rem}
+.panel-note{font-size:.86rem;color:var(--taupe);padding:6px 4px;line-height:1.7}
+
+.rv{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:680px){
+  .nav-links{position:fixed;inset:0;background:var(--linen);flex-direction:column;justify-content:center;gap:26px;transform:translateX(100%);transition:transform .35s}
+  .nav-links.open{transform:none}
+  .nav-links a{font-size:1.1rem}
+  .menu-btn{display:block;z-index:1001}
+  .menu-btn.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+  .menu-btn.open span:nth-child(2){opacity:0}
+  .menu-btn.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+  .foot-grid{grid-template-columns:1fr}
+}
+
+/* ============ ASSESSMENT-SPECIFIC ============ */
+.pq-hero{padding:160px 0 50px;text-align:center}
+.pq-hero h1{font-size:clamp(2.1rem,4.6vw,3.4rem);max-width:760px;margin:0 auto}
+.pq-hero .lede{max-width:560px;margin:20px auto 0;font-size:1.05rem;color:var(--taupe)}
+.pq-stats{display:flex;gap:40px;justify-content:center;margin-top:32px;flex-wrap:wrap}
+.pq-stats .ps{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--taupe-lt)}
+.pq-stats .ps strong{display:block;font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--brown);letter-spacing:0;text-transform:none;margin-bottom:4px}
+
+.pq-stage{padding:0 0 100px}
+.pq-card{
+  max-width:680px;margin:0 auto;background:var(--ivory);border:1px solid var(--border);
+  padding:48px 44px;position:relative;overflow:hidden;
+}
+@media(max-width:600px){.pq-card{padding:34px 24px}}
+
+/* progress bar */
+.pq-progress-wrap{max-width:680px;margin:0 auto 18px;display:flex;align-items:center;gap:14px}
+.pq-progress-track{flex:1;height:2px;background:var(--parchment)}
+.pq-progress-fill{height:2px;background:var(--gold);width:0%;transition:width .4s ease}
+.pq-progress-label{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--taupe-lt);white-space:nowrap}
+
+/* choice cards (audience / persona) */
+.pq-choices{display:grid;gap:14px}
+.pq-choices.cols2{grid-template-columns:1fr 1fr}
+@media(max-width:600px){.pq-choices.cols2{grid-template-columns:1fr}}
+.pq-choice{
+  text-align:left;background:var(--linen);border:1px solid var(--border);
+  padding:22px 24px;cursor:pointer;transition:border-color .2s,background .2s,transform .2s;
+  font-family:'DM Sans',sans-serif;color:var(--ink);
+}
+.pq-choice:hover{border-color:var(--gold);background:var(--white);transform:translateY(-2px)}
+.pq-choice .pc-title{font-family:'Cormorant Garamond',serif;font-size:1.12rem;margin-bottom:6px}
+.pq-choice .pc-sub{font-size:.86rem;color:var(--taupe-lt)}
+
+/* question card */
+.pq-q-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.pq-q-dim{font-size:.64rem;letter-spacing:.26em;text-transform:uppercase;color:var(--taupe-lt)}
+.pq-q-num{font-size:.74rem;color:var(--taupe-lt)}
+.pq-q-text{font-family:'Cormorant Garamond',serif;font-size:1.35rem;margin:18px 0 32px;line-height:1.4}
+.pq-scale{display:flex;flex-direction:column;gap:10px}
+.pq-scale-opt{
+  display:flex;align-items:center;gap:16px;padding:14px 18px;
+  background:var(--linen);border:1px solid var(--border);cursor:pointer;
+  transition:border-color .2s,background .2s;
+}
+.pq-scale-opt:hover{border-color:var(--gold)}
+.pq-scale-opt.selected{border-color:var(--gold);background:var(--white)}
+.pq-scale-opt .dot{width:18px;height:18px;border-radius:50%;border:1px solid var(--border);flex-shrink:0;position:relative;transition:border-color .2s}
+.pq-scale-opt.selected .dot{border-color:var(--gold)}
+.pq-scale-opt.selected .dot::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--gold)}
+.pq-scale-opt .lbl{font-size:.96rem}
+
+/* slide transitions for question cards */
+.pq-q-card{transition:transform .25s ease,opacity .25s ease}
+.pq-q-card.out-left{transform:translateX(-40px);opacity:0}
+.pq-q-card.out-right{transform:translateX(40px);opacity:0}
+.pq-q-card.in{transform:translateX(0);opacity:1}
+
+.pq-nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:34px}
+.pq-back{background:none;border:none;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--taupe-lt);cursor:pointer;padding:8px 0}
+.pq-back:hover{color:var(--brown)}
+.pq-back:disabled{opacity:0;pointer-events:none}
+
+/* results: score + band + bars */
+.pq-results-head{text-align:center;margin-bottom:36px}
+.pq-score-ring{
+  width:160px;height:160px;border-radius:50%;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  margin:0 auto 22px;background:var(--linen);position:relative;
+}
+.pq-score-ring .num{font-family:'Cormorant Garamond',serif;font-size:3rem;color:var(--brown);line-height:1}
+.pq-score-ring .of{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--taupe-lt);margin-top:4px}
+.pq-band-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.7rem;color:var(--brown);min-height:1.4em}
+.pq-band-name .cursor-blink{display:inline-block;width:2px;background:var(--gold);margin-left:2px;animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+
+.pq-bars{margin:34px 0 8px;display:flex;flex-direction:column;gap:18px}
+.pq-bar-row .bar-label{display:flex;justify-content:space-between;font-size:.8rem;letter-spacing:.06em;color:var(--taupe);margin-bottom:8px}
+.pq-bar-row .bar-label strong{color:var(--ink);font-weight:400}
+.pq-bar-track{height:6px;background:var(--parchment);position:relative;overflow:hidden}
+.pq-bar-fill{height:100%;background:var(--gold);width:0%;transition:width 1s cubic-bezier(.22,.8,.3,1)}
+
+/* lock box */
+.pq-lock{
+  margin-top:40px;padding-top:36px;border-top:1px solid var(--border);
+  opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;
+}
+.pq-lock.shown{opacity:1;transform:translateY(0)}
+.pq-lock-head{text-align:center;margin-bottom:24px}
+.pq-lock-head h3{font-size:1.4rem;margin-bottom:8px}
+.pq-lock-head p{font-size:.92rem;color:var(--taupe)}
+.pq-form label{display:block;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--taupe-lt);margin-bottom:6px;margin-top:14px}
+.pq-form input{
+  width:100%;padding:13px 14px;border:1px solid var(--border);background:var(--white);
+  font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--ink);font-weight:400;
+}
+.pq-form input:focus{outline:2px solid var(--gold);outline-offset:1px}
+.pq-form .cta{width:100%;margin-top:22px}
+.pq-privacy{font-size:.74rem;color:var(--taupe-lt);text-align:center;margin-top:14px}
+
+/* unlocked results */
+.pq-unlock-head{text-align:center;margin-bottom:30px}
+.pq-unlock-head .tag{font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--taupe-lt);margin-bottom:10px}
+.pq-opportunity{
+  background:var(--linen);border:1px solid var(--border);padding:28px 28px;margin-bottom:24px;
+}
+.pq-opportunity h4{font-size:1.1rem;margin-bottom:10px}
+.pq-opportunity p{font-size:.94rem;color:var(--taupe)}
+.pq-takeaway{padding:0 4px;margin-bottom:28px}
+.pq-takeaway .lbl{font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--taupe-lt);margin-bottom:10px}
+.pq-takeaway p{font-size:.96rem;color:var(--taupe)}
+.pq-rec{
+  background:var(--ink);color:var(--ivory);padding:32px 28px;margin-bottom:30px;
+}
+.pq-rec .lbl{font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--taupe-lt);margin-bottom:10px}
+.pq-rec h4{color:var(--white);font-size:1.25rem;margin-bottom:10px}
+.pq-rec p{font-size:.92rem;color:var(--parchment)}
+.pq-final-actions{display:flex;flex-direction:column;gap:12px}
+.pq-final-actions .cta{width:100%}
+.pq-restart{
+  display:block;text-align:center;margin-top:18px;font-size:.76rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--taupe-lt);cursor:pointer;background:none;border:none;width:100%;
+}
+.pq-restart:hover{color:var(--brown)}
+
+/* hidden PDF render container */
+#pdfRoot{position:absolute;left:-9999px;top:0;width:800px}
+.pdf-page{
+  width:800px;height:1131px;background:#F8F4EE;color:#2A1F14;font-family:'DM Sans',sans-serif;
+  padding:64px;box-sizing:border-box;position:relative;page-break-after:always;
+  display:flex;flex-direction:column;
+}
+.pdf-page .pdf-eyebrow{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:#6B5D50;margin-bottom:14px}
+.pdf-page h1,.pdf-page h2,.pdf-page h3{font-family:'Cormorant Garamond',serif;color:#2A1F14;font-weight:500}
+.pdf-page .pdf-foot{position:absolute;bottom:48px;left:64px;right:64px;display:flex;justify-content:space-between;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#6B5D50;border-top:1px solid #DED4CA;padding-top:16px}
+.pdf-cover{align-items:center;justify-content:center;text-align:center}
+.pdf-cover .pdf-score-num{font-family:'Cormorant Garamond',serif;font-size:120px;color:#9C5A4C;line-height:1;margin:30px 0 10px}
+.pdf-cover .pdf-band{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:34px;color:#9C5A4C;margin-bottom:30px}
+.pdf-cover .pdf-name{font-size:18px;color:#3D2F1D;margin-bottom:6px}
+.pdf-cover .pdf-date{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#6B5D50}
+.pdf-cover .pdf-logo{font-family:'Cormorant Garamond',serif;font-size:28px;color:#2A1F14;margin-bottom:8px}
+.pdf-cover .pdf-tagline{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#6B5D50;margin-bottom:60px}
+.pdf-page p{font-size:14px;line-height:1.8;color:#3D2F1D;margin-bottom:16px}
+.pdf-page .pdf-pull{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;color:#9C5A4C;border-left:3px solid #AE957E;padding:6px 0 6px 22px;margin:24px 0}
+.pdf-dim-block{margin-bottom:24px}
+.pdf-dim-block .pdf-dim-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.pdf-dim-block .pdf-dim-name{font-family:'Cormorant Garamond',serif;font-size:18px;color:#2A1F14}
+.pdf-dim-block .pdf-dim-score{font-family:'Cormorant Garamond',serif;font-size:18px;color:#9C5A4C}
+.pdf-dim-bar{height:6px;background:#DED4CA;margin-bottom:10px}
+.pdf-dim-bar-fill{height:100%;background:#AE957E}
+.pdf-cta-box{background:#2A1F14;color:#FBF7F3;padding:28px;margin-top:auto}
+.pdf-cta-box .pdf-cta-lbl{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#AE957E;margin-bottom:10px}
+.pdf-cta-box h3{color:#FFFFFF;font-size:20px;margin-bottom:8px}
+.pdf-cta-box p{color:#DED4CA;font-size:13px;margin-bottom:0}
+
+@media(max-width:600px){
+  .pq-score-ring{width:130px;height:130px}
+  .pq-score-ring .num{font-size:2.3rem}
+  .pq-band-name{font-size:1.35rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}
+  .rv,.pq-lock{opacity:1 !important;transform:none !important}
+  #cursor{display:none !important}
+}
+.lead-overlay{position:fixed;inset:0;background:rgba(44,32,24,.5);opacity:0;pointer-events:none;transition:opacity .3s;z-index:1800;display:flex;align-items:center;justify-content:center;padding:20px}
+.lead-overlay.open{opacity:1;pointer-events:auto}
+.lead-modal{
+  background:var(--linen);border:1px solid var(--border);max-width:420px;width:100%;
+  padding:40px 36px;transform:translateY(20px);transition:transform .35s;
+  max-height:90vh;overflow-y:auto;
+}
+.lead-overlay.open .lead-modal{transform:translateY(0)}
+.lead-modal h3{font-size:1.3rem;margin-bottom:8px}
+.lead-modal .sub{font-size:.9rem;color:var(--taupe);margin-bottom:24px}
+.lead-modal label{display:block;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--taupe-lt);margin-bottom:6px;margin-top:16px}
+.lead-modal input,.lead-modal select,.lead-modal textarea{
+  width:100%;padding:12px 14px;border:1px solid var(--border);background:var(--white);
+  font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--ink);font-weight:400;
+}
+.lead-modal select{appearance:none;cursor:pointer}
+.lead-modal textarea{resize:vertical;min-height:90px;font-size:.92rem}
+.lead-modal input:focus,.lead-modal select:focus,.lead-modal textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
+.lead-modal .submit-row{display:flex;gap:12px;align-items:center;margin-top:26px}
+.lead-modal .cta{padding:13px 28px;font-size:.74rem}
+.lead-close{background:none;border:none;font-size:1.5rem;color:var(--taupe);cursor:pointer;line-height:1;float:right;padding:0 4px}
+.lead-success{display:none;text-align:center;padding:10px 0}
+.lead-success.show{display:block}
+.lead-success .seal{margin:0 auto 16px}
+.lead-success h3{margin-bottom:10px}
+.lead-success p{font-size:.92rem;color:var(--taupe)}
+</style>
+</head>
+<body>
+
+<div id="cursor" aria-hidden="true"></div>
+
+<nav id="nav">
+  <div class="wrap nav-inner">
+    <a class="nav-logo" href="index.html">
+      <img src="images/shared/monogram.png" height="44" alt="Arpita Mehta monogram" fetchpriority="high" style="width:auto;display:block"/>
+      <span class="nav-wordmark"><span class="nm">Arpita Mehta</span><span class="ti">Presence Consultant, Delhi</span></span>
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Programmes</a></li>
+      <li><a href="assessment.html">The Presence Quotient</a></li>
+      <li><a href="blog/index.html">Journal</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><button class="cta nav-cta" data-calendly>Request a Call</button></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="pq-hero">
+  <div class="wrap">
+    <p class="eyebrow" style="justify-content:center">The Presence Quotient</p>
+    <h1>IQ got you hired. EQ got you promoted. <em>PQ is why some people run the room.</em></h1>
+    <p class="lede">Sixteen questions. Two minutes. A score out of one hundred, a band, and a private scorecard naming exactly where your presence leaks and where Arpita would begin with you.</p>
+    <div class="pq-stats">
+      <div class="ps"><strong>16</strong>Questions</div>
+      <div class="ps"><strong>4</strong>Dimensions</div>
+      <div class="ps"><strong>2</strong>Minutes</div>
+      <div class="ps"><strong>100</strong>Point Score</div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ ASSESSMENT STAGE ============ -->
+<section class="pq-stage">
+  <div class="wrap">
+
+    <div class="pq-progress-wrap" id="progressWrap" style="display:none">
+      <div class="pq-progress-track"><div class="pq-progress-fill" id="progressFill"></div></div>
+      <div class="pq-progress-label" id="progressLabel">Question 1 of 16</div>
+    </div>
+
+    <!-- STEP 1: AUDIENCE -->
+    <div class="pq-card" id="stepAudience">
+      <p class="eyebrow" style="justify-content:center">Step 1 of 4</p>
+      <h2 style="text-align:center;font-size:1.5rem;margin-bottom:30px">Who is this for?</h2>
+      <div class="pq-choices cols2">
+        <button class="pq-choice" data-audience="self">
+          <p class="pc-title">For myself</p>
+          <p class="pc-sub">A personal read on how you come across, and where to begin.</p>
+        </button>
+        <button class="pq-choice" data-audience="org">
+          <p class="pc-title">For my team or organisation</p>
+          <p class="pc-sub">A read on how your team presents, framed around the rooms they face.</p>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 2: PERSONA (self only) -->
+    <div class="pq-card" id="stepPersona" style="display:none">
+      <p class="eyebrow" style="justify-content:center">Step 2 of 4</p>
+      <h2 style="text-align:center;font-size:1.5rem;margin-bottom:30px">What best describes where you are?</h2>
+      <div class="pq-choices" id="personaChoices"></div>
+      <div class="pq-nav-row">
+        <button class="pq-back" id="backToAudience">Back</button>
+        <span></span>
+      </div>
+    </div>
+
+    <!-- STEP 3: CONTEXT -->
+    <div class="pq-card" id="stepContext" style="display:none">
+      <p class="eyebrow" style="justify-content:center">Step 3 of 4</p>
+      <h2 style="text-align:center;font-size:1.5rem;margin-bottom:30px" id="contextQuestion">What matters most right now?</h2>
+      <div class="pq-choices" id="contextChoices"></div>
+      <div class="pq-nav-row">
+        <button class="pq-back" id="backToPersona">Back</button>
+        <span></span>
+      </div>
+    </div>
+
+    <!-- STEP 4: QUESTIONS -->
+    <div class="pq-card" id="stepQuestions" style="display:none">
+      <div class="pq-q-card in" id="qCard">
+        <div class="pq-q-head">
+          <span class="pq-q-dim" id="qDim">Image</span>
+          <span class="pq-q-num" id="qNum">1 / 16</span>
+        </div>
+        <p class="pq-q-text" id="qText"></p>
+        <div class="pq-scale" id="qScale">
+          <label class="pq-scale-opt"><span class="dot"></span><span class="lbl">Not at all like me</span></label>
+          <label class="pq-scale-opt"><span class="dot"></span><span class="lbl">A little like me</span></label>
+          <label class="pq-scale-opt"><span class="dot"></span><span class="lbl">Somewhat like me</span></label>
+          <label class="pq-scale-opt"><span class="dot"></span><span class="lbl">Mostly like me</span></label>
+          <label class="pq-scale-opt"><span class="dot"></span><span class="lbl">Completely me</span></label>
+        </div>
+      </div>
+      <div class="pq-nav-row">
+        <button class="pq-back" id="backQuestion">Back</button>
+        <span></span>
+      </div>
+    </div>
+
+    <!-- STEP 5/6: RESULTS TEASER + LOCK -->
+    <div class="pq-card" id="stepResults" style="display:none">
+      <div class="pq-results-head">
+        <p class="eyebrow" style="justify-content:center">Your Results</p>
+        <div class="pq-score-ring">
+          <span class="num" id="scoreNum">0</span>
+          <span class="of">out of 100</span>
+        </div>
+        <p class="pq-band-name" id="bandName"></p>
+      </div>
+      <div class="pq-bars" id="resultBars"></div>
+
+      <div class="pq-lock" id="lockBox">
+        <div class="pq-lock-head">
+          <h3>Unlock your full scorecard</h3>
+          <p>Your biggest opportunity, a personal recommendation, and a downloadable four page PDF, sent nowhere, kept private, yours to keep.</p>
+        </div>
+        <form class="pq-form" id="leadForm" autocomplete="on">
+          <label for="pq-name">Name</label>
+          <input type="text" id="pq-name" name="name" required autocomplete="name">
+          <label for="pq-email">Email</label>
+          <input type="email" id="pq-email" name="email" required autocomplete="email">
+          <label for="pq-phone">Phone</label>
+          <input type="tel" id="pq-phone" name="phone" required autocomplete="tel">
+          <button type="submit" class="cta">Unlock My Results</button>
+        </form>
+        <p class="pq-privacy">Private. Never shared. Used only so Arpita can send your scorecard if you ask.</p>
+      </div>
+    </div>
+
+    <!-- STEP 7: UNLOCKED -->
+    <div class="pq-card" id="stepUnlocked" style="display:none">
+      <div class="pq-unlock-head">
+        <p class="tag" id="unlockBand">The Polished</p>
+        <h2 style="font-size:1.7rem">Here is where Arpita would begin with you.</h2>
+      </div>
+
+      <div class="pq-opportunity">
+        <h4 id="oppTitle">Your biggest opportunity: Social Culture</h4>
+        <p id="oppText"></p>
+      </div>
+
+      <div class="pq-takeaway">
+        <p class="lbl">One Thing To Try This Week</p>
+        <p id="takeawayText"></p>
+      </div>
+
+      <div class="pq-rec">
+        <p class="lbl">Arpita's Recommendation</p>
+        <h4 id="recTitle"></h4>
+        <p id="recText"></p>
+      </div>
+
+      <div class="pq-final-actions">
+        <button class="cta" id="downloadPdfBtn">Download Your Scorecard (PDF)</button>
+        <button class="cta ghost" data-calendly>Book a Discovery Call</button>
+      </div>
+      <button class="pq-restart" id="restartBtn">Take the assessment again</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ HIDDEN PDF RENDER ROOT ============ -->
+<div id="pdfRoot" aria-hidden="true">
+  <!-- Page 1: Cover -->
+  <div class="pdf-page pdf-cover">
+    <div class="pdf-logo">AM</div>
+    <p class="pdf-tagline">Arpita Mehta &middot; Presence Consultant &middot; Delhi</p>
+    <p class="pdf-eyebrow" style="text-align:center">The Presence Quotient</p>
+    <h2 style="font-size:30px">Your Private Scorecard</h2>
+    <div class="pdf-score-num" id="pdfScore">00</div>
+    <div class="pdf-band" id="pdfBand">The Polished</div>
+    <div class="pdf-name" id="pdfName">Prepared for</div>
+    <div class="pdf-date" id="pdfDate">Date</div>
+  </div>
+
+  <!-- Page 2: What your score means -->
+  <div class="pdf-page">
+    <p class="pdf-eyebrow">Page Two</p>
+    <h2 style="font-size:24px;margin-bottom:18px">What your score means</h2>
+    <p id="pdfMeaning1"></p>
+    <p id="pdfMeaning2"></p>
+    <div class="pdf-pull" id="pdfPull"></div>
+    <p id="pdfContext"></p>
+    <div class="pdf-foot"><span>The Presence Quotient</span><span id="pdfFootDate2"></span></div>
+  </div>
+
+  <!-- Page 3: Four dimensions -->
+  <div class="pdf-page">
+    <p class="pdf-eyebrow">Page Three</p>
+    <h2 style="font-size:24px;margin-bottom:24px">Your four dimensions</h2>
+    <div id="pdfDimensions"></div>
+    <div class="pdf-foot"><span>The Presence Quotient</span><span id="pdfFootDate3"></span></div>
+  </div>
+
+  <!-- Page 4: Opportunity + recommendation -->
+  <div class="pdf-page">
+    <p class="pdf-eyebrow">Page Four</p>
+    <h2 style="font-size:24px;margin-bottom:18px" id="pdfOppTitle"></h2>
+    <p id="pdfOppText"></p>
+    <p class="pdf-pull" id="pdfTakeaway" style="border-left:3px solid #AE957E;padding-left:22px;font-style:normal;font-family:'DM Sans',sans-serif;font-size:14px;color:#3D2F1D"></p>
+    <p id="pdfRecText"></p>
+    <div class="pdf-cta-box">
+      <p class="pdf-cta-lbl">Your Full Roadmap</p>
+      <h3 id="pdfRecTitle"></h3>
+      <p>This scorecard names the gap. The roadmap to close it, paced to your life and your rooms, is reserved for a conversation. Book a discovery call at arpitamehta.co to begin.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   DATA
+   ============================================================ */
+
+var DIM_LABEL = { image:"Image", presence:"Executive Presence", social:"Social Culture", edge:"Distinction" };
+var DIM_ORDER = ["image","presence","social","edge"];
+
+var SELF_SCALE = ["Not at all like me","A little like me","Somewhat like me","Mostly like me","Completely me"];
+var ORG_SCALE  = ["Not at all true for us","A little true for us","Somewhat true for us","Mostly true for us","Completely true for us"];
+
+var BANDS = [
+  { max:40,  name:"The Overlooked",
+    p1:"A score in this range means the gap between who you are and how you are currently read is significant, and probably wider than you would guess. This is not a verdict on your ability. It is a description of how much of your ability is currently visible to the rooms that matter.",
+    p2:"The good news inside an uncomfortable number: every dimension measured here is learnable, and most people in this band see meaningful movement within weeks of starting, because so much of the gap is made of small, fixable habits rather than anything fundamental." },
+  { max:60,  name:"The Emerging",
+    p1:"A score in this range means parts of your presence are already working, and other parts are quietly undermining them. The inconsistency is often more costly than a uniformly low score, because it makes you harder to read and easier to underestimate.",
+    p2:"The work from here is rarely about starting from scratch. It is about identifying the one or two specific habits or signals that are out of step with everything else you do well, and bringing them into alignment." },
+  { max:80,  name:"The Polished",
+    p1:"A score in this range means your presence is doing real work for you in most rooms, most of the time. People generally read you accurately, and that accuracy is an asset you may be underusing.",
+    p2:"The opportunity at this level is precision. The gap between Polished and Magnetic is rarely about fixing something broken. It is about sharpening the one dimension that, if it matched the others, would make the whole impression more cohesive and more memorable." },
+  { max:101, name:"The Magnetic",
+    p1:"A score in this range is rare, and it means your presence is already an asset that compounds: people remember you, trust you faster, and give you the benefit of the doubt in ambiguous situations.",
+    p2:"The work from here is protection and intention. At this level, the risk is coasting on what already works while the rooms around you get higher stakes. The smallest remaining gap is usually where the next level of opportunity is hiding." }
+];
+
+function getBand(score){
+  for (var i=0;i<BANDS.length;i++){ if (score <= BANDS[i].max) return BANDS[i]; }
+  return BANDS[BANDS.length-1];
+}
+
+/* ---------- PERSONAS (self) ---------- */
+var PERSONAS = [
+  { id:"authority",  title:"Lead with authority",            sub:"For the executive or manager whose results deserve more attention than they get.", track:"pro" },
+  { id:"clients",    title:"Win bigger clients",              sub:"For the founder or consultant whose pitch deserves a presence to match.", track:"pro" },
+  { id:"launch",     title:"Launch my career",                sub:"For the graduate or fresher about to walk into their first real rooms.", track:"launch" },
+  { id:"chapter",    title:"Step into a new chapter",         sub:"For the bride, groom, or anyone stepping into a new family or circle.", track:"personal" },
+  { id:"homemaker",  title:"Elevate my personal presence",    sub:"For the woman returning to her world, on her own terms.", track:"personal" },
+  { id:"impression", title:"Make a memorable impression",     sub:"For arranged introductions, first dates, or any meeting that matters.", track:"personal" }
+];
+
+/* ---------- CONTEXT QUESTIONS (per persona, incl org) ---------- */
+var CONTEXT = {
+  authority: { q:"What's the room that matters most right now?", opts:[
+    "A specific promotion or leadership move",
+    "Day to day credibility with my team and peers",
+    "High stakes meetings with senior leadership",
+    "All of the above, presence affects everything"
+  ]},
+  clients: { q:"What's the room that matters most right now?", opts:[
+    "Pitches and first meetings with prospects",
+    "Closing and growing existing client relationships",
+    "Industry events and conferences",
+    "All of the above, presence affects everything"
+  ]},
+  launch: { q:"What's coming up for you?", opts:[
+    "Interviews and placements",
+    "Starting a new job soon",
+    "Already in my first role, finding my footing",
+    "Planning ahead before I need it"
+  ]},
+  chapter: { q:"What's the chapter ahead?", opts:[
+    "My own wedding or a family wedding",
+    "Joining a new family and social circle",
+    "Moving to a new city or country",
+    "A new role or identity I'm stepping into"
+  ]},
+  homemaker: { q:"What does this chapter look like?", opts:[
+    "Returning to social life after time at home",
+    "Returning to work after a career break",
+    "Stepping more visibly into my community or circle",
+    "Simply wanting to feel more like myself again"
+  ]},
+  impression: { q:"What's the meeting that matters?", opts:[
+    "An arranged introduction or first meeting",
+    "Dating and getting to know someone new",
+    "A formal social or family gathering",
+    "General confidence in new social settings"
+  ]},
+  org: { q:"What does your team face most often?", opts:[
+    "Client facing meetings and pitches",
+    "Internal leadership and cross team communication",
+    "Public or external representation",
+    "A mix of all of the above"
+  ]}
+};
+
+/* ---------- CONTEXT REFLECTIONS (for PDF page 2, by persona) ---------- */
+var CONTEXT_REFLECTION = {
+  authority:  "Whatever specific room you named, the same dynamic applies: your competence is assumed by the time you are in it. What decides what happens next is everything measured in this report.",
+  clients:    "Every pitch and every relationship you are trying to grow is being read for the same signals measured here, often before a single word about your offering is spoken.",
+  launch:     "The first months in any role are when reputations are formed fastest, and hardest to revise later. What you measure now is what the room will remember about you later.",
+  chapter:    "New families, new circles and new chapters come with their own unwritten rules. What you measure here is how ready you are to meet them, not as a performance, but as yourself.",
+  homemaker:  "Returning to visible life, however that looks for you, is its own kind of debut. This report measures the same things a first impression always measures, for a chapter that deserves them too.",
+  impression: "However small the meeting feels on paper, it is being read in full. This report measures exactly what the other side is forming an impression of, often within minutes.",
+  org:        "Whatever your team faces most, clients and partners are reading the same four dimensions measured here, often before the meeting's actual content has registered."
+};
+
+/* ---------- 16 QUESTIONS PER TRACK (4 per dimension) ---------- */
+var TRACKS = {
+
+  pro: {
+    image: [
+      "My wardrobe matches the seniority of the role I want, not just the one I have.",
+      "I feel confident I am dressed appropriately walking into any client meeting or boardroom.",
+      "People's first reaction to my appearance matches how I want to be perceived professionally.",
+      "I have a consistent, considered visual identity across video calls, meetings and events."
+    ],
+    presence: [
+      "I pause before answering difficult questions instead of rushing to respond.",
+      "My voice and pace stay steady even when a meeting gets tense.",
+      "People in meetings tend to wait for my view before moving on.",
+      "I can hold a room's attention without raising my voice."
+    ],
+    social: [
+      "I am comfortable hosting or steering a business dinner from start to finish.",
+      "I know how to navigate a formal table setting without a second thought.",
+      "Small talk before a meeting energises me rather than draining me.",
+      "I can read a room's social dynamics and adjust how I engage."
+    ],
+    edge: [
+      "Colleagues describe me in specific, memorable terms rather than generic praise.",
+      "People remember meeting me, even months later.",
+      "I have a clear point of view that I am known for in my field.",
+      "When I leave a room, I leave an impression that outlasts the meeting."
+    ]
+  },
+
+  launch: {
+    image: [
+      "My interview and work outfits feel like they belong in the role I am starting.",
+      "I know how to dress for my workplace without overthinking it every morning.",
+      "My grooming and presentation feel finished, not just neat.",
+      "I feel as put together on a video call as I do in person."
+    ],
+    presence: [
+      "I can answer a tough question by saying 'I don't know, but here's how I'd find out' without panicking.",
+      "I speak up at least once in most meetings I attend.",
+      "I don't rush my words when I'm nervous in front of senior people.",
+      "I feel comfortable asking a thoughtful question instead of staying quiet."
+    ],
+    social: [
+      "I know basic professional etiquette: emails, meetings, introductions.",
+      "I am comfortable making conversation with someone much senior to me.",
+      "I know how to network without it feeling forced or fake.",
+      "I feel at ease in situations like office lunches or team outings."
+    ],
+    edge: [
+      "People remember me after a single interview or interaction.",
+      "I have something specific I am known for among my peers.",
+      "I leave meetings having said at least one thing people remember.",
+      "I feel like I stand out for the right reasons, not just blend in."
+    ]
+  },
+
+  personal: {
+    image: [
+      "My wardrobe reflects who I am now, not who I used to be.",
+      "I feel confident about how I look walking into a new social setting.",
+      "Getting ready for an important event feels exciting rather than stressful.",
+      "I feel like my appearance matches the version of myself I want to be."
+    ],
+    presence: [
+      "I can walk into a room full of strangers without feeling smaller.",
+      "I speak at my natural pace even when I'm nervous.",
+      "I feel comfortable being the centre of attention for a moment, like at an introduction or celebration.",
+      "I trust myself to handle an awkward silence gracefully."
+    ],
+    social: [
+      "I feel at ease at a dinner table, even with unfamiliar etiquette.",
+      "I know how to make conversation with someone I'm meeting for the first time.",
+      "I feel comfortable in a new family or social circle's gatherings.",
+      "I know how to gracefully accept or decline things without it feeling awkward."
+    ],
+    edge: [
+      "People tend to remember me after meeting me once.",
+      "I feel like myself, just a more polished version, in important moments.",
+      "I have a sense of what makes me memorable to others.",
+      "I feel ready to be seen, not just present, in this new chapter."
+    ]
+  },
+
+  org: {
+    image: [
+      "Our team presents a consistent, professional image across client meetings.",
+      "Our team dresses appropriately and consistently for the rooms we are in.",
+      "Our team's video call presence, background, dress, setup, feels professional.",
+      "Clients would describe our team's visual presentation as polished."
+    ],
+    presence: [
+      "Our team holds its own in meetings with senior stakeholders or clients.",
+      "Our team members speak with confidence and clarity under pressure.",
+      "Our team is comfortable leading conversations, not just participating.",
+      "Our team's communication feels assured rather than hesitant."
+    ],
+    social: [
+      "Our team is comfortable in business dinners or social settings with clients.",
+      "Our team understands etiquette appropriate to formal and informal settings.",
+      "Our team builds rapport easily with new clients or partners.",
+      "Our team represents the brand well outside of formal meetings too."
+    ],
+    edge: [
+      "Clients and partners remember our team specifically, not just generically.",
+      "Our team has a distinct way of showing up that competitors don't.",
+      "Our team leaves a lasting impression in pitches and meetings.",
+      "People would describe our team as different, in a good way."
+    ]
+  }
+};
+
+/* ---------- DIMENSION NARRATIVES (PDF page 3, high/low) ---------- */
+var DIM_NARRATIVE = {
+  image: {
+    high:"Image is where you are strongest. People form an accurate impression of your calibre before you speak, and that impression tends to work in your favour. This is a foundation to build on, not a project that needs urgent attention.",
+    low:"Image is the dimension quietly working against you. However sharp your thinking, the room forms its first impression before you have said a word, and right now that impression may be underselling you. This is often the fastest dimension to shift, because small, deliberate changes compound visibly."
+  },
+  presence: {
+    high:"Executive presence is a clear strength. Your voice, pace and composure under pressure are already doing work for you in rooms that matter. The opportunity now is consistency: making sure this version of you shows up everywhere, not just on your best days.",
+    low:"Executive presence is where the gap shows up most. The pace of your speech, the pauses you don't take, and how you hold a room under pressure are likely costing you more than you realise. This is learnable, and it tends to shift fastest with direct, honest practice."
+  },
+  social: {
+    high:"Social culture is a genuine strength. You move through tables, introductions and informal rooms with an ease that reads as belonging. This is worth protecting and refining further as the rooms you enter become higher stakes.",
+    low:"Social culture is where some of your most important rooms, the dinner, the introduction, the conversation before the formal one, are quietly costing you. This is rarely about knowledge. It is about composure in unfamiliar settings, and it is highly learnable."
+  },
+  edge: {
+    high:"Distinction is a strength. People remember you, and they remember you for something specific. This is rare, and it is worth protecting deliberately as you move into bigger rooms.",
+    low:"Distinction is your biggest hidden gap. Everything else may be working, yet the room may still struggle to describe what makes you, specifically, memorable. This is the dimension that turns competence into being unforgettable, and it is usually the last thing people think to work on, and the first thing that changes how they are remembered."
+  }
+};
+
+/* ---------- TAKEAWAYS (one per dimension) ---------- */
+var TAKEAWAY = {
+  image:"Photograph your five most worn outfits in good light, full length. The camera will show you what the mirror does not. Remove anything that does not earn its place.",
+  presence:"In your next three conversations, pause for two full seconds before answering any question that matters. It will feel long to you. It will read as judgement to everyone else.",
+  social:"At your next meal with people you don't know well, ask one genuine question and then stay quiet long enough for a real answer. Composure in conversation is built one exchange at a time.",
+  edge:"Ask one person who knows you well: 'What's one specific thing people remember about me?' Write down the answer exactly as they say it. That sentence is your starting point."
+};
+
+/* ---------- RECOMMENDATION ENGINE ---------- */
+function programmeFor(track, dim){
+  if (track === "org"){
+    var orgMap = {
+      image:    { title:"Corporate Group Training: Professional Image & Presentation",
+                  text:"Your team's image is the dimension most worth attention right now. As a certified Train the Trainer, Arpita designs a Professional Image & Presentation session built around the rooms your team actually faces, not generic theory." },
+      presence: { title:"Corporate Group Training: Executive Presence",
+                  text:"Your team's executive presence is the dimension most worth attention right now. An Executive Presence session, built around your team's actual meetings and pitches, is where Arpita would begin." },
+      social:   { title:"Corporate Group Training: Business Dining & Social Fluency",
+                  text:"Your team's social fluency is the dimension most worth attention right now. A Business Dining & Social Fluency session prepares your team for the rooms where relationships are actually built." },
+      edge:     { title:"Corporate Group Training: Distinction & Personal Branding",
+                  text:"Your team's distinction is the dimension most worth attention right now. A Distinction & Personal Branding session helps your team show up as memorably as the work deserves." }
+    };
+    return orgMap[dim];
+  }
+  if (track === "launch"){
+    var launchText = {
+      image:"Your image is where this shows up most for you right now, and The Debut gives it real attention alongside everything else: interview presence, professional image, workplace etiquette and first impression fluency.",
+      presence:"Your executive presence is where this shows up most for you right now, and The Debut is built to close exactly this kind of gap: interview presence, professional image, workplace etiquette and first impression fluency.",
+      social:"Your social fluency is where this shows up most for you right now, and The Debut gives it real attention alongside everything else: interview presence, professional image, workplace etiquette and first impression fluency.",
+      edge:"Your distinction is where this shows up most for you right now, and The Debut is built to help you stand out from day one: interview presence, professional image, workplace etiquette and first impression fluency."
+    };
+    return { title:"The Debut", text: launchText[dim] + " It runs as a licensed cohort approximately twice a year, or you can begin one to one now." };
+  }
+  if (track === "personal"){
+    var personalMap = {
+      presence: { title:"Presence & Confidence Coaching",
+                  text:"This isn't about a boardroom, it's about walking into a room, any room, and feeling like yourself. One to one presence and confidence coaching, paced to what's ahead of you, is where Arpita would begin: voice, posture and composure for the specific moments in front of you." },
+      edge:     { title:"The Presence Edit + Personal Distinction",
+                  text:"Your image and presence are largely working. What's missing is distinction, the specific quality that makes you memorable rather than simply presentable. One to one work combining The Presence Edit with personal distinction coaching is where this gap closes fastest." },
+      image:    { title:"The Presence Edit",
+                  text:"Image is your biggest opportunity right now, and it is usually the fastest to shift. The Presence Edit rebuilds your wardrobe, grooming and visual identity so the first impression finally matches who you are. Available as a licensed cohort or one to one." },
+      social:   { title:"The Social Table",
+                  text:"Social culture, the table, the introduction, the unscripted conversation, is your biggest opportunity. The Social Table builds exactly this fluency, including a dedicated chapter for brides, grooms and couples. Available as a licensed cohort or one to one." }
+    };
+    return personalMap[dim];
+  }
+  // pro
+  var proMap = {
+    presence: { title:"The Executive Edge",
+                text:"Executive presence is where this shows up most for you, and The Executive Edge works directly on it: voice, posture, gravitas and the specific signals that decide whether a room is convinced or merely informed. Available as a licensed cohort or one to one." },
+    edge:     { title:"The Executive Edge",
+                text:"Distinction is where this shows up most for you, and The Executive Edge works directly on the signals that turn competence into being remembered: voice, posture and the specific habits that make a room recall you afterwards. Available as a licensed cohort or one to one." },
+    image:    { title:"The Presence Edit",
+                text:"Image is your biggest opportunity, and the first sentence of your story is currently underselling the rest of it. The Presence Edit rebuilds wardrobe, grooming and visual identity to match the calibre of the work you're already doing. Available as a licensed cohort or one to one." },
+    social:   { title:"The Social Table",
+                text:"Social culture, the dinner, the conversation before the formal one, is your biggest opportunity. The Social Table builds the fluency that turns those rooms into an advantage rather than a risk. Available as a licensed cohort or one to one." }
+  };
+  return proMap[dim];
+}
+
+function getRecommendation(track, weakest, secondWeakest, closeGap){
+  var primary = programmeFor(track, weakest);
+  var result = { title: primary.title, text: primary.text };
+  if (closeGap){
+    var secondary = programmeFor(track, secondWeakest);
+    if (secondary.title !== primary.title){
+      result.title = primary.title + " & " + secondary.title;
+      result.text += " Your " + DIM_LABEL[secondWeakest] + " sits close behind too, so " + secondary.title + " is worth exploring alongside this.";
+    }
+  }
+  return result;
+}
+
+window.PQ_DATA = {
+  DIM_LABEL: DIM_LABEL, DIM_ORDER: DIM_ORDER,
+  SELF_SCALE: SELF_SCALE, ORG_SCALE: ORG_SCALE,
+  BANDS: BANDS, getBand: getBand,
+  PERSONAS: PERSONAS, CONTEXT: CONTEXT, CONTEXT_REFLECTION: CONTEXT_REFLECTION,
+  TRACKS: TRACKS, DIM_NARRATIVE: DIM_NARRATIVE, TAKEAWAY: TAKEAWAY,
+  getRecommendation: getRecommendation
+};
+})();
+</script>
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <p class="foot-quote" id="footQuote">The most powerful thing you can learn is how to walk into any room and be unforgettable, for the right reasons.</p>
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="images/shared/logo.png" alt="Arpita Mehta, Presence Consultant, Delhi" style="height:46px;width:auto;max-width:100%;object-fit:contain;object-position:left center;filter:brightness(0) invert(.92)" loading="lazy">
+        <p>Image, executive presence, social culture and AI for branding and business. One private practice in Delhi. In person in Delhi, online wherever you are.</p>
+      </div>
+      <div>
+        <h4>Practice</h4>
+        <ul>
+          <li><a href="about.html">About Arpita</a></li>
+          <li><a href="services.html">Programmes</a></li>
+          <li><a href="assessment.html">The Presence Quotient</a></li>
+          <li><a href="resources.html">Free Guide</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Journal</h4>
+        <ul>
+          <li><a href="blog/executive-presence-guide.html">Executive Presence</a></li>
+          <li><a href="blog/image-confidence-guide.html">Image and Confidence</a></li>
+          <li><a href="blog/campus-to-corporate.html">Campus to Corporate</a></li>
+          <li><a href="blog/wine-etiquette-india.html">Wine Etiquette</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><button class="cta-link" data-enquiry="General Enquiry" style="background:none;border:none;padding:0;font-size:.92rem;color:var(--parchment);cursor:pointer;font-family:'DM Sans',sans-serif;text-align:left">Send an Enquiry</button></li>
+          <li><a href="mailto:presence.arpitamehta@gmail.com">presence.arpitamehta@gmail.com</a></li>
+          <li><a href="https://www.linkedin.com/in/arpitamehta279" rel="noopener" target="_blank">LinkedIn</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>&copy; <span id="yr">2026</span> Arpita Mehta. All rights reserved. The Presence Quotient, programme frameworks and all materials on this site are proprietary intellectual property.</span>
+      <span>Presence Consultant, Delhi</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ BOOKING PANEL ============ -->
+<!-- ============ GENERAL ENQUIRY MODAL ============ -->
+<div class="lead-overlay" id="enquiryOverlay">
+  <div class="lead-modal">
+    <button class="lead-close" id="enquiryClose" aria-label="Close">&times;</button>
+    <div id="enquiryFormWrap">
+      <h3>Send an Enquiry</h3>
+      <p class="sub">Tell Arpita what you're interested in. This goes directly to her, and you'll hear back by email.</p>
+      <form id="enquiryForm">
+        <label for="enq-name">Name</label>
+        <input type="text" id="enq-name" name="name" required autocomplete="name">
+        <label for="enq-email">Email</label>
+        <input type="email" id="enq-email" name="email" required autocomplete="email">
+        <label for="enq-phone">Phone</label>
+        <input type="tel" id="enq-phone" name="phone" required autocomplete="tel">
+        <label for="enq-type">What's this about?</label>
+        <select id="enq-type" name="type">
+          <option>General Enquiry</option>
+          <option>The Presence Edit (Cohort)</option>
+          <option>The Executive Edge (Cohort)</option>
+          <option>The Social Table (Cohort)</option>
+          <option>The Debut (Cohort)</option>
+          <option>One to One Presence Consulting</option>
+          <option>Soft Skills & Corporate Training</option>
+          <option>AI for Branding & Business</option>
+          <option>Corporate Group Training</option>
+        </select>
+        <label for="enq-message">Your message (optional)</label>
+        <textarea id="enq-message" name="message" placeholder="Anything you'd like Arpita to know before replying."></textarea>
+        <div class="submit-row">
+          <button type="submit" class="cta">Send Enquiry</button>
+        </div>
+      </form>
+    </div>
+    <div class="lead-success" id="enquirySuccess">
+      <img src="images/shared/monogram.png" alt="Arpita Mehta" style="width:60px;height:60px;display:block;border-radius:50%">
+      <h3>Thank you</h3>
+      <p>Your enquiry has been sent. Arpita typically replies within one to two working days.</p>
+    </div>
+  </div>
+</div>
+
+<div class="panel-overlay" id="panelOverlay"></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-label="Book a call with Arpita">
+  <div class="panel-head">
+    <span class="t">Begin Here</span>
+    <button class="panel-close" id="panelClose" aria-label="Close booking panel">&times;</button>
+  </div>
+  <div class="panel-opts">
+    <div class="p-opt">
+      <div>
+        <p class="d-title">The Discovery Call</p>
+        <p class="d-sub">Fifteen minutes, online, from anywhere in the world.</p>
+      </div>
+      <div class="p-right">
+        <p class="d-price">&#8377;339</p>
+        <button class="cta d-cta" data-pay="discovery">Reserve</button>
+      </div>
+    </div>
+    <div class="p-opt">
+      <div>
+        <p class="d-title">The In Person Session</p>
+        <p class="d-sub">Thirty minutes with Arpita, face to face in Delhi.</p>
+      </div>
+      <div class="p-right">
+        <p class="d-price">&#8377;4,499</p>
+        <button class="cta d-cta" data-pay="inperson">Reserve</button>
+      </div>
+    </div>
+    <p class="panel-note">Payment confirms your booking, and you choose your slot on the very next screen. Joining from outside Delhi, or outside India? Begin with the discovery call. Every engagement is designed around where you are.</p>
+  </div>
+</aside>
+
+<script>
+(function(){
+"use strict";
+var D = window.PQ_DATA;
+var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ============================================================
+   STATE
+   ============================================================ */
+var state = {
+  persona: null,     // {id,title,sub,track} or {id:'org',title:'Your Team',track:'org'}
+  contextIndex: null,
+  contextLabel: "",
+  questions: [],     // flattened 16 [{dim, text}]
+  answers: [],       // 16 values 1-5
+  currentQ: 0,
+  dimScores: {}, overall: 0, band: null,
+  weakest: null, secondWeakest: null, strongest: null, closeGap: false,
+  recommendation: null
+};
+
+/* ============================================================
+   STEP NAVIGATION
+   ============================================================ */
+var steps = ["stepAudience","stepPersona","stepContext","stepQuestions","stepResults","stepUnlocked"];
+function showStep(id){
+  steps.forEach(function(s){ document.getElementById(s).style.display = (s===id) ? "" : "none"; });
+  document.getElementById("progressWrap").style.display = (id==="stepQuestions") ? "" : "none";
+  document.querySelector(".pq-stage .wrap").scrollIntoView({behavior: reduced ? "auto" : "smooth", block:"start"});
+}
+
+/* ============================================================
+   STEP 1: AUDIENCE
+   ============================================================ */
+document.querySelectorAll("[data-audience]").forEach(function(btn){
+  btn.addEventListener("click", function(){
+    var aud = this.dataset.audience;
+    if (window.amTrack) amTrack("pq_start", {audience: aud});
+    if (aud === "org"){
+      state.persona = { id:"org", title:"Your team or organisation", track:"org" };
+      buildContext();
+      showStep("stepContext");
+    } else {
+      buildPersonaChoices();
+      showStep("stepPersona");
+    }
+  });
+});
+
+/* ============================================================
+   STEP 2: PERSONA (self)
+   ============================================================ */
+function buildPersonaChoices(){
+  var wrap = document.getElementById("personaChoices");
+  wrap.innerHTML = "";
+  D.PERSONAS.forEach(function(p){
+    var b = document.createElement("button");
+    b.className = "pq-choice";
+    b.innerHTML = '<p class="pc-title">'+p.title+'</p><p class="pc-sub">'+p.sub+'</p>';
+    b.addEventListener("click", function(){
+      state.persona = p;
+      buildContext();
+      showStep("stepContext");
+    });
+    wrap.appendChild(b);
+  });
+}
+document.getElementById("backToAudience").addEventListener("click", function(){ showStep("stepAudience"); });
+
+/* ============================================================
+   STEP 3: CONTEXT
+   ============================================================ */
+function buildContext(){
+  var ctx = D.CONTEXT[state.persona.id];
+  document.getElementById("contextQuestion").textContent = ctx.q;
+  var wrap = document.getElementById("contextChoices");
+  wrap.innerHTML = "";
+  ctx.opts.forEach(function(opt, i){
+    var b = document.createElement("button");
+    b.className = "pq-choice";
+    b.innerHTML = '<p class="pc-title" style="font-size:1rem;font-family:\'DM Sans\',sans-serif">'+opt+'</p>';
+    b.addEventListener("click", function(){
+      state.contextIndex = i;
+      state.contextLabel = opt;
+      buildQuestions();
+      showStep("stepQuestions");
+    });
+    wrap.appendChild(b);
+  });
+}
+document.getElementById("backToPersona").addEventListener("click", function(){
+  if (state.persona.track === "org") showStep("stepAudience");
+  else showStep("stepPersona");
+});
+
+/* ============================================================
+   STEP 4: QUESTIONS
+   ============================================================ */
+function buildQuestions(){
+  var track = D.TRACKS[state.persona.track];
+  state.questions = [];
+  D.DIM_ORDER.forEach(function(dim){
+    track[dim].forEach(function(text){ state.questions.push({dim:dim, text:text}); });
+  });
+  state.answers = new Array(16).fill(0);
+  state.currentQ = 0;
+  renderQuestionContent(0);
+  updateProgress(0);
+}
+
+function updateProgress(idx){
+  document.getElementById("progressFill").style.width = (((idx)/16)*100) + "%";
+  document.getElementById("progressLabel").textContent = "Question " + (idx+1) + " of 16";
+}
+
+function renderQuestionContent(idx){
+  var q = state.questions[idx];
+  document.getElementById("qDim").textContent = D.DIM_LABEL[q.dim];
+  document.getElementById("qNum").textContent = (idx+1) + " / 16";
+  document.getElementById("qText").textContent = q.text;
+
+  var scaleLabels = (state.persona.track === "org") ? D.ORG_SCALE : D.SELF_SCALE;
+  var scaleWrap = document.getElementById("qScale");
+  scaleWrap.innerHTML = "";
+  scaleLabels.forEach(function(lbl, i){
+    var opt = document.createElement("label");
+    opt.className = "pq-scale-opt";
+    if (state.answers[idx] === i+1) opt.classList.add("selected");
+    opt.innerHTML = '<span class="dot"></span><span class="lbl">'+lbl+'</span>';
+    opt.addEventListener("click", function(){ selectAnswer(idx, i+1); });
+    scaleWrap.appendChild(opt);
+  });
+  updateProgress(idx);
+}
+
+function selectAnswer(idx, value){
+  state.answers[idx] = value;
+  // visual selection feedback
+  document.querySelectorAll("#qScale .pq-scale-opt").forEach(function(el,i){
+    el.classList.toggle("selected", i === value-1);
+  });
+  setTimeout(function(){
+    if (idx < 15){ transitionQuestion(idx+1, "forward"); }
+    else { finishQuestions(); }
+  }, 220);
+}
+
+function transitionQuestion(newIdx, direction){
+  var card = document.getElementById("qCard");
+  card.classList.remove("in");
+  card.classList.add(direction === "forward" ? "out-left" : "out-right");
+  setTimeout(function(){
+    state.currentQ = newIdx;
+    renderQuestionContent(newIdx);
+    card.classList.remove("out-left","out-right");
+    card.style.transition = "none";
+    card.style.transform = direction === "forward" ? "translateX(40px)" : "translateX(-40px)";
+    card.style.opacity = "0";
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        card.style.transition = "";
+        card.style.transform = "";
+        card.style.opacity = "";
+        card.classList.add("in");
+      });
+    });
+  }, reduced ? 0 : 250);
+}
+
+document.getElementById("backQuestion").addEventListener("click", function(){
+  if (state.currentQ === 0){ showStep("stepContext"); return; }
+  transitionQuestion(state.currentQ-1, "back");
+});
+
+/* ============================================================
+   SCORING
+   ============================================================ */
+function computeScores(){
+  D.DIM_ORDER.forEach(function(dim, di){
+    var sum = 0;
+    for (var i=0;i<4;i++) sum += state.answers[di*4+i];
+    state.dimScores[dim] = Math.round((sum-4)/16*100);
+  });
+  var total = 0;
+  D.DIM_ORDER.forEach(function(dim){ total += state.dimScores[dim]; });
+  state.overall = Math.round(total/4);
+  state.band = D.getBand(state.overall);
+
+  var sorted = D.DIM_ORDER.slice().sort(function(a,b){ return state.dimScores[a]-state.dimScores[b]; });
+  state.weakest = sorted[0];
+  state.secondWeakest = sorted[1];
+  state.strongest = sorted[3];
+  state.closeGap = (state.dimScores[state.secondWeakest] - state.dimScores[state.weakest]) <= 8;
+
+  state.recommendation = D.getRecommendation(state.persona.track, state.weakest, state.secondWeakest, state.closeGap);
+}
+
+/* ============================================================
+   STEP 5/6: RESULTS TEASER + LOCK (WOW10 choreography)
+   ============================================================ */
+function finishQuestions(){
+  computeScores();
+  if (window.amTrack) amTrack("pq_complete", {score: state.overall, band: state.band.name, track: state.persona.track});
+  showStep("stepResults");
+  document.getElementById("lockBox").classList.remove("shown");
+
+  // 1. score count-up
+  var scoreEl = document.getElementById("scoreNum");
+  var target = state.overall, start = null;
+  if (reduced){ scoreEl.textContent = target; }
+  else {
+    function step(ts){
+      if (!start) start = ts;
+      var p = Math.min((ts-start)/1200, 1);
+      var eased = 1 - Math.pow(1-p,4);
+      scoreEl.textContent = Math.round(eased*target);
+      if (p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  // 2. band name typewriter
+  var bandEl = document.getElementById("bandName");
+  var bandText = state.band.name;
+  bandEl.textContent = "";
+  if (reduced){
+    bandEl.textContent = bandText;
+    renderBars();
+  } else {
+    var ci = 0;
+    (function type(){
+      bandEl.textContent = bandText.slice(0,ci);
+      var cur = document.createElement("span");
+      cur.className = "cursor-blink";
+      cur.textContent = "\u00A0";
+      bandEl.appendChild(cur);
+      ci++;
+      if (ci <= bandText.length){ setTimeout(type, 55); }
+      else { bandEl.textContent = bandText; renderBars(); }
+    })();
+  }
+}
+
+function renderBars(){
+  var wrap = document.getElementById("resultBars");
+  wrap.innerHTML = "";
+  D.DIM_ORDER.forEach(function(dim){
+    var row = document.createElement("div");
+    row.className = "pq-bar-row";
+    row.innerHTML = '<div class="bar-label"><span>'+D.DIM_LABEL[dim]+'</span><strong>'+state.dimScores[dim]+'</strong></div>'+
+      '<div class="pq-bar-track"><div class="pq-bar-fill" data-pct="'+state.dimScores[dim]+'"></div></div>';
+    wrap.appendChild(row);
+  });
+  // staggered fill, 200ms apart
+  var fills = wrap.querySelectorAll(".pq-bar-fill");
+  fills.forEach(function(f, i){
+    setTimeout(function(){ f.style.width = f.dataset.pct + "%"; }, reduced ? 0 : i*200);
+  });
+  // lock box slides up after bars settle
+  setTimeout(function(){
+    document.getElementById("lockBox").classList.add("shown");
+    document.getElementById("lockBox").scrollIntoView({behavior: reduced?"auto":"smooth", block:"nearest"});
+  }, reduced ? 100 : (fills.length*200 + 600));
+}
+
+/* ============================================================
+   STEP 6 -> 7: LEAD CAPTURE + UNLOCK
+   ============================================================ */
+var FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSfi0a-qHiSgcVllmtYjZdPEyxvdo2I2Ydisp46C-QvYeO273w/formResponse";
+
+document.getElementById("leadForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  var name = document.getElementById("pq-name").value;
+  var email = document.getElementById("pq-email").value;
+  var phone = document.getElementById("pq-phone").value;
+  var personaLabel = state.persona.track === "org" ? "Organisation / Team" : state.persona.title;
+
+  var body = new URLSearchParams();
+  body.append("entry.479034743", name);
+  body.append("entry.548561860", email);
+  body.append("entry.1982097609", phone);
+  body.append("entry.680222901", personaLabel);
+  body.append("entry.739404936", String(state.overall));
+  body.append("entry.1364036640", state.band.name);
+  body.append("entry.136995607", D.DIM_LABEL[state.strongest]);
+  body.append("entry.1372217125", D.DIM_LABEL[state.weakest]);
+  body.append("entry.379151362", state.recommendation.title);
+
+  fetch(FORM_ACTION, { method:"POST", mode:"no-cors",
+    headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: body.toString()
+  }).catch(function(){});
+
+  state.leadName = name;
+  if (window.amTrack) amTrack("generate_lead", {source: "presence_quotient", band: state.band.name, score: state.overall});
+  renderUnlocked();
+  fillPdf();
+  showStep("stepUnlocked");
+});
+
+function renderUnlocked(){
+  document.getElementById("unlockBand").textContent = state.band.name;
+  document.getElementById("oppTitle").textContent = "Your biggest opportunity: " + D.DIM_LABEL[state.weakest];
+  document.getElementById("oppText").textContent = D.DIM_NARRATIVE[state.weakest].low;
+  document.getElementById("takeawayText").textContent = D.TAKEAWAY[state.weakest];
+  document.getElementById("recTitle").textContent = state.recommendation.title;
+  document.getElementById("recText").textContent = state.recommendation.text;
+}
+
+/* ============================================================
+   PDF POPULATION + GENERATION
+   ============================================================ */
+function fillPdf(){
+  var today = new Date();
+  var dateStr = today.toLocaleDateString("en-GB", {day:"numeric", month:"long", year:"numeric"});
+
+  document.getElementById("pdfScore").textContent = state.overall;
+  document.getElementById("pdfBand").textContent = state.band.name;
+  document.getElementById("pdfName").textContent = "Prepared for " + (state.leadName || "you");
+  document.getElementById("pdfDate").textContent = dateStr;
+  document.getElementById("pdfFootDate2").textContent = dateStr;
+  document.getElementById("pdfFootDate3").textContent = dateStr;
+
+  document.getElementById("pdfMeaning1").textContent = state.band.p1;
+  document.getElementById("pdfMeaning2").textContent = state.band.p2;
+  document.getElementById("pdfPull").textContent = "\u201CThe most powerful thing you can learn is how to walk into any room and be unforgettable, for the right reasons.\u201D";
+  document.getElementById("pdfContext").textContent = D.CONTEXT_REFLECTION[state.persona.id];
+
+  var dimWrap = document.getElementById("pdfDimensions");
+  dimWrap.innerHTML = "";
+  D.DIM_ORDER.forEach(function(dim){
+    var pct = state.dimScores[dim];
+    var tier = pct >= 60 ? "high" : "low";
+    var block = document.createElement("div");
+    block.className = "pdf-dim-block";
+    block.innerHTML =
+      '<div class="pdf-dim-head"><span class="pdf-dim-name">'+D.DIM_LABEL[dim]+'</span><span class="pdf-dim-score">'+pct+' / 100</span></div>'+
+      '<div class="pdf-dim-bar"><div class="pdf-dim-bar-fill" style="width:'+pct+'%"></div></div>'+
+      '<p>'+D.DIM_NARRATIVE[dim][tier]+'</p>';
+    dimWrap.appendChild(block);
+  });
+
+  document.getElementById("pdfOppTitle").textContent = "Your biggest opportunity: " + D.DIM_LABEL[state.weakest];
+  document.getElementById("pdfOppText").textContent = D.DIM_NARRATIVE[state.weakest].low;
+  document.getElementById("pdfTakeaway").textContent = "One thing to try this week: " + D.TAKEAWAY[state.weakest];
+  document.getElementById("pdfRecText").textContent = state.recommendation.text;
+  document.getElementById("pdfRecTitle").textContent = state.recommendation.title;
+}
+
+document.getElementById("downloadPdfBtn").addEventListener("click", function(){
+  var btn = this;
+  if (typeof html2pdf === "undefined"){
+    alert("PDF generation is loading, please try again in a moment.");
+    return;
+  }
+  btn.textContent = "Preparing your PDF...";
+  btn.disabled = true;
+  if (window.amTrack) amTrack("pq_pdf_download", {band: state.band.name});
+  var root = document.getElementById("pdfRoot");
+  var opt = {
+    margin: 0,
+    filename: "Presence-Quotient-Scorecard.pdf",
+    image: { type: "jpeg", quality: 0.97 },
+    html2canvas: { scale: 2, useCORS: true, backgroundColor: "#F8F4EE" },
+    jsPDF: { unit: "px", format: [800, 1131], orientation: "portrait" },
+    pagebreak: { mode: ["css"] }
+  };
+  html2pdf().set(opt).from(root).save().then(function(){
+    btn.textContent = "Download Your Scorecard (PDF)";
+    btn.disabled = false;
+  }).catch(function(){
+    btn.textContent = "Download Your Scorecard (PDF)";
+    btn.disabled = false;
+  });
+});
+
+/* ============================================================
+   RESTART
+   ============================================================ */
+document.getElementById("restartBtn").addEventListener("click", function(){
+  state = {
+    persona:null, contextIndex:null, contextLabel:"", questions:[], answers:[], currentQ:0,
+    dimScores:{}, overall:0, band:null, weakest:null, secondWeakest:null, strongest:null,
+    closeGap:false, recommendation:null
+  };
+  document.getElementById("leadForm").reset();
+  showStep("stepAudience");
+});
+
+/* ============================================================
+   SHARED CHROME: nav, menu, cursor, footer wave, booking panel
+   ============================================================ */
+document.getElementById("yr").textContent = new Date().getFullYear();
+
+var nav = document.getElementById("nav"), lastY = 0;
+window.addEventListener("scroll", function(){
+  var y = window.scrollY;
+  if (y > lastY + 14 && y > 220) nav.classList.add("hidden");
+  else if (y < lastY) nav.classList.remove("hidden");
+  lastY = y;
+}, {passive:true});
+
+var menuBtn = document.getElementById("menuBtn"), navLinks = document.getElementById("navLinks");
+menuBtn.addEventListener("click", function(){
+  var open = navLinks.classList.toggle("open");
+  menuBtn.classList.toggle("open", open);
+  menuBtn.setAttribute("aria-expanded", open);
+});
+navLinks.addEventListener("click", function(e){
+  if (e.target.tagName === "A" || e.target.tagName === "BUTTON"){
+    navLinks.classList.remove("open"); menuBtn.classList.remove("open");
+  }
+});
+
+if (!reduced && window.matchMedia("(pointer: fine)").matches){
+  var cur = document.getElementById("cursor"), mx=0, my=0, cx=0, cy=0;
+  document.addEventListener("mousemove", function(e){
+    mx = e.clientX; my = e.clientY; cur.style.opacity = 1;
+    var t = e.target.closest(".cta, .pq-choice, .pq-scale-opt");
+    if (t){
+      var r = t.getBoundingClientRect();
+      mx += (r.left + r.width/2 - mx) * 0.15;
+      my += (r.top + r.height/2 - my) * 0.15;
+      cur.style.width = "26px"; cur.style.height = "26px";
+    } else { cur.style.width = "12px"; cur.style.height = "12px"; }
+  });
+  document.addEventListener("mouseleave", function(){ cur.style.opacity = 0; });
+  (function lerp(){
+    cx += (mx-cx)*0.18; cy += (my-cy)*0.18;
+    cur.style.left = cx+"px"; cur.style.top = cy+"px";
+    requestAnimationFrame(lerp);
+  })();
+}
+
+var fq = document.getElementById("footQuote");
+var fw = fq.textContent.trim().split(/\s+/);
+fq.textContent = "";
+fw.forEach(function(w,i){
+  var s = document.createElement("span");
+  s.className = "w"; s.style.transitionDelay = (i*40)+"ms";
+  s.textContent = w; fq.appendChild(s); fq.appendChild(document.createTextNode(" "));
+});
+
+var panel = document.getElementById("panel"), overlay = document.getElementById("panelOverlay");
+var PAY_LINKS = { discovery:"YOUR_RAZORPAY_DISCOVERY_LINK", inperson:"YOUR_RAZORPAY_INPERSON_LINK" };
+function openPanel(){ panel.classList.add("open"); overlay.classList.add("open"); document.body.style.overflow="hidden"; }
+function closePanel(){ panel.classList.remove("open"); overlay.classList.remove("open"); document.body.style.overflow=""; }
+document.querySelectorAll("[data-calendly]").forEach(function(b){ b.addEventListener("click", function(){ if(window.amTrack) amTrack("booking_panel_open", {page: location.pathname}); openPanel(); }); });
+document.querySelectorAll("[data-pay]").forEach(function(b){ b.addEventListener("click", function(){ if(window.amTrack) amTrack("payment_click", {option: b.dataset.pay}); window.open(PAY_LINKS[b.dataset.pay], "_blank", "noopener"); }); });
+document.getElementById("panelClose").addEventListener("click", closePanel);
+overlay.addEventListener("click", closePanel);
+document.addEventListener("keydown", function(e){ if (e.key==="Escape") closePanel(); }); document.addEventListener("keydown", function(e){ if (e.key==="Escape") closeEnquiry(); });
+/* ============ GENERAL ENQUIRY MODAL ============ */
+var ENQUIRY_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSfi0a-qHiSgcVllmtYjZdPEyxvdo2I2Ydisp46C-QvYeO273w/formResponse";
+var ENQUIRY_MESSAGE_ENTRY = "YOUR_ENQUIRY_MESSAGE_ENTRY_ID";
+var ENQUIRY_SOURCE_ENTRY = "YOUR_ENQUIRY_SOURCE_ENTRY_ID";
+var enquiryOverlay = document.getElementById("enquiryOverlay"),
+    enquiryFormWrap = document.getElementById("enquiryFormWrap"),
+    enquirySuccess = document.getElementById("enquirySuccess"),
+    enquiryForm = document.getElementById("enquiryForm"),
+    enquiryType = document.getElementById("enq-type");
+
+function openEnquiry(type){
+  if (type) enquiryType.value = type;
+  enquiryFormWrap.style.display = "";
+  enquirySuccess.classList.remove("show");
+  enquiryForm.reset();
+  if (type) enquiryType.value = type;
+  enquiryOverlay.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closeEnquiry(){
+  enquiryOverlay.classList.remove("open");
+  document.body.style.overflow = "";
+}
+document.querySelectorAll("[data-enquiry]").forEach(function(b){
+  b.addEventListener("click", function(){ openEnquiry(b.dataset.enquiry); });
+});
+document.getElementById("enquiryClose").addEventListener("click", closeEnquiry);
+enquiryOverlay.addEventListener("click", function(e){ if (e.target === enquiryOverlay) closeEnquiry(); });
+
+enquiryForm.addEventListener("submit", function(e){
+  e.preventDefault();
+  var name = document.getElementById("enq-name").value;
+  var email = document.getElementById("enq-email").value;
+  var phone = document.getElementById("enq-phone").value;
+  var type = enquiryType.value;
+  var message = document.getElementById("enq-message").value;
+
+  var body = new URLSearchParams();
+  body.append("entry.479034743", name);
+  body.append("entry.548561860", email);
+  body.append("entry.1982097609", phone);
+  body.append("entry.680222901", "Enquiry: " + type);
+  body.append(ENQUIRY_SOURCE_ENTRY, location.pathname + (document.title ? " (" + document.title.split("|")[0].trim() + ")" : ""));
+  if (message) body.append(ENQUIRY_MESSAGE_ENTRY, message);
+
+  fetch(ENQUIRY_FORM_ACTION, { method:"POST", mode:"no-cors",
+    headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: body.toString()
+  }).catch(function(){});
+
+  if (window.amTrack) amTrack("generate_lead", {source:"enquiry", type: type, page: location.pathname});
+
+  enquiryFormWrap.style.display = "none";
+  enquirySuccess.classList.add("show");
+});
+
+
+})();
+</script>
+</body>
+</html>
