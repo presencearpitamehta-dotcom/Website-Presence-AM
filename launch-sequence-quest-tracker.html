@@ -1,0 +1,634 @@
+<title>The Launch Quest</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Outfit:wght@300;400;500;600&display=swap">
+<style>
+/* 60-30-10: graphite ground, slate structure, one brass accent. World tints appear only on the
+   world you are in. Layout: pick a world, then a single trail fills the screen. */
+:root{
+  --bg:#F5F3EF;            /* 60 */
+  --surface:#FFFFFF;       /* 30 */
+  --surface-2:#EDEAE4;
+  --line:#DAD5CC;
+  --line-soft:#E7E3DB;
+  --fg:#1F2127;
+  --fg-dim:#5E6472;
+  --fg-faint:#8C919C;
+  --accent:#B9792A;        /* 10 */
+  --accent-soft:rgba(185,121,42,.11);
+  --ok:#3F8A62;
+  --w:#B5543F; --w-soft:rgba(181,84,63,.11);
+  --disp:"Fredoka","Trebuchet MS",sans-serif;
+  --ui:"Outfit","Helvetica Neue",Arial,sans-serif;
+  --ease:cubic-bezier(.2,.7,.3,1);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--ui);font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:60}
+body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(900px 480px at 50% -12%, rgba(185,121,42,.09), transparent 70%)}
+h1,h2,h3{font-family:var(--disp);font-weight:600;margin:0;text-wrap:balance}
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+.wrap{position:relative;z-index:1;max-width:620px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 100px}
+
+/* ---------- header ---------- */
+.hud{display:flex;align-items:center;gap:14px;padding-block:22px 16px}
+.mono{flex:0 0 auto;width:46px;height:46px;border-radius:14px;background:#FFFFFF;border:1px solid var(--line);display:grid;place-items:center;overflow:hidden}
+.mono img{width:34px;height:auto;display:block}
+.hud-mid{flex:1 1 auto;min-width:0}
+.hud-mid h1{font-size:1.32rem;line-height:1.1;letter-spacing:-.01em}
+.hud-mid p{margin:4px 0 0;font-size:.78rem;color:var(--fg-dim)}
+.hud-mid p b{color:var(--accent);font-weight:500}
+.donut{flex:0 0 auto;position:relative;width:60px;height:60px}
+.donut svg{width:100%;height:100%;transform:rotate(-90deg);display:block}
+.donut .dt{fill:none;stroke:var(--line);stroke-width:6}
+.donut .db{fill:none;stroke:var(--accent);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .9s var(--ease)}
+.donut b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--disp);font-size:.84rem;font-variant-numeric:tabular-nums}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:26px}
+.stat{background:var(--surface);border:1px solid var(--line-soft);border-radius:13px;padding:11px 12px;transition:border-color .3s var(--ease)}
+.stat:hover{border-color:var(--line)}
+.stat b{display:block;font-family:var(--disp);font-size:1.18rem;font-variant-numeric:tabular-nums;line-height:1.1}
+.stat span{display:block;font-size:.67rem;color:var(--fg-faint);letter-spacing:.05em;margin-top:3px}
+.stat.on b{color:var(--accent)}
+
+.snd{position:absolute;top:28px;right:max(16px,env(safe-area-inset-right,0px));width:32px;height:32px;border-radius:10px;
+  background:transparent;border:1px solid var(--line);color:var(--fg-faint);display:grid;place-items:center;
+  transition:all .3s var(--ease);z-index:3}
+.snd:hover{color:var(--accent);border-color:var(--accent)}
+.snd svg{width:15px;height:15px}
+
+/* ---------- picker ---------- */
+.lead{margin:0 0 14px;color:var(--fg-dim);font-size:.88rem}
+.lead b{color:var(--fg);font-weight:500}
+.wgrid{display:grid;gap:10px}
+.wwrap{position:relative}
+.wcard{display:flex;align-items:center;gap:13px;width:100%;text-align:left;background:var(--surface);
+  border:1px solid var(--line-soft);border-left:3px solid var(--w);border-radius:15px;padding:14px 15px;
+  transition:transform .3s var(--ease),border-color .3s var(--ease),background .3s var(--ease)}
+.wcard:hover{transform:translateX(3px);background:var(--surface-2);border-color:var(--line);border-left-color:var(--w)}
+.wcard:active{transform:translateX(1px) scale(.995)}
+.wcard.clear{opacity:.5}
+.wic{flex:0 0 auto;width:46px;height:46px;border-radius:13px;display:grid;place-items:center;
+  background:var(--w-soft);color:var(--w);transition:transform .3s var(--ease)}
+.wcard:hover .wic{transform:scale(1.07)}
+.wic svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.wtx{flex:1 1 auto;min-width:0}
+.wn{margin:0;font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-faint);font-weight:500}
+.wtx h3{font-size:1.1rem;line-height:1.2;margin:3px 0 7px;letter-spacing:-.01em}
+.tiles{display:flex;gap:5px}
+.tile{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-family:var(--disp);
+  font-size:.62rem;font-weight:600;color:#FFFFFF;letter-spacing:-.02em}
+.wmeter{flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-end;gap:5px;min-width:46px}
+.wmeter b{font-family:var(--disp);font-size:.8rem;font-variant-numeric:tabular-nums;color:var(--fg-dim)}
+.wmeter .seg{display:flex;gap:2px}
+.wmeter .seg i{width:5px;height:5px;border-radius:2px;background:var(--line);transition:background .4s var(--ease)}
+.wmeter .seg i.f{background:var(--w)}
+.herebadge{position:absolute;top:-6px;left:16px;z-index:2;font-size:.55rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;background:var(--accent);color:#FFFFFF;border-radius:5px;padding:3px 8px}
+
+/* ---------- world ---------- */
+.back{display:inline-flex;align-items:center;gap:7px;background:transparent;border:1px solid var(--line);
+  color:var(--fg-dim);border-radius:10px;padding:7px 13px;font-size:.78rem;margin-bottom:18px;transition:all .3s var(--ease)}
+.back:hover{color:var(--fg);border-color:var(--fg-faint);transform:translateX(-2px)}
+.whead{margin-bottom:20px}
+.whead h2{font-size:2rem;line-height:1.05;margin:5px 0 7px;letter-spacing:-.02em}
+.wsub{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:.76rem;color:var(--fg-faint)}
+.wbar{height:5px;background:var(--line-soft);border-radius:99px;overflow:hidden;margin-top:14px}
+.wbar i{display:block;height:100%;width:0;background:var(--w);border-radius:99px;transition:width .8s var(--ease)}
+.crown{display:none;align-items:center;gap:7px;margin-top:11px;font-family:var(--disp);font-size:.76rem;font-weight:600;color:var(--accent)}
+.world.clear .crown{display:inline-flex}
+
+.trail{position:relative;margin:0 auto}
+.tsvg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.tbase{fill:none;stroke:var(--line-soft);stroke-width:11;stroke-linecap:round}
+.tfill{fill:none;stroke:var(--w);stroke-width:6;stroke-linecap:round;opacity:.85;transition:stroke-dashoffset .9s var(--ease)}
+
+.node{position:absolute;width:132px;transform:translateX(-50%);text-align:center}
+.orbwrap{height:88px;display:grid;place-items:center}
+.orb{position:relative;width:68px;height:68px;border-radius:21px;background:var(--surface);border:1px solid var(--line);
+  color:var(--fg-faint);display:grid;place-items:center;padding:0;transition:all .3s var(--ease)}
+.orb:hover{transform:translateY(-3px);border-color:var(--w);color:var(--w)}
+.orb:active{transform:translateY(0) scale(.96)}
+.orb svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.orb-ck{position:absolute;inset:0;display:grid;place-items:center;opacity:0;transform:scale(.5);transition:all .35s var(--ease)}
+.orb-ck svg{width:30px;height:30px;stroke-width:2.6;stroke:#FFFFFF}
+.orb-ic{display:grid;place-items:center;transition:all .3s var(--ease)}
+.node.boss .orb{width:84px;height:84px;border-radius:26px}
+.node.boss .orb svg{width:33px;height:33px}
+.node.now .orb{border-color:var(--w);color:var(--w);background:var(--w-soft);box-shadow:0 0 0 4px var(--w-soft)}
+.node.now .orb::after{content:"";position:absolute;inset:-7px;border-radius:26px;border:1px solid var(--w);opacity:.4;animation:halo 2.4s ease-out infinite}
+@keyframes halo{0%{transform:scale(.96);opacity:.45}100%{transform:scale(1.14);opacity:0}}
+.node.done .orb{background:var(--w);border-color:var(--w);color:#FFFFFF}
+.node.done .orb .orb-ic{opacity:0;transform:scale(.5)}
+.node.done .orb-ck{opacity:1;transform:scale(1)}
+.nlabel{display:block;margin-top:5px;font-family:var(--disp);font-weight:500;font-size:.78rem;line-height:1.2;color:var(--fg-dim);transition:color .3s var(--ease)}
+.node.now .nlabel{color:var(--fg)}
+.node.done .nlabel{color:var(--fg-faint)}
+.bosstag{display:block;font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-top:2px}
+
+/* ---------- sheet ---------- */
+.scrim{position:fixed;inset:0;z-index:50;background:rgba(10,11,14,.76);backdrop-filter:blur(4px);opacity:0;transition:opacity .3s var(--ease)}
+.scrim.on{opacity:1}
+.sheet{position:fixed;z-index:51;left:0;right:0;bottom:0;max-width:520px;margin:0 auto;background:var(--surface);
+  border:1px solid var(--line);border-bottom:0;border-radius:24px 24px 0 0;
+  padding:8px 20px calc(22px + env(safe-area-inset-bottom,0px));
+  transform:translateY(102%);transition:transform .4s var(--ease);max-height:88vh;overflow-y:auto}
+.sheet.on{transform:translateY(0)}
+.grip{width:38px;height:4px;border-radius:99px;background:var(--line);margin:0 auto 16px}
+.s-head{display:flex;gap:13px;align-items:center;margin-bottom:12px}
+.s-ic{flex:0 0 auto;width:50px;height:50px;border-radius:15px;background:var(--w-soft);color:var(--w);display:grid;place-items:center}
+.s-ic svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.s-head h3{font-size:1.24rem;line-height:1.15;letter-spacing:-.01em}
+.schips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:15px;align-items:center}
+.schip{font-size:.69rem;font-weight:500;padding:4px 10px;border-radius:7px;background:var(--surface-2);color:var(--fg-dim);border:1px solid var(--line-soft);white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.schip.xp{background:var(--accent-soft);color:var(--accent);border-color:rgba(233,161,59,.3);font-family:var(--disp);font-weight:600}
+.schip.me{background:var(--w-soft);color:var(--w);border-color:var(--w)}
+.schip .tile{width:17px;height:17px;border-radius:5px;font-size:.55rem}
+.s-why{margin:0 0 16px;font-size:.9rem;color:var(--fg);background:var(--surface-2);border-left:2px solid var(--w);border-radius:0 10px 10px 0;padding:11px 14px}
+.s-steps{list-style:none;margin:0 0 18px;padding:0;counter-reset:n}
+.s-steps li{counter-increment:n;display:flex;gap:11px;align-items:flex-start;font-size:.87rem;color:var(--fg-dim);margin-bottom:10px}
+.s-steps li::before{content:counter(n);flex:0 0 auto;width:21px;height:21px;border-radius:6px;background:var(--surface-2);
+  border:1px solid var(--line-soft);color:var(--w);font-family:var(--disp);font-weight:600;font-size:.65rem;display:grid;place-items:center;margin-top:1px}
+.s-steps code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.85em;background:var(--bg);padding:1px 6px;border-radius:5px;color:var(--fg);word-break:break-word}
+.s-acts{display:flex;gap:9px;flex-wrap:wrap}
+.b{flex:1 1 150px;font-family:var(--disp);font-weight:600;font-size:.87rem;border:0;border-radius:12px;padding:13px 18px;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:all .3s var(--ease);text-decoration:none}
+.b.go{background:var(--accent);color:#FFFFFF}
+.b.go:hover{filter:brightness(1.08)}
+.b.go:active{transform:scale(.97)}
+.b.alt{background:transparent;color:var(--fg-dim);border:1px solid var(--line)}
+.b.alt:hover{color:var(--fg);border-color:var(--fg-faint)}
+.b.alt:active{transform:scale(.97)}
+
+#fx{position:fixed;inset:0;z-index:70;pointer-events:none}
+.toast{position:fixed;z-index:80;left:50%;top:24%;transform:translate(-50%,-10px) scale(.9);opacity:0;
+  background:var(--accent);color:#FFFFFF;font-family:var(--disp);font-weight:700;font-size:1.3rem;
+  padding:15px 30px;border-radius:16px;text-align:center;
+  transition:all .45s var(--ease);pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0) scale(1)}
+.toast small{display:block;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;opacity:.7;font-weight:600}
+.foot{text-align:center;color:var(--fg-faint);font-size:.73rem;margin-top:28px}
+.sync{display:inline-flex;align-items:center;gap:7px}
+.sync i{width:6px;height:6px;border-radius:50%;background:var(--ok)}
+.sync.off i{background:var(--fg-faint)} .sync.err i{background:#C9654F}
+
+@media (max-width:420px){.node{width:112px}.nlabel{font-size:.73rem}.whead h2{font-size:1.65rem}.stat b{font-size:1.05rem}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+  <button class="snd" id="sndBtn" type="button" aria-label="Toggle sound">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" id="sndIcon">
+      <path d="M11 5L6.5 9H3v6h3.5L11 19V5z"/><path d="M15.5 9.5a3.5 3.5 0 0 1 0 5M18 7a7 7 0 0 1 0 10"/>
+    </svg>
+  </button>
+
+  <header class="hud">
+    <div class="mono"><img src="monogram.png" alt="Arpita Mehta monogram"></div>
+    <div class="hud-mid">
+      <h1>The Launch Quest</h1>
+      <p><b id="lvlName">Getting started</b> &middot; <span id="lvlNum">Level 1</span></p>
+    </div>
+    <div class="donut">
+      <svg viewBox="0 0 64 64"><circle class="dt" cx="32" cy="32" r="27"></circle>
+      <circle class="db" id="donutBar" cx="32" cy="32" r="27" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100"></circle></svg>
+      <b id="pctTxt">0%</b>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat" id="stW"><b id="stWorlds">0/7</b><span>WORLDS</span></div>
+    <div class="stat" id="stS"><b id="stSteps">0/46</b><span>STEPS</span></div>
+    <div class="stat on"><b id="stXp">0</b><span>XP</span></div>
+  </div>
+
+  <div id="view"></div>
+  <p class="foot"><span class="sync" id="sync"><i></i><span id="syncTxt">Connecting…</span></span></p>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sTitle">
+  <div class="grip"></div>
+  <div class="s-head"><div class="s-ic" id="sIc"></div><h3 id="sTitle"></h3></div>
+  <div class="schips" id="sChips"></div>
+  <p class="s-why" id="sWhy"></p>
+  <ol class="s-steps" id="sSteps"></ol>
+  <div class="s-acts" id="sActs"></div>
+</aside>
+<div class="toast" id="toast"></div>
+<canvas id="fx"></canvas>
+
+<script>
+var I={
+ key:'<circle cx="8.5" cy="12" r="4.2"/><path d="M12.7 12H21M17.5 12v3.4M20.3 12v2.4"/>',
+ bug:'<path d="M12 4.2l8.6 15.3H3.4z"/><path d="M12 10.2v4"/><circle cx="12" cy="17" r=".9" fill="currentColor" stroke="none"/>',
+ fix:'<path d="M20.2 5.3a4.6 4.6 0 0 1-6.1 5.9l-7.6 7.6a2 2 0 1 1-2.8-2.8l7.6-7.6a4.6 4.6 0 0 1 5.9-6.1l-3 3 2.9 2.9 3.1-2.9z"/>',
+ card:'<rect x="2.8" y="5.8" width="18.4" height="12.4" rx="2.8"/><path d="M2.8 10.3h18.4M6.5 14.6h3"/>',
+ cal:'<rect x="3.4" y="5.4" width="17.2" height="15.2" rx="3"/><path d="M3.4 10h17.2M8 3.2v4M16 3.2v4"/>',
+ link:'<path d="M10.2 13.8a4.2 4.2 0 0 0 6 0l2.8-2.8a4.2 4.2 0 1 0-6-6l-1.4 1.4"/><path d="M13.8 10.2a4.2 4.2 0 0 0-6 0L5 13a4.2 4.2 0 0 0 6 6l1.4-1.4"/>',
+ bolt:'<path d="M13.6 2.8L5 13.4h6.1L10.4 21.2 19 10.6h-6.1l.7-7.8z"/>',
+ bell:'<path d="M18.2 16.2V11a6.2 6.2 0 1 0-12.4 0v5.2L4.2 18.8h15.6l-1.6-2.6z"/><path d="M9.9 21a2.3 2.3 0 0 0 4.2 0"/>',
+ cup:'<path d="M7.8 3.6h8.4v5.2a4.2 4.2 0 1 1-8.4 0V3.6z"/><path d="M7.8 5.2H5a3.1 3.1 0 0 0 3 3.1M16.2 5.2H19a3.1 3.1 0 0 1-3 3.1"/><path d="M12 13v3.6M8.6 20.4h6.8"/>',
+ chart:'<path d="M4.6 20V12.4M12 20V4.4M19.4 20v-9.4"/>',
+ flag:'<path d="M6 21.2V3.4M6 4.6h11.6l-2.8 4.2 2.8 4.2H6"/>',
+ find:'<circle cx="10.6" cy="10.6" r="6.4"/><path d="M15.3 15.3L20.4 20.4"/>',
+ mail:'<rect x="2.8" y="5.2" width="18.4" height="13.6" rx="3"/><path d="M4 7.8l8 6 8-6"/>',
+ spark:'<path d="M12 2.8l2.1 6.8 6.8 2.1-6.8 2.1L12 20.6l-2.1-6.8L3.1 11.7l6.8-2.1L12 2.8z"/>',
+ pin:'<path d="M12 21.4s7.2-6.4 7.2-11.4a7.2 7.2 0 1 0-14.4 0c0 5 7.2 11.4 7.2 11.4z"/><circle cx="12" cy="9.8" r="2.7"/>',
+ heart:'<path d="M12 20.4S4.2 15.4 4.2 10a4.4 4.4 0 0 1 7.8-2.6A4.4 4.4 0 0 1 19.8 10c0 5.4-7.8 10.4-7.8 10.4z"/>',
+ cam:'<rect x="2.8" y="6.8" width="18.4" height="13.4" rx="3.4"/><path d="M8.4 6.8l1.6-2.8h4l1.6 2.8"/><circle cx="12" cy="13.4" r="3.6"/>',
+ star:'<path d="M12 3.2l2.8 5.7 6.3.9-4.6 4.4 1.1 6.3L12 17.6l-5.6 2.9 1.1-6.3L2.9 9.8l6.3-.9L12 3.2z"/>',
+ pen:'<path d="M3.8 20.2l1.1-4.6L16.2 4.3a2.2 2.2 0 1 1 3.1 3.1L8 18.9l-4.2 1.3z"/>',
+ loop:'<path d="M20.2 12a8.2 8.2 0 1 1-2.4-5.8"/><path d="M20.4 3.6v5.2h-5.2"/>',
+ magnet:'<path d="M4.8 3.8h4.4v9.4a2.8 2.8 0 0 0 5.6 0V3.8h4.4v9.4a7.2 7.2 0 0 1-14.4 0V3.8z"/><path d="M4.8 9.1h4.4M14.8 9.1h4.4"/>',
+ globe:'<circle cx="12" cy="12" r="8.6"/><path d="M3.4 12h17.2M12 3.4c2.6 3.2 2.6 14.2 0 17.2M12 3.4c-2.6 3.2-2.6 14.2 0 17.2"/>'
+};
+var CHECK='<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.6l5 5L19.5 7"/></svg>';
+var TOOL={
+ netlify:{n:"Netlify",l:"Nf",c:"#3BBFB2"}, github:{n:"GitHub",l:"Gh",c:"#AAB3C0"},
+ hubspot:{n:"HubSpot",l:"Hs",c:"#E8785A"}, cal:{n:"Cal.com",l:"Cal",c:"#7FB069"},
+ razorpay:{n:"Razorpay",l:"Rp",c:"#5B8FD6"}, google:{n:"Google",l:"Go",c:"#E0A33B"},
+ site:{n:"Your site",l:"AM",c:"#C25C84"}, you:{n:"Your material",l:"You",c:"#4E96B8"}
+};
+var WORLDS=[
+ {id:"w1",n:"World 1",name:"Stop the Leaks",ic:"fix",when:"Nearly done",c:"#B5543F",s:"rgba(181,84,63,.11)",tools:["netlify","cal","google"]},
+ {id:"w5",n:"World 2",name:"Move to GitHub",ic:"bolt",when:"This week",c:"#5A64B8",s:"rgba(90,100,184,.11)",tools:["github","netlify"]},
+ {id:"w2",n:"World 3",name:"Switch On the Lights",ic:"chart",when:"Next two weeks",c:"#B9792A",s:"rgba(185,121,42,.11)",tools:["hubspot","google"]},
+ {id:"w3",n:"World 4",name:"Make It Sell",ic:"heart",when:"Weeks 3 to 6",c:"#A8456C",s:"rgba(168,69,108,.11)",tools:["site","you"]},
+ {id:"w7",n:"World 5",name:"Fill the Shelves",ic:"pen",when:"Alongside everything",c:"#376F8C",s:"rgba(55,111,140,.11)",tools:["you"]},
+ {id:"w4",n:"World 6",name:"Go Wide",ic:"globe",when:"Month two on",c:"#357A5A",s:"rgba(53,122,90,.11)",tools:["google","site"]},
+ {id:"w6",n:"World 7",name:"Take the Money",ic:"cup",when:"The last leg",c:"#97761A",s:"rgba(151,118,26,.12)",tools:["razorpay","cal"]}
+];
+
+var S=[
+{id:"a1",w:"w1",ic:"key",t:"Find the Code",xp:200,m:"15 min",who:"You",tool:"netlify",
+ why:"The live site is not the folder we had been editing. We needed the real one.",
+ d:["Open Netlify, Site configuration","Build &amp; deploy","GitHub repo, or a dragged folder?","Tell me which"],l:{t:"Open Netlify",u:"https://app.netlify.com"}},
+{id:"a2",w:"w1",ic:"bug",t:"Catch the Error",xp:200,m:"10 min",who:"Together",tool:"site",
+ why:"One broken quote mark was killing the quiz, the forms and the counters all at once.",
+ d:["Open the site in Chrome","Right-click, Inspect, Console","Reload and screenshot anything red"],l:{t:"Open the live site",u:"https://arpitamehta.co/"}},
+{id:"a3",w:"w1",ic:"fix",t:"Patch It",xp:300,m:"30 min",who:"Me",tool:"site",
+ why:"The repair itself. One line in assessment.html.",
+ d:["Nothing for you","Fixed and saved to your folder"],l:null},
+{id:"a4",w:"w1",ic:"globe",t:"Ship v30",xp:300,m:"5 min",who:"You",tool:"netlify",
+ why:"The quiz fix and 19 missing images. Until it went up, nothing had changed for visitors.",
+ d:["Drag the folder into Netlify","Open the live quiz","Check the logo on your phone"],l:{t:"Open Netlify",u:"https://app.netlify.com"}},
+{id:"a5",w:"w1",ic:"cal",t:"Fix the Clock",xp:250,m:"2 min",who:"You",tool:"cal",
+ why:"Your scheduling was set to New York. A 3pm booking would have landed at 12:30am your time.",
+ d:["Account settings, Profile","Timezone to India Standard Time","Reopen a booking page to confirm"],l:null},
+{id:"a6",w:"w1",ic:"spark",t:"Wake the Intro Call",xp:200,m:"3 min",who:"You",tool:"cal",
+ why:"The 15 minute call existed but was switched off, so its link was dead.",
+ d:["Event Types","Find the discovery call","Toggle it on"],l:null},
+{id:"a7",w:"w1",ic:"cal",t:"Move to Cal.com",xp:250,m:"20 min",who:"You",tool:"cal",
+ why:"Free, and unlike Calendly it runs both events at once. Nothing manual.",
+ d:["Sign up with your presence email","Timezone to India Standard Time","Connect Google Calendar so busy days grey out","Discovery Call, 15 min, video","In Person Session, 30 min, Delhi","Hide both from your public page"],l:{t:"Open Cal.com",u:"https://cal.com"}},
+{id:"a8",w:"w1",ic:"bell",t:"Sort Out Alerts",xp:300,m:"2 min",who:"You",tool:"google",
+ why:"Enquiries sat in your sheet for months with nothing telling you. The script now handles this properly, so Google's plain version is just a duplicate of a worse email.",
+ d:["Google Form, Responses, three dots","Switch Google's notifications <b>off</b>","The script's branded version replaces it","One notification per lead, not two"],l:{t:"Open Google Forms",u:"https://docs.google.com/forms"}},
+{id:"a9",w:"w1",ic:"globe",t:"Ship v32",xp:200,m:"5 min",who:"You",tool:"netlify",
+ why:"The moving testimonial rail, and your heaviest image cut from 926 KB to 111 KB.",
+ d:["Unzip v32","Push to GitHub, or drag into Netlify","Check the testimonials move"],l:null},
+
+{id:"a10",w:"w1",ic:"mail",t:"Auto-Reply to Enquiries",xp:350,m:"15 min",who:"You",tool:"google",
+ why:"Someone enquires, sees a thank you on screen, then hears nothing for two days. That silence is where interest dies. This replies in their inbox within seconds, branded, with wording tailored to all nine enquiry types.",
+ d:["Sign in to Google as <b>presence.arpitamehta@gmail.com</b>, not your personal account","Open the sheet <b>Presence Quotient Leads (Responses)</b>","Menu: <b>Extensions &rarr; Apps Script</b>","Delete what is in the editor, paste <code>enquiry-autoresponder.gs</code>, press Save","Left sidebar: the alarm-clock <b>Triggers</b> icon, then <b>Add Trigger</b>","Function <code>onFormSubmit</code> &middot; source <b>From spreadsheet</b> &middot; type <b>On form submit</b>","Save, then authorise when Google asks (choose Advanced, then Allow)","Submit a test enquiry on your live site and watch both inboxes"],
+ l:{t:"Open the responses sheet",u:"https://docs.google.com/spreadsheets/d/1emY_kLi7prCvaJrvS1kr2Xm3C6bWReuYd3YjPXVH8Jc/edit"}},
+{id:"a11",w:"w1",ic:"find",t:"Tame Your Inbox",xp:150,m:"10 min",who:"You",tool:"google",
+ why:"A lead buried between newsletters is a lead you answer late. Make them impossible to miss.",
+ d:["Gmail, create a filter on the notification sender","Apply a label: Enquiries","Star it, and never send to spam","Check that label once a morning, once an evening"],l:null},
+
+{id:"g1",w:"w5",ic:"bolt",t:"Upload v32",xp:250,m:"10 min",who:"You",tool:"github",
+ why:"Your repository needs the real site in it, so there is finally one true copy.",
+ d:["Add file, Upload files","Drag the <b>contents</b> of v32 in","Include images, blog and downloads","Commit"],l:{t:"Open your repo",u:"https://github.com/presencearpitamehta-dotcom/Website-Presence-AM"}},
+{id:"g2",w:"w5",ic:"key",t:"Let Me In",xp:150,m:"2 min",who:"You",tool:"github",
+ why:"I can read your repo but not write to it. Grant access and fixes arrive as commits, no more zips.",
+ d:["Open the GitHub App install page","Select your account","Give it the Website-Presence-AM repo"],l:{t:"Install the app",u:"https://github.com/apps/claude/installations/select_target"}},
+{id:"g3",w:"w5",ic:"link",t:"Link Netlify",xp:300,m:"10 min",who:"You",tool:"netlify",
+ why:"Deploys stop being a folder you drag and start happening on their own.",
+ d:["Site configuration, Build &amp; deploy","Continuous deployment, Link repository","Build command <code>node update-sitemap-date.js</code>","Publish directory <code>.</code>"],l:{t:"Open Netlify",u:"https://app.netlify.com"}},
+{id:"g4",w:"w5",ic:"loop",t:"Watch It Build",xp:200,m:"5 min",who:"You",tool:"netlify",
+ why:"The build stamps your sitemap dates automatically, which drag-and-drop never did.",
+ d:["Make a tiny edit in GitHub and commit","Watch the deploy run","Open <code>/sitemap.xml</code>","The dates should read today"],l:null},
+{id:"g5",w:"w5",ic:"fix",t:"Learn the Loop",xp:150,m:"5 min",who:"You",tool:"github",
+ why:"Once this clicks, changing your site is a two-minute job you never need anyone for.",
+ d:["Open any file in GitHub","Click the pencil","Edit, then Commit","Netlify republishes within a minute"],l:null},
+
+{id:"b1",w:"w2",ic:"fix",t:"Finish HubSpot Setup",xp:250,m:"15 min",who:"You",tool:"hubspot",
+ why:"Your portal exists but has never been set up. Nothing else here runs until it is.",
+ d:["Sign in to HubSpot","Walk through the setup prompts","Verify your sending email address"],l:{t:"Open HubSpot",u:"https://app.hubspot.com"}},
+{id:"b2",w:"w2",ic:"key",t:"Give Me Write Access",xp:200,m:"2 min",who:"You",tool:"hubspot",
+ why:"I can read your HubSpot but not build in it. Two minutes unlocks four of my steps.",
+ d:["Claude settings, Connectors","Disconnect HubSpot","Reconnect it","Approve the write permissions"],l:null},
+{id:"b3",w:"w2",ic:"pen",t:"Build the Lead Form",xp:350,m:"20 min",who:"You",tool:"hubspot",
+ why:"This replaces your Google Form. Leads land straight in the CRM with no spreadsheet between.",
+ d:["Marketing, Forms, Create","Fields: name, email, phone, persona","Score, band and weakness as hidden fields","Publish, copy the embed code","Send that code to me"],l:{t:"Open HubSpot",u:"https://app.hubspot.com"}},
+{id:"b4",w:"w2",ic:"bolt",t:"Put HubSpot on the Site",xp:300,m:"30 min",who:"Me",tool:"hubspot",
+ why:"Tracking on every page, and the quiz feeding HubSpot instead of a spreadsheet.",
+ d:["Send me your tracking code","And the form embed code","I update all eleven pages"],l:null},
+{id:"b5",w:"w2",ic:"mail",t:"The Welcome Emails",xp:400,m:"30 min",who:"Me",tool:"hubspot",
+ why:"One per audience, sent the moment someone lands in the right list.",
+ d:["I write and build them","You read them and fix the voice","Org leads route to you, never bulk"],l:null},
+{id:"b6",w:"w2",ic:"spark",t:"The Magic Email",xp:500,m:"30 min",who:"Me",boss:1,tool:"hubspot",
+ why:"It lands minutes after someone sees their score, naming their band and weakest dimension back to them.",
+ d:["Fires on quiz completion","Merges in score, band and weakness","One soft line about the ₹339 call","You approve before it goes live"],l:null},
+{id:"b7",w:"w2",ic:"chart",t:"See Your Visitors",xp:300,m:"15 min",who:"You",tool:"google",
+ why:"HubSpot counts contacts. Analytics counts everyone who never becomes one.",
+ d:["analytics.google.com","Admin, Create, Property","Copy the <code>G-</code> code and send it to me"],l:{t:"Open Analytics",u:"https://analytics.google.com"}},
+{id:"b8",w:"w2",ic:"find",t:"Get Found",xp:250,m:"10 min",who:"You",tool:"google",
+ why:"This is how Google tells you what you rank for.",
+ d:["Search Console, Add property, Domain","Verify with the DNS record","Submit <code>sitemap.xml</code>"],l:{t:"Open Search Console",u:"https://search.google.com/search-console"}},
+{id:"b10",w:"w2",ic:"find",t:"Map the Customer Journey",xp:350,m:"1 hr",who:"You",tool:"hubspot",
+ why:"Before building a single automation, draw the path. Stranger, curious, warm, booked, client, advocate. Each stage needs a different thing said to it.",
+ d:["Name your stages, no more than six","What does someone believe at each one?","What one thing moves them to the next?","Where do people currently drop out?","Send me the map and I build it"],l:null},
+{id:"b11",w:"w2",ic:"loop",t:"Build the Journeys",xp:500,m:"2 hrs",who:"Me",boss:1,tool:"hubspot",
+ why:"Your map, turned into HubSpot workflows that run without you. Needs write access first.",
+ d:["One workflow per stage","Enrolment triggers from the quiz, the form, the playbook","You approve every email before it sends","Nothing touches the website"],l:null},
+{id:"b12",w:"w2",ic:"mail",t:"Start the Newsletter",xp:400,m:"2 hrs / mo",who:"You",tool:"hubspot",
+ why:"The people who are not ready yet. A monthly note keeps you in mind for the moment they are, and it is the cheapest audience you will ever own.",
+ d:["Monthly, same week each month","One idea, properly argued, not a roundup","Reuse your journal article as the spine","Soft invitation at the end, never the top"],l:null},
+{id:"b9",w:"w2",ic:"pin",t:"Claim Your Pin",xp:250,m:"15 min",who:"You",tool:"google",
+ why:"Delhi searches show the map before the blue links.",
+ d:["business.google.com","Delhi NCR as your service area","Add five photos","Verify, it takes a few days"],l:{t:"Open Google Business",u:"https://business.google.com"}},
+
+{id:"c1",w:"w3",ic:"heart",t:"Collect 5 Quotes",xp:500,m:"20 min",who:"You",boss:1,tool:"you",
+ why:"Your biggest missing asset. Nothing converts like a real person saying it worked.",
+ d:["Write to five people you have helped","Two lines, not a paragraph","Ask what changed afterwards","Name, role, company","A photo doubles the weight"],l:null},
+{id:"c2",w:"w3",ic:"cam",t:"The Photoshoot",xp:400,m:"Half a day",who:"You",tool:"you",
+ why:"Every image is a placeholder. For a presence consultant that quietly undermines the claim.",
+ d:["Portrait, four programmes, two sessions","Name files per the guide","Under 200KB each","Send them to me"],l:null},
+{id:"c3",w:"w3",ic:"star",t:"Show the Proof",xp:200,m:"30 min",who:"Me",tool:"site",
+ why:"Quotes plus review schema, which can put stars beside your search result.",
+ d:["Send me the quotes and photos","I place them above the booking panel"],l:null},
+{id:"c4",w:"w3",ic:"pen",t:"Article Five",xp:300,m:"2 hrs",who:"You",tool:"you",
+ why:"Four articles is a start, not a library.",
+ d:["Your most-asked client question","1,200 words that truly answer it","End with the assessment","Send me the text"],l:null},
+{id:"c5",w:"w3",ic:"spark",t:"Moving Testimonials",xp:300,m:"30 min",who:"Me",tool:"site",
+ why:"Quote cards and session photos drifting in one rail. Built and tested.",
+ d:["Drop photos into images/testimonials/","Name them 1.jpg, 2.jpg, 3.jpg","They join the strip automatically"],l:null},
+{id:"c6",w:"w3",ic:"card",t:"Programme Image Cards",xp:250,m:"30 min",who:"Me",tool:"site",
+ why:"Your four programmes are text blocks. Photographs make people stop and read them.",
+ d:["Needs the photoshoot first","I rebuild the cards with pictures","Lift on hover, nothing louder"],l:null},
+{id:"c7",w:"w3",ic:"star",t:"The Score Reveal",xp:250,m:"30 min",who:"Me",tool:"site",
+ why:"The most emotional moment on your site is someone seeing their own number. Right now it just appears.",
+ d:["The score sweeps around a dial","Counts up to their number","The one flourish your site has earned"],l:null},
+
+{id:"e1",w:"w7",ic:"find",t:"Map What Exists",xp:200,m:"30 min",who:"You",tool:"you",
+ why:"Before writing anything new, see what you have. Most of this is half-built in old decks.",
+ d:["List every programme you run","Against each: slides, workbook, emails, one pager","Mark done, half done or nothing","Send me the list"],l:null},
+{id:"e2",w:"w7",ic:"card",t:"Programme One Pagers",xp:500,m:"1 day",who:"You",tool:"you",
+ why:"The sales sheet. Someone about to spend real money needs to see what they get, on one page.",
+ d:["One each across your programmes","Who it is for, what is different afterwards","Format, length, group size","Dates, place, price","Send them to me and I build the pages"],l:null},
+{id:"e3",w:"w7",ic:"pen",t:"Session Material",xp:600,m:"A day each",who:"You",boss:1,tool:"you",
+ why:"What you deliver in the room. The biggest body of work, and what clients judge you on afterwards.",
+ d:["Slides, workbook and exercises per programme","Start with the one you run most","Reuse the workshop template and workbook","One finished beats five started"],l:null},
+{id:"e4",w:"w7",ic:"mail",t:"Enquiry Reply Emails",xp:400,m:"2 hrs",who:"You",tool:"you",
+ why:"Six options in your enquiry dropdown means six replies to have ready. Writing fresh each time is how leads go cold.",
+ d:["General, Presence Edit, Executive Edge","Social Table, Debut, One to One","What it is, who it suits, what happens next","One clear next step, never a menu"],l:null},
+{id:"e5",w:"w7",ic:"loop",t:"Post Enquiry Follow Up",xp:400,m:"3 hrs",who:"You",tool:"you",
+ why:"Most people who enquire do not buy on the first reply. Two more useful emails is the difference.",
+ d:["Day 3: one useful thing, no pitch","Day 7: a short invitation to the call","Day 21: a case or a cohort date"],l:null},
+{id:"e6",w:"w7",ic:"spark",t:"Post Session Material",xp:300,m:"3 hrs",who:"You",tool:"you",
+ why:"What they get after the room empties. This earns the referral, and almost nobody does it.",
+ d:["A recap of what was covered","Three things to practise this month","An invitation to the next programme","Ask for the testimonial here, while it is warm"],l:null},
+
+{id:"d1",w:"w4",ic:"loop",t:"Monthly Ritual",xp:200,m:"2 hrs / mo",who:"You",tool:"you",
+ why:"Consistency beats volume. Google notices sites that keep moving.",
+ d:["Block the same two hours monthly","Keep a list of client questions","That list is your content plan"],l:null},
+{id:"d2",w:"w4",ic:"cal",t:"Name the Dates",xp:150,m:"10 min",who:"You",tool:"site",
+ why:"&ldquo;Twice a year&rdquo; gives nobody a reason to act today.",
+ d:["Pick the next date per programme","Next cohort February 2027, six places","No date yet? Offer a waiting list"],l:null},
+{id:"d3",w:"w4",ic:"magnet",t:"Magnet Two",xp:400,m:"1 day",who:"You",tool:"you",
+ why:"The playbook only speaks to graduates. Your best-paying audience gets nothing.",
+ d:["One sharp problem senior professionals have","Eight focused pages, not forty","Same form, same sheet","I build the landing page"],l:null},
+{id:"d4",w:"w4",ic:"globe",t:"Three Links",xp:400,m:"Ongoing",who:"You",tool:"you",
+ why:"The one ranking signal you cannot create from inside your own site.",
+ d:["Guest piece for a careers publication","Certification directories, usually free","Ask a corporate client to list you","Two podcasts"],l:null},
+
+{id:"r1",w:"w6",ic:"card",t:"Build Checkout",xp:400,m:"20 min",who:"You",tool:"razorpay",
+ why:"Two payment pages. This is the moment your website stops being a brochure.",
+ d:["Payment Pages, Create","Page A: <code>339</code> fixed","Page B: <code>5999</code> fixed","Name, email, phone required","Publish both, copy the links"],l:{t:"Open Razorpay",u:"https://dashboard.razorpay.com"}},
+{id:"r2",w:"w6",ic:"link",t:"Join the Two",xp:150,m:"5 min",who:"You",tool:"razorpay",
+ why:"Each payment page hands the person straight to its own booking link. Pay, pick a slot, done.",
+ d:["Discovery page, Redirect URL, your Cal.com discoverycall link","In person page, Redirect URL, your Cal.com inperson link","Switch on Razorpay payment alerts","Someone who pays but never books still needs chasing"],l:null},
+{id:"r3",w:"w6",ic:"bolt",t:"Wire It Up",xp:150,m:"5 min",who:"Me",tool:"site",
+ why:"I drop your two live links into every page that has the booking panel.",
+ d:["Send me both Razorpay URLs","I replace the placeholders","Push, or send you the folder"],l:null},
+{id:"r4",w:"w6",ic:"cup",t:"Pay Yourself",xp:500,m:"15 min",who:"You",boss:1,tool:"razorpay",
+ why:"The final boss. Walk your own funnel with real money, then refund it.",
+ d:["On your phone, book the discovery call","Pay the ₹339","Do you land on Cal.com? Pick a slot","Did the emails arrive?","Refund yourself"],l:null},
+{id:"r5",w:"w6",ic:"bolt",t:"Make It Automatic",xp:300,m:"15 min",who:"Me",tool:"razorpay",
+ why:"Right now, the confirmation and prepare for your session emails go out by hand, you copy, paste, send. Once a real payment exists, that same payment is a signal the script can read. No more copying a template at eleven at night.",
+ d:["Razorpay, Settings, Webhooks","Point it at the script's web address","A payment comes in, the confirmation goes out, same minute","Your manual send retires, the template stays as backup","Confirmation email reminds them to complete the PQ assessment the same day, before the session","No score on file yet? the email carries the assessment link; already taken? it skips the nag"],l:null},
+{id:"r6",w:"w6",ic:"spark",t:"Make the Assessment the Starting Point",xp:250,m:"30 min",who:"Me",tool:"site",
+ why:"Every one-to-one session is meant to open with a score, not a blank page. Right now the PQ assessment is one path in among several, so a client can book and show up with nothing on file. It needs to be the thing every booking checks for, not an optional detour.",
+ d:["Confirm the assessment itself is solid before every session leans on it","Check it against each lead's confirmation flow, not just the quiz page","Booking checks for an existing submission tied to that email","No submission yet, the confirmation email carries the link and the nudge","The four missing per-dimension fields (Image/Presence/Social/Distinction) still need adding to the sheet before scores can be shown in full"],l:null},
+{id:"r7",w:"w6",ic:"spark",t:"Arpita's Assistant, Phase 1",xp:350,m:"45 min",who:"Me",tool:"site",
+ why:"You write My Read, the habit and the recommendation once, in the sheet, after the session. Tick Ready to Send and the Diagnosis & Plan doc gets filled from your real brand template, saved, and emailed as a PDF, no copy-pasting a document by hand for every client.",
+ d:["New sheet columns: Session Date, My Read 1-3, Habit, Why This Programme, Ready to Send, Sent At, Status, Client Folder","Diagnosis & Plan Google Doc template, merge-tag driven, your brand colours","Ready to Send checkbox triggers generate + email, guarded so it never double-sends","Missing fields block the send and tell you what's missing, instead of mailing a half-built doc"],l:null},
+{id:"r8",w:"w6",ic:"card",t:"One Folder Per Client",xp:200,m:"20 min",who:"Me",tool:"site",
+ why:"Right now a client's documents live wherever they happened to be generated. Every client should have one Drive folder that quietly collects everything you've ever sent them, created automatically the first time anything goes out.",
+ d:["Folder auto-created on first send, named for the client","Every generated Doc + PDF saved there going forward","Folder link written back into the sheet so you can jump to it","Later: move older, already-sent documents in by hand, once, to backfill"],l:null},
+{id:"r9",w:"w6",ic:"chart",t:"Deliverables Tracker & Calendar Blocks",xp:300,m:"1 hr",who:"Me",tool:"site",
+ why:"What's owed to which client, and when you actually need to sit down and prepare, currently lives in your head. A tracker makes it visible; calendar blocks make sure prep time isn't quietly skipped.",
+ d:["A tracker view: client, what's owed, what's sent, what's overdue","Calendar event auto-created per booked session, with a prep block before it","Reminder the morning of, if the assessment still isn't filled in","Not yet scoped in detail — needs a short conversation on what 'owed' should track"],l:null}
+];
+var TOTAL=S.reduce(function(a,s){return a+s.xp},0);
+var TIERS=["Getting started","Finding your feet","Picking up speed","Hitting your stride","Halfway there","On a roll","Home stretch","Nearly there","Almost home","Fully launched"];
+var XPAT=[50,74,50,26];
+var done={},db=null,busy={},muted=false,lastLevel=1,cur=null,ready=false,viewW=null;
+var $=function(i){return document.getElementById(i)};
+function esc(s){return String(s).replace(/"/g,"&quot;")}
+function step(id){for(var i=0;i<S.length;i++)if(S[i].id===id)return S[i];return null}
+function world(id){for(var i=0;i<WORLDS.length;i++)if(WORLDS[i].id===id)return WORLDS[i];return null}
+var RM=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+var actx=null;
+try{muted=localStorage.getItem("lq_mute")==="1"}catch(e){}
+function tone(f,d,ty,v){if(muted)return;try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();var o=actx.createOscillator(),g=actx.createGain(),t=actx.currentTime;o.type=ty||"sine";o.frequency.setValueAtTime(f,t);g.gain.setValueAtTime(v||.06,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(actx.destination);o.start(t);o.stop(t+d+.02)}catch(e){}}
+function fanfare(){[523,659,784,1047].forEach(function(f,i){setTimeout(function(){tone(f,.24,"triangle",.06)},i*85)})}
+function paintSnd(){$("sndIcon").innerHTML=muted?'<path d="M11 5L6.5 9H3v6h3.5L11 19V5z"/><path d="M16 10l5 4M21 10l-5 4"/>':'<path d="M11 5L6.5 9H3v6h3.5L11 19V5z"/><path d="M15.5 9.5a3.5 3.5 0 0 1 0 5M18 7a7 7 0 0 1 0 10"/>';$("sndBtn").style.color=muted?"":"var(--accent)"}
+$("sndBtn").addEventListener("click",function(){muted=!muted;try{localStorage.setItem("lq_mute",muted?"1":"0")}catch(e){}paintSnd();if(!muted)tone(660,.12,"triangle",.05)});
+paintSnd();
+
+var cv=$("fx"),ctx=cv.getContext("2d"),bits=[],raf=null;
+function sizeFx(){var d=window.devicePixelRatio||1;cv.width=innerWidth*d;cv.height=innerHeight*d;cv.style.width=innerWidth+"px";cv.style.height=innerHeight+"px";ctx.setTransform(d,0,0,d,0,0)}
+sizeFx();
+function burst(x,y,cols,n){if(RM)return;for(var i=0;i<n;i++){var a=Math.random()*Math.PI*2,sp=3+Math.random()*9;bits.push({x:x,y:y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-5.5,c:cols[i%cols.length],s:3+Math.random()*5,r:Math.random()*6,vr:(Math.random()-.5)*.4,life:1})}if(!raf)raf=requestAnimationFrame(tick)}
+function tick(){ctx.clearRect(0,0,innerWidth,innerHeight);for(var i=bits.length-1;i>=0;i--){var p=bits[i];p.vy+=.32;p.x+=p.vx;p.y+=p.vy;p.vx*=.99;p.r+=p.vr;p.life-=.012;if(p.life<=0||p.y>innerHeight+60){bits.splice(i,1);continue}ctx.save();ctx.globalAlpha=Math.max(0,p.life);ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=p.c;ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.62);ctx.restore()}if(bits.length)raf=requestAnimationFrame(tick);else{raf=null;ctx.clearRect(0,0,innerWidth,innerHeight)}}
+var tT=null;
+function toast(b,s){var el=$("toast");el.innerHTML='<small>'+s+'</small>'+b;el.classList.add("on");clearTimeout(tT);tT=setTimeout(function(){el.classList.remove("on")},2100)}
+
+function stepsOf(id){return S.filter(function(s){return s.w===id})}
+function nextStep(){for(var i=0;i<S.length;i++)if(!done[S[i].id])return S[i];return null}
+function tiles(list){return list.map(function(k){var t=TOOL[k];return t?'<span class="tile" style="background:'+t.c+'" title="'+t.n+'">'+t.l+'</span>':''}).join('')}
+
+function renderHome(){
+  var nx=nextStep(),nw=nx?nx.w:null,h='';
+  h+='<p class="lead">'+(nx?'What are you working on today? <b>'+world(nw).name+'</b> is where you left off.':'Every world is clear.')+'</p><div class="wgrid">';
+  WORLDS.forEach(function(w){
+    var mine=stepsOf(w.id),n=mine.filter(function(s){return !!done[s.id]}).length;
+    var segs='';for(var i=0;i<mine.length;i++)segs+='<i class="'+(i<n?'f':'')+'"></i>';
+    h+='<div class="wwrap">'+(w.id===nw?'<span class="herebadge">Start here</span>':'')
+     +'<button class="wcard'+(n===mine.length?' clear':'')+'" data-w="'+w.id+'" style="--w:'+w.c+';--w-soft:'+w.s+'">'
+     +'<span class="wic"><svg viewBox="0 0 24 24">'+I[w.ic]+'</svg></span>'
+     +'<span class="wtx"><p class="wn">'+w.n+' &middot; '+w.when+'</p><h3>'+w.name+'</h3><span class="tiles">'+tiles(w.tools)+'</span></span>'
+     +'<span class="wmeter"><b>'+n+'/'+mine.length+'</b><span class="seg">'+segs+'</span></span>'
+     +'</button></div>';
+  });
+  h+='</div>';
+  $("view").innerHTML=h;
+}
+
+function renderWorld(id){
+  var w=world(id); if(!w) return renderHome();
+  var mine=stepsOf(id);
+  var h='<button class="back" id="backBtn">&larr; All worlds</button>'
+   +'<section class="world" id="wo-'+w.id+'" style="--w:'+w.c+';--w-soft:'+w.s+'">'
+   +'<div class="whead"><p class="wn">'+w.n+'</p><h2>'+w.name+'</h2>'
+   +'<div class="wsub"><span>'+w.when+'</span><span class="tiles">'+tiles(w.tools)+'</span></div>'
+   +'<div class="wbar"><i id="wb-'+w.id+'"></i></div>'
+   +'<span class="crown"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+I.cup+'</svg>World cleared</span></div>'
+   +'<div class="trail" id="tr-'+w.id+'" style="height:'+(mine.length*130+52)+'px">'
+   +'<svg class="tsvg"><path class="tbase" id="tb-'+w.id+'"/><path class="tfill" id="tf-'+w.id+'" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>';
+  mine.forEach(function(s,i){
+    h+='<div class="node'+(s.boss?' boss':'')+'" id="nd-'+s.id+'" style="left:'+XPAT[i%4]+'%;top:'+(i*130)+'px">'
+     +'<div class="orbwrap"><button class="orb" type="button" data-s="'+s.id+'" aria-label="'+esc(s.t)+'">'
+     +'<span class="orb-ic"><svg viewBox="0 0 24 24">'+I[s.ic]+'</svg></span><span class="orb-ck">'+CHECK+'</span></button></div>'
+     +'<span class="nlabel">'+s.t+(s.boss?'<span class="bosstag">Boss</span>':'')+'</span></div>';
+  });
+  h+='</div></section>';
+  $("view").innerHTML=h;
+  $("backBtn").addEventListener("click",function(){go(null)});
+  requestAnimationFrame(function(){drawTrail(id);paintWorld(id)});
+}
+
+function curve(p){if(!p.length)return"";var d="M"+p[0][0].toFixed(1)+" "+p[0][1].toFixed(1);for(var i=1;i<p.length;i++){var a=p[i-1],b=p[i],k=(b[1]-a[1])*.5;d+=" C"+a[0].toFixed(1)+" "+(a[1]+k).toFixed(1)+","+b[0].toFixed(1)+" "+(b[1]-k).toFixed(1)+","+b[0].toFixed(1)+" "+b[1].toFixed(1)}return d}
+function drawTrail(id){
+  var box=$("tr-"+id); if(!box)return;
+  var W=box.clientWidth,mine=stepsOf(id);
+  var pts=mine.map(function(s,i){return [W*XPAT[i%4]/100,i*130+44]});
+  var d=curve(pts);
+  ["tb-","tf-"].forEach(function(p){var el=$(p+id);if(el)el.setAttribute("d",d)});
+}
+function paintWorld(id){
+  var mine=stepsOf(id),n=0,first=nextStep();
+  mine.forEach(function(s){
+    var isd=!!done[s.id]; if(isd)n++;
+    var el=$("nd-"+s.id); if(!el)return;
+    el.classList.toggle("done",isd);
+    el.classList.toggle("now",!isd&&!!first&&first.id===s.id);
+  });
+  var f=mine.length?n/mine.length:0;
+  var bar=$("wb-"+id); if(bar)bar.style.width=(f*100)+"%";
+  var fill=$("tf-"+id); if(fill)fill.setAttribute("stroke-dashoffset",String(1-f));
+  var sec=$("wo-"+id); if(sec)sec.classList.toggle("clear",n===mine.length&&mine.length>0);
+}
+
+function go(id){
+  viewW=id;
+  if(id){location.hash=id;renderWorld(id);window.scrollTo({top:0,behavior:RM?"auto":"smooth"})}
+  else{if(location.hash)history.replaceState(null,"",location.pathname);renderHome()}
+}
+$("view").addEventListener("click",function(e){
+  var w=e.target.closest("[data-w]"); if(w){tone(520,.09,"triangle",.04);go(w.getAttribute("data-w"));return}
+  var b=e.target.closest("[data-s]"); if(b){openSheet(b.getAttribute("data-s"))}
+});
+
+function openSheet(id){
+  var s=step(id); if(!s)return;
+  cur=id;
+  var w=world(s.w),sh=$("sheet");
+  sh.style.setProperty("--w",w.c); sh.style.setProperty("--w-soft",w.s);
+  $("sIc").innerHTML='<svg viewBox="0 0 24 24">'+I[s.ic]+'</svg>';
+  $("sTitle").textContent=s.t;
+  var t=TOOL[s.tool];
+  $("sChips").innerHTML='<span class="schip xp">+'+s.xp+' XP</span>'
+   +'<span class="schip'+(s.who==="Me"?" me":"")+'">'+s.who+'</span>'
+   +'<span class="schip">'+s.m+'</span>'
+   +(t?'<span class="schip"><span class="tile" style="background:'+t.c+'">'+t.l+'</span>'+t.n+'</span>':'')
+   +(s.boss?'<span class="schip xp">Boss</span>':'');
+  $("sWhy").innerHTML=s.why;
+  $("sSteps").innerHTML=s.d.map(function(x){return "<li><span>"+x+"</span></li>"}).join("");
+  var isDone=!!done[s.id];
+  var acts='<button class="b go" type="button" id="sDone">'+(isDone?'Undo this':'Complete &middot; +'+s.xp+' XP')+'</button>';
+  if(s.l)acts+='<a class="b alt" href="'+s.l.u+'" target="_blank" rel="noopener noreferrer">'+s.l.t+' &rarr;</a>';
+  $("sActs").innerHTML=acts;
+  $("sDone").addEventListener("click",function(){mark(s.id)});
+  $("scrim").hidden=false; sh.hidden=false;
+  requestAnimationFrame(function(){$("scrim").classList.add("on");sh.classList.add("on")});
+  tone(520,.09,"triangle",.04);
+}
+function closeSheet(){$("scrim").classList.remove("on");$("sheet").classList.remove("on");setTimeout(function(){$("scrim").hidden=true;$("sheet").hidden=true},360);cur=null}
+$("scrim").addEventListener("click",closeSheet);
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&cur)closeSheet()});
+
+function hud(){
+  var xp=0,n=0;
+  S.forEach(function(s){if(done[s.id]){xp+=s.xp;n++}});
+  var wc=WORLDS.filter(function(w){var m=stepsOf(w.id);return m.length&&m.every(function(s){return !!done[s.id]})}).length;
+  var pct=Math.round(xp/TOTAL*100);
+  var lvl=Math.min(TIERS.length,Math.floor(xp/(TOTAL/TIERS.length))+1);
+  $("lvlNum").textContent="Level "+lvl;
+  $("lvlName").textContent=TIERS[lvl-1];
+  $("pctTxt").textContent=pct+"%";
+  $("donutBar").setAttribute("stroke-dashoffset",String(100-pct));
+  $("stWorlds").textContent=wc+"/"+WORLDS.length;
+  $("stSteps").textContent=n+"/"+S.length;
+  $("stXp").textContent=xp.toLocaleString();
+  $("stW").classList.toggle("on",wc>0);
+  $("stS").classList.toggle("on",n>0);
+  if(ready&&lvl>lastLevel){fanfare();toast("Level "+lvl,"Level up");burst(innerWidth/2,innerHeight*.3,["#E9A13B","#C9654F","#EDEFF3","#4E9B78"],80)}
+  lastLevel=lvl;
+}
+function repaint(){hud(); if(viewW)paintWorld(viewW); else renderHome()}
+function setSync(c,t){$("sync").className="sync"+(c?" "+c:"");$("syncTxt").textContent=t}
+
+async function mark(id){
+  if(busy[id])return;
+  var s=step(id); if(!s)return;
+  if(!db){setSync("err","Not connected, that did not save");return}
+  var next=!done[id];
+  done[id]=next; if(!next)delete done[id];
+  repaint();
+  if(next){
+    var el=$("nd-"+id),w=world(s.w);
+    if(el){var r=el.getBoundingClientRect();burst(r.left+r.width/2,r.top+40,[w.c,"#E9A13B","#EDEFF3"],s.boss?70:38)}
+    if(s.boss){fanfare();toast("+"+s.xp+" XP","Boss cleared")}
+    else{tone(660,.09,"triangle",.05);setTimeout(function(){tone(880,.14,"triangle",.05)},85)}
+  }else tone(220,.13,"sine",.04);
+  closeSheet();
+  busy[id]=true; setSync("","Saving…");
+  try{
+    if(next)await db.collection("progress").doc(id).set({done:true,at:new Date().toISOString()});
+    else await db.collection("progress").doc(id).delete();
+    setSync("","Progress saved");
+  }catch(e){
+    done[id]=!next; if(!done[id])delete done[id];
+    repaint(); setSync("err","Could not save that");
+  }finally{busy[id]=false}
+}
+
+var h0=(location.hash||"").replace("#","");
+viewW=world(h0)?h0:null;
+if(viewW)renderWorld(viewW); else renderHome();
+hud();
+window.addEventListener("resize",function(){if(viewW)drawTrail(viewW);sizeFx()});
+
+(async function(){
+  var d=null;
+  try{d=await claude.use("db")}catch(e){d=null}
+  if(!d){setSync("off","Progress is not saving in this view");ready=true;return}
+  db=d; setSync("","Progress saved");
+  db.collection("progress").onSnapshot(function(snap){
+    var m={};
+    snap.docs.forEach(function(doc){var v=doc.data();if(v&&v.done)m[doc.id]=true});
+    done=m; repaint(); if(viewW)drawTrail(viewW); ready=true;
+  },function(){setSync("err","Live sync stopped, reload the page")});
+})();
+</script>
