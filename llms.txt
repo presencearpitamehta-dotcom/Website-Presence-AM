@@ -1,0 +1,29 @@
+# Arpita Mehta — Presence Consultant, Delhi
+
+> Presence consultant in Delhi working across four disciplines — image, executive presence, social culture, and AI for branding and business — for executives, founders, brides, graduates and homemakers. Over ten years in marketing before moving into presence work; WSET-qualified in wines; certified Train the Trainer and soft skills facilitator. Four licensed cohort programmes run roughly twice a year; one-to-one consulting runs year-round. Based in Delhi, works online with clients across India and internationally.
+
+## Core pages
+
+- [Home](https://arpitamehta.co/): the four-pillar overview — Image, Executive Presence, Social Culture, AI for Branding & Business — and how they combine into one "room-ready" result.
+- [About](https://arpitamehta.co/about.html): Arpita's background, the gap she identified between credentials and presence, and why the practice is built the way it is.
+- [Services](https://arpitamehta.co/services.html): the four licensed programmes (The Presence Edit, The Executive Edge, The Social Table, The Debut) and one-to-one consulting, with who each is for.
+- [FAQ](https://arpitamehta.co/faq.html): detailed, specific answers on the practice, who it's for, how to begin, the programmes, results and process, and privacy.
+- [Resources](https://arpitamehta.co/resources.html): the Presence Quotient assessment and downloadable guides.
+- [Presence Quotient Assessment](https://arpitamehta.co/assessment.html): a free 16-question self-assessment producing a score, a band, and a private scorecard.
+
+## Blog / guides
+
+- [Blog index](https://arpitamehta.co/blog/index.html)
+- [Executive Presence Guide](https://arpitamehta.co/blog/executive-presence-guide.html)
+- [Image Confidence Guide](https://arpitamehta.co/blog/image-confidence-guide.html)
+- [Campus to Corporate](https://arpitamehta.co/blog/campus-to-corporate.html)
+- [Wine & Dining Etiquette in India](https://arpitamehta.co/blog/wine-etiquette-india.html)
+
+## Clean Markdown mirror (for AI tools)
+
+Every page above also has a plain-text, verbatim Markdown copy for AI/LLM reading, with navigation, scripts and buttons stripped and all links resolved to full URLs: see `/llm-markdown/` in this site's repository, or request a page's Markdown version directly.
+
+## Contact
+
+- Email: presence.arpitamehta@gmail.com
+- Discovery call (₹339, 15 min, online) and in-person session (₹5,999, 1 hour, Delhi) are both bookable from the homepage.
