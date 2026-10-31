@@ -926,6 +926,10 @@ footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
           <option>Event or workshop</option>
           <option>Other</option>
         </select>
+        <div id="enq-referrer-wrap" style="display:none">
+          <label for="enq-referrer">Which friend referred you?</label>
+          <input type="text" id="enq-referrer" name="referrer" autocomplete="off" placeholder="Their name">
+        </div>
         <label for="enq-message">Your message (optional)</label>
         <textarea id="enq-message" name="message" placeholder="Anything you'd like Arpita to know before replying."></textarea>
         <div class="submit-row">
@@ -1106,6 +1110,8 @@ var ENQUIRY_SOURCE_ENTRY = "YOUR_ENQUIRY_SOURCE_ENTRY_ID";
 // TODO: add "How did you hear about us?" as a question in the actual Google Form,
 // then replace this with its real entry.XXXXXXXXXX id so answers reach the spreadsheet.
 var ENQUIRY_HEAR_ENTRY = "YOUR_ENQUIRY_HEAR_ENTRY_ID";
+// TODO: same as above, needs the real Google Form entry id for "Which friend referred you?"
+var ENQUIRY_REFERRER_ENTRY = "YOUR_ENQUIRY_REFERRER_ENTRY_ID";
 var enquiryOverlay = document.getElementById("enquiryOverlay"),
     enquiryFormWrap = document.getElementById("enquiryFormWrap"),
     enquirySuccess = document.getElementById("enquirySuccess"),
@@ -1118,9 +1124,14 @@ function openEnquiry(type){
   enquirySuccess.classList.remove("show");
   enquiryForm.reset();
   if (type) enquiryType.value = type;
+  document.getElementById("enq-referrer-wrap").style.display = "none";
   enquiryOverlay.classList.add("open");
   document.body.style.overflow = "hidden";
 }
+document.getElementById("enq-hear").addEventListener("change", function(){
+  document.getElementById("enq-referrer-wrap").style.display =
+    (this.value === "Referral / word of mouth") ? "" : "none";
+});
 function closeEnquiry(){
   enquiryOverlay.classList.remove("open");
   document.body.style.overflow = "";
@@ -1187,6 +1198,7 @@ enquiryForm.addEventListener("submit", function(e){
   var phone = document.getElementById("enq-phone").value;
   var type = enquiryType.value;
   var hear = document.getElementById("enq-hear").value;
+  var referrer = document.getElementById("enq-referrer").value;
   var message = document.getElementById("enq-message").value;
 
   var body = new URLSearchParams();
@@ -1196,6 +1208,7 @@ enquiryForm.addEventListener("submit", function(e){
   body.append("entry.680222901", "Enquiry: " + type);
   body.append(ENQUIRY_SOURCE_ENTRY, location.pathname + (document.title ? " (" + document.title.split("|")[0].trim() + ")" : ""));
   if (hear) body.append(ENQUIRY_HEAR_ENTRY, hear);
+  if (hear === "Referral / word of mouth" && referrer) body.append(ENQUIRY_REFERRER_ENTRY, referrer);
   if (message) body.append(ENQUIRY_MESSAGE_ENTRY, message);
 
   fetch(ENQUIRY_FORM_ACTION, { method:"POST", mode:"no-cors",
