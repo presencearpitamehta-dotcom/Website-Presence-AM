@@ -14,6 +14,20 @@
   status = 404
   force = true
 
+# book-a-call.html was briefly live under its old name before being
+# renamed to booking.html. Permanent redirect so any link already shared
+# (ads, bio, WhatsApp) or indexed by Google still lands on the right page.
+[[redirects]]
+  from = "/book-a-call.html"
+  to = "/booking.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/book-a-call"
+  to = "/booking.html"
+  status = 301
+  force = true
+
 # Security headers (brief section 9) applied to every page
 [[headers]]
   for = "/*"
