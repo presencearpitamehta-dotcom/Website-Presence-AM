@@ -179,7 +179,8 @@ window.amTrack = function(name, params){ try{ gtag('event', name, params || {});
       "provider": { "@id": "https://arpitamehta.co/#business" },
       "offers": [
         { "@type": "Offer", "price": "339", "priceCurrency": "INR", "itemOffered": { "@type": "Service", "name": "The Discovery Call", "description": "Fifteen-minute online discovery call with Arpita, anywhere in the world." } },
-        { "@type": "Offer", "price": "5999", "priceCurrency": "INR", "itemOffered": { "@type": "Service", "name": "The In Person Session", "description": "One hour with Arpita, face to face in Delhi." } }
+        { "@type": "Offer", "price": "2049", "priceCurrency": "INR", "itemOffered": { "@type": "Service", "name": "The Video Consultation", "description": "Forty-five minute one-to-one video consultation with Arpita." } },
+        { "@type": "Offer", "price": "4299", "priceCurrency": "INR", "itemOffered": { "@type": "Service", "name": "The In Person Session", "description": "One hour with Arpita, face to face in Delhi." } }
       ]
     },
     {
@@ -546,11 +547,21 @@ footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
       </div>
       <div class="p-opt">
         <div>
+          <p class="d-title">The Video Consultation</p>
+          <p class="d-sub">Forty-five minutes, one-to-one over video &mdash; a full diagnosis of your presence, and a clear plan to act on it.</p>
+        </div>
+        <div class="p-right">
+          <p class="d-price">&#8377;2,049</p>
+          <button class="cta d-cta" data-enquiry="Video Consultation">Reserve</button>
+        </div>
+      </div>
+      <div class="p-opt">
+        <div>
           <p class="d-title">The In Person Session</p>
           <p class="d-sub">One hour with Arpita, face to face in Delhi.</p>
         </div>
         <div class="p-right">
-          <p class="d-price">&#8377;5,999</p>
+          <p class="d-price">&#8377;4,299</p>
           <button class="cta d-cta" data-pay="inperson">Reserve</button>
         </div>
       </div>
