@@ -706,6 +706,11 @@ footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
           <div class="faq-a" role="region"><p class="faq-a-inner">One hour with Arpita in Delhi, face to face. You are read as a room reads you, your image is examined in real light, and you rehearse the first thirty seconds until it changes. You leave with three things to change this month, and a written summary follows within two days. It is a session in its own right, not a consultation attached to a programme. The fee is Rs. 5,999.</p></div>
         </div>
 
+        <div class="faq-item" id="cancellation-policy">
+          <button class="faq-q" aria-expanded="false">What if I need to cancel or reschedule?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Free to reschedule, any time up to twenty four hours before your session — just reply to your confirmation email. Inside twenty four hours, or a no-show, the booking cannot be refunded, since that slot was held for you alone. If a session needs to move from Arpita's end instead, you get a full refund or a free reschedule, whichever you prefer.</p></div>
+        </div>
+
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">Do you work with clients outside Delhi?<span class="faq-icon" aria-hidden="true"></span></button>
           <div class="faq-a" role="region"><p class="faq-a-inner">Yes. Online sessions are available for clients across India and internationally. For in-person work outside Delhi, the scope and logistics are discussed on the discovery call.</p></div>
@@ -928,6 +933,7 @@ footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
       </div>
     </div>
     <p class="panel-note">Choose a time that suits you. A payment link follows to confirm it, and your slot is held for twenty four hours. Joining from outside Delhi, or outside India? Begin with the discovery call. Every engagement is designed around where you are.</p>
+    <p class="panel-note">Free to reschedule up to 24h before your session; no refund inside 24h or for a no-show. <a href="#cancellation-policy" style="color:var(--brown);text-decoration:underline">Full policy</a>.</p>
   </div>
 </aside>
 
@@ -958,6 +964,23 @@ navLinks.addEventListener("click", function(e){
     navLinks.classList.remove("open"); menuBtn.classList.remove("open");
   }
 });
+
+/* open a deep-linked item on load (e.g. faq.html#cancellation-policy) */
+function openHashItem(){
+  var id = location.hash.slice(1);
+  if (!id) return;
+  var item = document.getElementById(id);
+  if (!item || !item.classList.contains("faq-item")) return;
+  item.closest(".faq-group").querySelectorAll(".faq-item").forEach(function(i){
+    i.classList.remove("open");
+    i.querySelector(".faq-q").setAttribute("aria-expanded","false");
+  });
+  item.classList.add("open");
+  item.querySelector(".faq-q").setAttribute("aria-expanded","true");
+  item.scrollIntoView({block:"center"});
+}
+openHashItem();
+window.addEventListener("hashchange", openHashItem);
 
 /* accordion */
 document.querySelectorAll(".faq-q").forEach(function(btn){

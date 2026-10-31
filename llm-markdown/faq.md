@@ -72,6 +72,10 @@ Fifteen minutes, online, from anywhere. A direct conversation about where you ar
 
 One hour with Arpita in Delhi, face to face. You are read as a room reads you, your image is examined in real light, and you rehearse the first thirty seconds until it changes. You leave with three things to change this month, and a written summary follows within two days. It is a session in its own right, not a consultation attached to a programme. The fee is Rs. 5,999.
 
+### What if I need to cancel or reschedule?
+
+Free to reschedule, any time up to twenty four hours before your session — just reply to your confirmation email. Inside twenty four hours, or a no-show, the booking cannot be refunded, since that slot was held for you alone. If a session needs to move from Arpita's end instead, you get a full refund or a free reschedule, whichever you prefer.
+
 ### Do you work with clients outside Delhi?
 
 Yes. Online sessions are available for clients across India and internationally. For in-person work outside Delhi, the scope and logistics are discussed on the discovery call.
@@ -167,3 +171,5 @@ One hour with Arpita, face to face in Delhi.
 ₹5,999
 
 Choose a time that suits you. A payment link follows to confirm it, and your slot is held for twenty four hours. Joining from outside Delhi, or outside India? Begin with the discovery call. Every engagement is designed around where you are.
+
+Free to reschedule up to 24h before your session; no refund inside 24h or for a no-show. [Full policy](https://arpitamehta.co/faq.html#cancellation-policy).

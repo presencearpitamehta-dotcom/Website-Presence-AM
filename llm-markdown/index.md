@@ -145,3 +145,5 @@ One hour with Arpita, face to face in Delhi.
 ₹5,999
 
 Choose a time that suits you. A payment link follows to confirm it, and your slot is held for twenty four hours. Joining from outside Delhi, or outside India? Begin with the discovery call. Every engagement is designed around where you are.
+
+Free to reschedule up to 24h before your session; no refund inside 24h or for a no-show. [Full policy](https://arpitamehta.co/faq.html#cancellation-policy).
