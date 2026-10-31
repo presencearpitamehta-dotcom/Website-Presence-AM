@@ -1039,7 +1039,7 @@ document.querySelectorAll(".faq-q").forEach(function(btn){
 var groups = document.querySelectorAll(".faq-group");
 var navLinks2 = document.querySelectorAll(".faq-nav a");
 window.addEventListener("scroll", function(){
-  var mid = window.scrollY + window.innerHeight * 0.4;
+  var mid = window.scrollY + 150;
   groups.forEach(function(g){
     var top = g.offsetTop, bot = top + g.offsetHeight;
     if (mid >= top && mid < bot){
