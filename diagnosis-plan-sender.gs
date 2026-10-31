@@ -182,9 +182,21 @@ function formatDate(d) {
 
 /* ---------------- client email shell (same palette as enquiry-autoresponder.gs) ---------------- */
 
+// data['Name'] comes from a client row you filled in, but the same
+// pattern that bit enquiry-autoresponder.gs applies here too, so this
+// stays escaped as a matter of consistent practice, not because this
+// particular field is public-facing.
+function escapeHtml(s) {
+  return String(s === null || s === undefined ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 function clientEmailBody(data) {
   var C = { linen: '#F8F4EE', parchment: '#DED4CA', ink: '#2A1F14', taupe: '#3D2F1D', white: '#FFFFFF' };
-  var firstName = String(data['Name']).split(' ')[0] || 'there';
+  var firstName = escapeHtml(String(data['Name']).split(' ')[0] || 'there');
   var inner = '<p style="margin:0 0 16px;font-family:\'Jost\',sans-serif;font-size:15px;line-height:1.7;color:' + C.taupe + '">'
     + 'Dear ' + firstName + ', attached is your session brief from today — your score, where I would begin, '
     + 'and the habit we agreed on. Keep it, it is yours.</p>'

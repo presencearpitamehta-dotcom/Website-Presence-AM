@@ -174,7 +174,20 @@ function classify(l) {
   return 'other';
 }
 function isEmail(s){ return !!s && s.indexOf('@') > 0 && s.indexOf('.') > 0; }
-function firstName(n){ return (n || '').split(' ')[0] || 'there'; }
+// Every value below comes from a public form submission, so it is
+// attacker-controllable. Anything going into an HTML email body must
+// pass through this first — otherwise a name like
+// "<img src=x onerror=...>" renders as live markup in both the
+// visitor's reply and, worse, the notification Arpita herself reads.
+function escapeHtml(s) {
+  return String(s === null || s === undefined ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+function firstName(n){ return escapeHtml((n || '').split(' ')[0] || 'there'); }
 function stripEnq(g){ return (g || '').replace(/^Enquiry:\s*/i, '').trim(); }
 function enqInfo(prog) {
   if (ENQUIRIES[prog]) return ENQUIRIES[prog];
@@ -223,9 +236,10 @@ function button(label, href) {
        + ';text-decoration:none">' + label + '</a></td></tr></table>';
 }
 function statCell(label, val) {
+  // label is a fixed string we wrote; val is the lead's own data.
   return '<td width="50%" style="padding:14px 8px 0;border-top:1px solid ' + C.parchment + ';text-align:center">'
        + '<div style="font-family:' + BODY + ';font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:' + C.taupeLt + ';padding-bottom:5px">' + label + '</div>'
-       + '<div style="font-family:' + DISP + ';font-size:16px;color:' + C.ink + '">' + val + '</div></td>';
+       + '<div style="font-family:' + DISP + ';font-size:16px;color:' + C.ink + '">' + escapeHtml(val) + '</div></td>';
 }
 function scoreCard(l) {
   var cells = '';
@@ -235,8 +249,8 @@ function scoreCard(l) {
        + 'style="margin:4px 0 24px;background:' + C.ivory + ';border:1px solid ' + C.parchment + '"><tr>'
        + '<td style="padding:30px 24px 24px;text-align:center">'
        + '<div style="font-family:' + BODY + ';font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:' + C.taupeLt + '">Your Presence Quotient</div>'
-       + '<div style="font-family:' + DISP + ';font-size:58px;line-height:1;color:' + C.cognac + ';padding:14px 0 8px">' + (l.score || '') + '</div>'
-       + '<div style="font-family:' + DISP + ';font-size:20px;font-style:italic;color:' + C.ink + '">' + (l.band || '') + '</div>'
+       + '<div style="font-family:' + DISP + ';font-size:58px;line-height:1;color:' + C.cognac + ';padding:14px 0 8px">' + escapeHtml(l.score || '') + '</div>'
+       + '<div style="font-family:' + DISP + ';font-size:20px;font-style:italic;color:' + C.ink + '">' + escapeHtml(l.band || '') + '</div>'
        + (cells ? '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:24px"><tr>' + cells + '</tr></table>' : '')
        + '</td></tr></table>';
 }
@@ -256,8 +270,8 @@ function replyBody(l) {
     inner += lede('Dear ' + firstName(l.name) + ', thank you for taking the Presence Quotient.');
     inner += scoreCard(l);
     if (l.band && BANDS[l.band]) inner += para(BANDS[l.band]);
-    if (l.weakness) inner += para('The dimension with the most room in it is <strong style="color:' + C.ink + '">' + l.weakness + '</strong>, and that is where I would start. It is usually the one that changes how a room reads you fastest.');
-    if (l.rec) inner += recStrip(l.rec);
+    if (l.weakness) inner += para('The dimension with the most room in it is <strong style="color:' + C.ink + '">' + escapeHtml(l.weakness) + '</strong>, and that is where I would start. It is usually the one that changes how a room reads you fastest.');
+    if (l.rec) inner += recStrip(escapeHtml(l.rec));
     inner += para(team
       ? 'For a team, the useful next step is a short conversation about who is in the room and what needs to be different afterwards.'
       : 'If you would like to talk it through, the fifteen minute introductory call is the simplest way in.');
@@ -271,7 +285,7 @@ function replyBody(l) {
 
   } else if (l.kind === 'enquiry') {
     var info = enqInfo(l.prog);
-    inner += lede('Dear ' + firstName(l.name) + ', thank you for your enquiry about ' + (l.prog || 'working together') + '.');
+    inner += lede('Dear ' + firstName(l.name) + ', thank you for your enquiry about ' + escapeHtml(l.prog || 'working together') + '.');
     inner += para(info.line);
     inner += para(info.team
       ? 'I read every one of these myself and will come back to you personally within one to two working days, with questions about your group and what a session would involve.'
@@ -302,9 +316,11 @@ function ownerBody(l) {
   var t = '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">';
   rows.forEach(function (r, i) {
     var top = i ? 'border-top:1px solid ' + C.parchment + ';' : '';
+    // r[0] (the label) is a fixed string we wrote; r[1] is the lead's own
+    // submitted value and must be escaped before it goes into this HTML.
     t += '<tr><td style="padding:8px 18px 8px 0;font-family:' + BODY + ';font-size:12px;letter-spacing:.14em;'
       +  'text-transform:uppercase;color:' + C.taupeLt + ';white-space:nowrap;' + top + 'vertical-align:top">' + r[0] + '</td>'
-      +  '<td style="padding:8px 0;font-family:' + DISP + ';font-size:17px;color:' + C.ink + ';' + top + '">' + r[1] + '</td></tr>';
+      +  '<td style="padding:8px 0;font-family:' + DISP + ';font-size:17px;color:' + C.ink + ';' + top + '">' + escapeHtml(r[1]) + '</td></tr>';
   });
   t += '</table>';
 
@@ -322,8 +338,11 @@ function ownerBody(l) {
   }
   inner += t;
   if (isEmail(l.email)) {
+    // isEmail() only checks for "@" and ".", so a crafted value like
+    // a@b.com" onmouseover="..." still passes it — escape before it
+    // goes into the href attribute below.
     inner += button('Reply to ' + firstName(l.name),
-      'mailto:' + l.email + '?subject=' + encodeURIComponent('Re: ' + (l.prog || 'your enquiry')));
+      'mailto:' + escapeHtml(l.email) + '?subject=' + encodeURIComponent('Re: ' + (l.prog || 'your enquiry')));
   }
   inner += '<p style="margin:14px 0 0;font-family:' + BODY + ';font-size:13px;color:' + C.taupeLt + '">'
         +  (l.replied
