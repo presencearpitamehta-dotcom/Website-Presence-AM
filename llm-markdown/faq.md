@@ -112,6 +112,12 @@ The Presence Quotient or a discovery call usually answers this. If your gap is b
 
 The Debut is the campus to corporate licensed programme for graduates and freshers in the first chapter of professional life. It covers interview presence, professional image, workplace etiquette and first-impression fluency, and runs as a structured cohort approximately twice a year. For ongoing or individual campus to corporate work outside that calendar, one to one consulting or a college workshop is the route. Parents who want to invest in a child's launch often initiate the conversation.
 
+## Referrals & offers
+
+### Do you offer a referral discount?
+
+Yes. Refer someone who books a session or programme, and you'll receive a discount code for your own next session with Arpita. Ask her for the current referral terms when you book, or write to presence.arpitamehta@gmail.com.
+
 ## Results and process
 
 ### What results do clients see?
