@@ -28,6 +28,14 @@
   status = 301
   force = true
 
+# Serve the clean, no-extension URL (arpitamehta.co/booking) rather than
+# relying on Netlify's default .html handling. A rewrite (200), not a
+# redirect, so the address bar keeps showing /booking.
+[[redirects]]
+  from = "/booking"
+  to = "/booking.html"
+  status = 200
+
 # Security headers (brief section 9) applied to every page
 [[headers]]
   for = "/*"
