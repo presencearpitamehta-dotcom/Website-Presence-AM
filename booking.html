@@ -552,7 +552,7 @@ footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
         </div>
         <div class="p-right">
           <p class="d-price">&#8377;2,049</p>
-          <button class="cta d-cta" data-enquiry="Video Consultation">Reserve</button>
+          <button class="cta d-cta" data-pay="video">Reserve</button>
         </div>
       </div>
       <div class="p-opt">
@@ -749,10 +749,11 @@ fw.forEach(function(w, i){
   fq.appendChild(document.createTextNode(" "));
 });
 
-/* ---------- Reserve buttons (Razorpay) ---------- */
+/* ---------- Reserve buttons (Razorpay / Cal.com) ---------- */
 var PAY_LINKS = {
   discovery: "https://rzp.io/rzp/discovery15",
-  inperson:  "https://rzp.io/rzp/sessionf2f"
+  inperson:  "https://rzp.io/rzp/sessionf2f",
+  video:     "https://cal.com/arpita-mehta-presence-consultant/video-consultation"
 };
 document.querySelectorAll("[data-pay]").forEach(function(b){
   b.addEventListener("click", function(){ if(window.amTrack) amTrack("payment_click", {option: b.dataset.pay}); window.open(PAY_LINKS[b.dataset.pay], "_blank", "noopener"); });
