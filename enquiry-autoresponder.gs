@@ -57,6 +57,25 @@ var CALL_LINK = 'https://arpitamehta.co/booking';
    three, with a flag saying how engaged they are. */
 var REPLY_GAP_MINUTES = 180;
 
+/* ---- abuse ceiling on auto-replies ----------------------------- */
+/* The form endpoint and every field ID are visible in the page source,
+   so anyone can POST to the form directly, without ever loading the
+   site. The 3-hour gap above only stops repeat replies to the SAME
+   address; a script cycling through a thousand different addresses
+   would make this account send a thousand branded emails to strangers.
+   Three things break when that happens, worst first: the Gmail daily
+   quota is spent, so real leads silently get no reply at all; people
+   who never contacted you receive mail with your name on it; the sheet
+   fills with junk.
+   The ceiling lives here rather than in the page because anything added
+   to the page can be skipped by posting straight to Google. This runs
+   on Google's side, after submission, so it cannot be bypassed.
+   If you ever genuinely expect more than MAX_AUTO_REPLIES_PER_DAY real
+   enquiries in a day, raise it. You are told by email the first time a
+   day hits the ceiling, so this never fails silently. */
+var MAX_AUTO_REPLIES_PER_DAY = 40;
+var QUOTA_FLOOR = 15;   // leave this much Gmail quota for owner alerts
+
 /* ---- one tailored sentence per enquiry type -------------------- */
 /* Key must match the enquiry name on the site. Unlisted keys fall
    back to a generic line, so nothing ever breaks.                  */
@@ -128,7 +147,7 @@ function onFormSubmit(e) {
 
   /* --- one reply per person per REPLY_GAP_MINUTES --- */
   lead.replied = false;
-  if (isEmail(lead.email)) {
+  if (isEmail(lead.email) && !looksAutomated(lead) && autoReplyAllowed()) {
     var key = 'r_' + lead.email.toLowerCase().trim();
     var cache = CacheService.getScriptCache();
     if (cache.get(key)) {
@@ -149,6 +168,78 @@ function onFormSubmit(e) {
       replyTo: isEmail(lead.email) ? lead.email : OWNER,
       subject: ownerSubject(lead), htmlBody: ownerBody(lead) });
   } catch (err) { Logger.log('Owner alert failed: ' + err); }
+}
+
+/**
+ * Is this submission allowed to trigger an auto-reply?
+ * Counts auto-replies per calendar day and refuses once the ceiling is
+ * reached, so a flood of fake submissions cannot spend the Gmail quota
+ * that real leads depend on. Owner alerts are deliberately NOT counted:
+ * they go to Arpita's own address, and she should always hear about a
+ * lead even on a day the ceiling is hit.
+ * Fails open on an unexpected error. A broken counter should never stop
+ * a genuine enquirer from getting their reply.
+ */
+function autoReplyAllowed() {
+  try {
+    // Respect Gmail's own remaining quota first, and keep a reserve so
+    // owner alerts still get out after auto-replies stop.
+    if (MailApp.getRemainingDailyQuota() <= QUOTA_FLOOR) {
+      Logger.log('Auto-reply skipped: Gmail quota reserve reached');
+      return false;
+    }
+
+    var props = PropertiesService.getScriptProperties();
+    var today = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy-MM-dd');
+    var count = (props.getProperty('ar_day') === today)
+      ? Number(props.getProperty('ar_count') || 0)
+      : 0;
+
+    if (count >= MAX_AUTO_REPLIES_PER_DAY) {
+      // Tell Arpita once per day, so this is never a silent failure.
+      if (props.getProperty('ar_warned') !== today) {
+        props.setProperty('ar_warned', today);
+        try {
+          MailApp.sendEmail({ to: OWNER, name: 'arpitamehta.co',
+            subject: 'Auto-replies paused for today',
+            htmlBody: '<p>The site has sent ' + MAX_AUTO_REPLIES_PER_DAY
+              + ' automatic replies today, which is the ceiling set in the script, '
+              + 'so further enquirers will not get an automatic reply until tomorrow.</p>'
+              + '<p>You will still be told about every enquiry, and they are all in the sheet '
+              + 'as usual. If today was genuinely that busy, raise MAX_AUTO_REPLIES_PER_DAY '
+              + 'in enquiry-autoresponder.gs. If it was not, the form is being submitted by '
+              + 'something automated and is worth a look.</p>' });
+        } catch (err) { Logger.log('Ceiling warning failed: ' + err); }
+      }
+      return false;
+    }
+
+    props.setProperty('ar_day', today);
+    props.setProperty('ar_count', String(count + 1));
+    return true;
+  } catch (err) {
+    Logger.log('autoReplyAllowed check failed, allowing the reply: ' + err);
+    return true;
+  }
+}
+
+/**
+ * Cheap signature check for submissions that are obviously not a person.
+ * Link-stuffing in a name or goal field is the standard shape of form
+ * spam, and no real enquirer writes a URL into their own name. This only
+ * suppresses the automatic reply; the submission still reaches the sheet
+ * and Arpita is still told, so a false positive costs a reply, never a lead.
+ */
+function looksAutomated(lead) {
+  try {
+    var linky = /(https?:\/\/|www\.|\[url=|<a\s)/i;
+    if (linky.test(lead.name)) return true;
+    if (/(https?:\/\/[^\s]+.*){3,}/i.test(String(lead.goal))) return true;
+    if (String(lead.name).length > 80) return true;
+    return false;
+  } catch (err) {
+    return false;   // never block a reply because this check broke
+  }
 }
 
 /** How many times has this address submitted anything today? */
