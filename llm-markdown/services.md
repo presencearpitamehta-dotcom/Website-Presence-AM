@@ -131,21 +131,3 @@ Tell Arpita what you're interested in. This goes directly to her, and you'll hea
 ### Thank you
 
 Your enquiry has been sent. Arpita typically replies within one to two working days.
-
-Begin Here
-
-The Discovery Call
-
-Fifteen minutes, online, from anywhere in the world.
-
-₹339
-
-The In Person Session
-
-One hour with Arpita, face to face in Delhi.
-
-₹5,999
-
-Choose a time that suits you. A payment link follows to confirm it, and your slot is held for twenty four hours. Joining from outside Delhi, or outside India? Begin with the discovery call. Every engagement is designed around where you are.
-
-Free reschedule with 24h+ notice. No refund with less notice or a no-show. [Details](https://arpitamehta.co/faq.html#cancellation-policy).

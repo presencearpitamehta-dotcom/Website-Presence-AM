@@ -68,13 +68,17 @@ It is self-reported, so it is as honest as you are. Most people find that answer
 
 Fifteen minutes, online, from anywhere. A direct conversation about where you are, what you want to change and whether the practice is the right fit. No pitch, no pressure. If it is not the right fit, she will say so. The fee is Rs. 339.
 
+### What is the video consultation?
+
+Forty-five minutes with Arpita, online, from anywhere in the world. Where the discovery call decides whether to work together, this one does the work: your image, how you read on camera and in a room, and the single gap costing you the most right now. You leave with a direction and the first changes to make. The fee is Rs. 2,049.
+
 ### What is the in-person session?
 
-One hour with Arpita in Delhi, face to face. You are read as a room reads you, your image is examined in real light, and you rehearse the first thirty seconds until it changes. You leave with three things to change this month, and a written summary follows within two days. It is a session in its own right, not a consultation attached to a programme. The fee is Rs. 5,999.
+One hour with Arpita in Delhi, face to face. You are read as a room reads you, your image is examined in real light, and you rehearse the first thirty seconds until it changes. You leave with three things to change this month, and a written summary follows within two days. It is a session in its own right, not a consultation attached to a programme. The fee is Rs. 4,299.
 
 ### Do you work with clients outside Delhi?
 
-Yes. Online sessions are available for clients across India and internationally. For in-person work outside Delhi, the scope and logistics are discussed on the discovery call.
+Yes. Online sessions are available for clients across India and internationally, most often as the forty-five minute video consultation. For in-person work outside Delhi, the scope and logistics are discussed on the discovery call.
 
 ### Do you do corporate or team training?
 
@@ -171,21 +175,3 @@ Tell Arpita what you're interested in. This goes directly to her, and you'll hea
 ### Thank you
 
 Your enquiry has been sent. Arpita typically replies within one to two working days.
-
-Begin Here
-
-The Discovery Call
-
-Fifteen minutes, online, from anywhere in the world.
-
-₹339
-
-The In Person Session
-
-One hour with Arpita, face to face in Delhi.
-
-₹5,999
-
-Choose a time that suits you. A payment link follows to confirm it, and your slot is held for twenty four hours. Joining from outside Delhi, or outside India? Begin with the discovery call. Every engagement is designed around where you are.
-
-Free reschedule with 24h+ notice. No refund with less notice or a no-show. [Details](https://arpitamehta.co/faq.html#cancellation-policy).
