@@ -1055,7 +1055,7 @@ fw.forEach(function(w, i){
 
 /* booking panel */
 var panel = document.getElementById("panel"), overlay = document.getElementById("panelOverlay");
-var PAY_LINKS = { discovery:"https://cal.com/arpita-mehta-presence-consultant/discoverycall", inperson:"https://cal.com/arpita-mehta-presence-consultant/inperson" };
+var PAY_LINKS = { discovery:"https://rzp.io/rzp/discovery15", inperson:"https://rzp.io/rzp/sessionf2f" };
 function openPanel(){ panel.classList.add("open"); overlay.classList.add("open"); document.body.style.overflow="hidden"; }
 function closePanel(){ panel.classList.remove("open"); overlay.classList.remove("open"); document.body.style.overflow=""; }
 document.querySelectorAll("[data-calendly]").forEach(function(b){ b.addEventListener("click", function(){ if(window.amTrack) amTrack("booking_panel_open", {page: location.pathname}); openPanel(); }); });
