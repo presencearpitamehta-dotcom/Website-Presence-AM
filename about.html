@@ -622,6 +622,17 @@ footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
           <option>AI for Branding & Business</option>
           <option>Corporate Group Training</option>
         </select>
+        <label for="enq-hear">How did you hear about us? (optional)</label>
+        <select id="enq-hear" name="hear">
+          <option value="">Prefer not to say</option>
+          <option>Google search</option>
+          <option>Instagram</option>
+          <option>LinkedIn</option>
+          <option>Referral / word of mouth</option>
+          <option>Topmate</option>
+          <option>Event or workshop</option>
+          <option>Other</option>
+        </select>
         <label for="enq-message">Your message (optional)</label>
         <textarea id="enq-message" name="message" placeholder="Anything you'd like Arpita to know before replying."></textarea>
         <div class="submit-row">
@@ -768,6 +779,9 @@ document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeP
 var ENQUIRY_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSfi0a-qHiSgcVllmtYjZdPEyxvdo2I2Ydisp46C-QvYeO273w/formResponse";
 var ENQUIRY_MESSAGE_ENTRY = "YOUR_ENQUIRY_MESSAGE_ENTRY_ID";
 var ENQUIRY_SOURCE_ENTRY = "YOUR_ENQUIRY_SOURCE_ENTRY_ID";
+// TODO: add "How did you hear about us?" as a question in the actual Google Form,
+// then replace this with its real entry.XXXXXXXXXX id so answers reach the spreadsheet.
+var ENQUIRY_HEAR_ENTRY = "YOUR_ENQUIRY_HEAR_ENTRY_ID";
 var enquiryOverlay = document.getElementById("enquiryOverlay"),
     enquiryFormWrap = document.getElementById("enquiryFormWrap"),
     enquirySuccess = document.getElementById("enquirySuccess"),
@@ -848,6 +862,7 @@ enquiryForm.addEventListener("submit", function(e){
   var email = document.getElementById("enq-email").value;
   var phone = document.getElementById("enq-phone").value;
   var type = enquiryType.value;
+  var hear = document.getElementById("enq-hear").value;
   var message = document.getElementById("enq-message").value;
 
   var body = new URLSearchParams();
@@ -856,6 +871,7 @@ enquiryForm.addEventListener("submit", function(e){
   body.append("entry.1982097609", phone);
   body.append("entry.680222901", "Enquiry: " + type);
   body.append(ENQUIRY_SOURCE_ENTRY, location.pathname + (document.title ? " (" + document.title.split("|")[0].trim() + ")" : ""));
+  if (hear) body.append(ENQUIRY_HEAR_ENTRY, hear);
   if (message) body.append(ENQUIRY_MESSAGE_ENTRY, message);
 
   fetch(ENQUIRY_FORM_ACTION, { method:"POST", mode:"no-cors",

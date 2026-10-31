@@ -118,6 +118,10 @@ The Debut is the campus to corporate licensed programme for graduates and freshe
 
 Yes. Refer someone who books a session or programme, and you'll receive a discount code for your own next session with Arpita. Ask her for the current referral terms when you book, or write to presence.arpitamehta@gmail.com.
 
+### Do you offer discounts for groups, siblings or corporate bookings?
+
+Yes. Booking together, whether as siblings, a group of friends, or a corporate team, can qualify for a bulk rate. Write to presence.arpitamehta@gmail.com with the group size and what you are each looking for, and you will receive a tailored quote.
+
 ## Results and process
 
 ### What results do clients see?
