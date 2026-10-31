@@ -148,4 +148,4 @@ One hour with Arpita, face to face in Delhi.
 
 Choose a time that suits you. A payment link follows to confirm it, and your slot is held for twenty four hours. Joining from outside Delhi, or outside India? Begin with the discovery call. Every engagement is designed around where you are.
 
-Free reschedule up to 24h before. No refund within 24h or for a no-show. [Details](https://arpitamehta.co/faq.html#cancellation-policy).
+Free reschedule with 24h+ notice. No refund with less notice or a no-show. [Details](https://arpitamehta.co/faq.html#cancellation-policy).
