@@ -4,7 +4,7 @@ Questions
 
 # Every question people ask *before they begin.*
 
-Answered honestly. If something is not here, write to presence.arpitamehta@gmail.com. She reads everything.
+Answered honestly. If something is not here, write to support@arpitamehta.co. She reads everything.
 
 ## The practice
 
@@ -26,7 +26,7 @@ Yes. Arpita is a certified Train the Trainer and soft skills facilitator, and wo
 
 ### What is the AI for Branding and Business service?
 
-A separate, private service for small business owners and aspiring entrepreneurs who want to build their brand, marketing and business using AI, the way Arpita built her own practice. It is not a licensed cohort programme. It is offered strictly one to one, in a very limited number of slots, because the work is specific to each business. Mention it on the discovery call, or write to presence.arpitamehta@gmail.com.
+A separate, private service for small business owners and aspiring entrepreneurs who want to build their brand, marketing and business using AI, the way Arpita built her own practice. It is not a licensed cohort programme. It is offered strictly one to one, in a very limited number of slots, because the work is specific to each business. Mention it on the discovery call, or write to support@arpitamehta.co.
 
 ## Who it is for
 
@@ -78,17 +78,17 @@ Yes. Online sessions are available for clients across India and internationally.
 
 ### Do you do corporate or team training?
 
-Yes. As a certified Train the Trainer and soft skills facilitator, Arpita designs group training for corporates, colleges and schools on presence topics such as executive presence and business dining culture, and on soft skills more broadly: communication, emotional intelligence, public speaking and team dynamics. The session is built around where the group actually needs the work. Write to presence.arpitamehta@gmail.com with the group size and context.
+Yes. As a certified Train the Trainer and soft skills facilitator, Arpita designs group training for corporates, colleges and schools on presence topics such as executive presence and business dining culture, and on soft skills more broadly: communication, emotional intelligence, public speaking and team dynamics. The session is built around where the group actually needs the work. Write to support@arpitamehta.co with the group size and context.
 
 ## Cancellations & rescheduling
 
 ### What if I need to cancel or reschedule?
 
-Free to reschedule, as long as you let us know at least 24 hours before your scheduled session. Just write to presence.arpitamehta@gmail.com. If you cancel or don't show up with less than 24 hours' notice, the booking can't be refunded, since that slot was held for you alone. If Arpita needs to cancel or reschedule instead, you'll get a full refund, processed within 5 to 7 business days, or a free reschedule, whichever you prefer.
+Free to reschedule, as long as you let us know at least 24 hours before your scheduled session. Just write to support@arpitamehta.co. If you cancel or don't show up with less than 24 hours' notice, the booking can't be refunded, since that slot was held for you alone. If Arpita needs to cancel or reschedule instead, you'll get a full refund, processed within 5 to 7 business days, or a free reschedule, whichever you prefer.
 
 ### What if I'm running a few minutes late?
 
-Message presence.arpitamehta@gmail.com as soon as you know. A few minutes is rarely an issue; it's a no-reply, no-show that forfeits the session, not lateness you've flagged in advance.
+Message support@arpitamehta.co as soon as you know. A few minutes is rarely an issue; it's a no-reply, no-show that forfeits the session, not lateness you've flagged in advance.
 
 ## The programmes
 
@@ -98,7 +98,7 @@ The Presence Edit (image consulting), The Executive Edge (executive presence), T
 
 ### How do I find out about the next cohort?
 
-Write to presence.arpitamehta@gmail.com naming the programme you are interested in, and you will receive the details, dates and enrolment information for the next available cohort.
+Write to support@arpitamehta.co naming the programme you are interested in, and you will receive the details, dates and enrolment information for the next available cohort.
 
 ### What if I want something more personal or customised?
 
@@ -116,11 +116,11 @@ The Debut is the campus to corporate licensed programme for graduates and freshe
 
 ### Do you offer a referral discount?
 
-Yes. Refer someone who books a session or programme, and you'll receive a discount code for your own next session with Arpita. Ask her for the current referral terms when you book, or write to presence.arpitamehta@gmail.com.
+Yes. Refer someone who books a session or programme, and you'll receive a discount code for your own next session with Arpita. Ask her for the current referral terms when you book, or write to support@arpitamehta.co.
 
 ### Do you offer discounts for groups, siblings or corporate bookings?
 
-Yes. Booking together, whether as siblings, a group of friends, or a corporate team, can qualify for a bulk rate. Write to presence.arpitamehta@gmail.com with the group size and what you are each looking for, and you will receive a tailored quote.
+Yes. Booking together, whether as siblings, a group of friends, or a corporate team, can qualify for a bulk rate. Write to support@arpitamehta.co with the group size and what you are each looking for, and you will receive a tailored quote.
 
 ## Results and process
 
@@ -160,7 +160,7 @@ If you are reading this page, you probably already know. The question is usually
 
 ### How do I contact Arpita?
 
-The fastest route is a discovery call or the in-person session, both bookable directly on this site. For corporate enquiries or specific questions before booking, write to [presence.arpitamehta@gmail.com](mailto:presence.arpitamehta@gmail.com). She reads everything.
+The fastest route is a discovery call or the in-person session, both bookable directly on this site. For corporate enquiries or specific questions before booking, write to [support@arpitamehta.co](mailto:support@arpitamehta.co). She reads everything.
 
 ### Send an Enquiry
 

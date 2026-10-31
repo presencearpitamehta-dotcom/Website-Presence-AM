@@ -24,7 +24,7 @@
  *
  * INSTALL
  *   1. Open "Presence Quotient Leads (Responses)" signed in as
- *      presence.arpitamehta@gmail.com
+ *      support@arpitamehta.co
  *   2. Extensions -> Apps Script
  *   3. Delete what is there, paste all of this, Save
  *   4. Triggers (alarm clock) -> Add Trigger:
@@ -39,7 +39,7 @@
  * ==================================================================
  */
 
-var OWNER     = 'presence.arpitamehta@gmail.com';
+var OWNER     = 'support@arpitamehta.co';
 var FROM_NAME = 'Arpita Mehta';
 var SITE      = 'https://arpitamehta.co';
 var LOGO      = 'https://arpitamehta.co/images/shared/logo.png';
