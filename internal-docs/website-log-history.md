@@ -30,6 +30,15 @@ A big day. In order:
     - Added a new "Referrals & offers" FAQ section: referral discount code, and group/sibling/corporate bulk pricing.
     - Added a "How did you hear about us?" optional dropdown to the general enquiry form on all 6 pages, plus a conditional "Which friend referred you?" field that only appears when "Referral / word of mouth" is picked. Added as quest step **a12** so it's not forgotten.
     - **Wired up all 4 fields** (source, message, how-did-you-hear, referrer) to their real Google Form entry IDs after you added the 4 matching questions to the Form and sent the pre-filled test link. Held for approval, not yet pushed.
+11. **Bug: blank PDF scorecard, found and fixed.** The "Download Your Scorecard" PDF had been coming out visually blank. Root cause: the hidden capture element was set to `opacity:0.01` to stay invisible on the page, but the PDF tool (html2canvas) bakes in actual rendered pixels — opacity included — so the text was there, just rendered 99% transparent. Fixed by keeping it fully opaque and hiding it by position instead (pushed far down the page, out of view, rather than faded out).
+12. **Full site audit, this session:**
+    - Fixed a broken nav link: `resources.html`'s "Journal" link pointed to `index.html` instead of `blog/index.html` — wrong only on that one page.
+    - **Security:** 5 internal files (`Diagnosis-and-Plan-TEMPLATE.docx`, `Diagnosis-and-Plan-AyushMehta-example.docx`, this log, the status/recovery guide, the app/automation plan) were sitting in the repo root, which Netlify publishes in full — meaning they were publicly downloadable to anyone who found or guessed the filename. Moved into `internal-docs/` (kept in git for history) and the whole folder is now hard-blocked by a Netlify redirect (404), so it can never be served even by accident. Added a proper `404.html` page too, since the site didn't have one.
+    - Removed the old `arpitamehta-v30-DEPLOY/` folder — a leftover from the very first Netlify Drop upload (Oct 25), never served live but sitting in the repo as a stale, unpatched duplicate of the whole early site. Still recoverable from git history if ever needed.
+    - **Found: Google Analytics has never actually been running.** Every page still has the placeholder `G-XXXXXXXXXX` instead of a real GA4 Measurement ID — it's been silently failing since day one, so there is currently zero visitor analytics data. Needs a real GA4 property + Measurement ID from you to fix.
+    - The 5 blog pages (`blog/index.html` + the 4 articles) were running an older, unpatched copy of the enquiry form: the message/source fields were wired to placeholder IDs that never worked, and the "how did you hear about us" / "referred by a friend" fields were missing entirely. Brought in line with the 6 main pages.
+    - Checked and found no issues: em dashes (none site-wide), font consistency (all pages use the same two fonts), LinkedIn/mailto links (consistent everywhere), the downloadable PDF guide (valid file).
+    - Not yet verified from this side (sandbox network couldn't reach the domain): the two live Razorpay payment links — worth a manual click-test.
 
 ---
 
