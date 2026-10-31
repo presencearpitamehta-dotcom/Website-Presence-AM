@@ -1605,24 +1605,30 @@ document.getElementById("downloadPdfBtn").addEventListener("click", function(){
   btn.disabled = true;
   if (window.amTrack) amTrack("pq_pdf_download", {band: state.band.name});
 
-  /* BUG FIX (Oct 2026): #pdfRoot is kept off-page with left:-9999px so it
-     never shows in the normal layout. html2canvas renders a document clone
-     bounded by the page's actual scrollWidth/scrollHeight, and a negative
-     left offset falls outside that range, nothing there to rasterize, so
-     the PDF came out blank. Fix: clone the populated node into a disposable
-     element inside the page's normal (positive) coordinate space, make it
-     practically invisible (near-zero opacity, no pointer events, stacked
-     behind everything), capture THAT, then discard it. #pdfRoot itself is
-     never shown and never modified. */
+  /* BUG FIX (Oct 2026, revised Oct 31): #pdfRoot is kept off-page with
+     left:-9999px so it never shows in the normal layout. html2canvas
+     renders a document clone bounded by the page's actual
+     scrollWidth/scrollHeight, and a negative left offset falls outside
+     that range, nothing there to rasterize, so the PDF came out blank.
+     The first fix cloned the node into the page's positive coordinate
+     space but made it opacity:0.01 to stay invisible to the eye -- and
+     html2canvas faithfully captures the rendered pixels, opacity and
+     all, so the "fix" produced a technically-non-empty PDF that was
+     visually 100% blank (confirmed from a real downloaded PDF: 1 page,
+     3KB, pure white). Correct fix: keep the clone at FULL opacity so
+     html2canvas captures real pixels, and hide it from the visitor by
+     position alone -- placed in normal document flow, far below any
+     visible content, with no pointer events, instead of relying on
+     opacity or z-index tricks that corrupt the capture. */
   var source = document.getElementById("pdfRoot");
   var capture = source.cloneNode(true);
   capture.removeAttribute("id");
-  capture.style.position = "fixed";
+  capture.style.position = "absolute";
   capture.style.left = "0";
-  capture.style.top = "0";
-  capture.style.opacity = "0.01";
+  capture.style.top = "20000px";
+  capture.style.opacity = "1";
   capture.style.pointerEvents = "none";
-  capture.style.zIndex = "-1";
+  capture.style.zIndex = "0";
   document.body.appendChild(capture);
 
   var opt = {
