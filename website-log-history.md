@@ -28,7 +28,8 @@ A big day. In order:
     - Fixed the anchor-scroll bug where clicking a topic in the FAQ sidebar landed you slightly below the section heading, under the fixed nav bar, so you had to scroll back up.
     - Section headings (The Practice, How to Begin, etc.) now bolder and visually set apart from the questions beneath them.
     - Added a new "Referrals & offers" FAQ section: referral discount code, and group/sibling/corporate bulk pricing.
-    - Added a "How did you hear about us?" optional dropdown to the general enquiry form on all 6 pages. **Not yet wired to your Google Form spreadsheet** — you'll need to add this as a real question in the Form and share its entry ID (same is true of the existing "message" and "source" fields, which were never wired up either). Added as quest step **a12** so it's not forgotten.
+    - Added a "How did you hear about us?" optional dropdown to the general enquiry form on all 6 pages, plus a conditional "Which friend referred you?" field that only appears when "Referral / word of mouth" is picked. Added as quest step **a12** so it's not forgotten.
+    - **Wired up all 4 fields** (source, message, how-did-you-hear, referrer) to their real Google Form entry IDs after you added the 4 matching questions to the Form and sent the pre-filled test link. Held for approval, not yet pushed.
 
 ---
 
