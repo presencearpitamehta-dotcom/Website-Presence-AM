@@ -1491,6 +1491,26 @@ document.getElementById("leadForm").addEventListener("submit", function(e){
   body.append("entry.1372217125", D.DIM_LABEL[state.weakest]);
   body.append("entry.379151362", state.recommendation.title);
 
+  /* The four per-dimension scores. Already computed and already shown on the
+     scorecard, but never sent to the Sheet, which is what blocks a full score
+     breakdown in the Diagnosis & Plan document.
+     These stay dormant until the four questions exist on the Google Form and
+     their real entry IDs are pasted in below. An empty ID is skipped, so the
+     submission keeps working exactly as before until then. Nothing about the
+     16 questions or the scoring is touched by this. */
+  var DIM_ENTRY = {
+    image:    "",   // Score: Image
+    presence: "",   // Score: Executive Presence
+    social:   "",   // Score: Social Culture
+    edge:     ""    // Score: Distinction
+  };
+  Object.keys(DIM_ENTRY).forEach(function(dim){
+    var id = DIM_ENTRY[dim];
+    if (id && state.dimScores && state.dimScores[dim] !== undefined) {
+      body.append(id, String(state.dimScores[dim]));
+    }
+  });
+
   fetch(FORM_ACTION, { method:"POST", mode:"no-cors",
     headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: body.toString()
   }).catch(function(){});

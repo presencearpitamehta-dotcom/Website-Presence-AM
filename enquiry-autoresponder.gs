@@ -43,7 +43,12 @@ var OWNER     = 'presence.arpitamehta@gmail.com';
 var FROM_NAME = 'Arpita Mehta';
 var SITE      = 'https://arpitamehta.co';
 var LOGO      = 'https://arpitamehta.co/images/shared/logo.png';
-var CALL_LINK = 'https://cal.com/arpita-mehta-presence-consultant/discoverycall';
+// Points at the booking page, NOT straight at Cal.com. A direct Cal.com link
+// lets someone book a paid session without paying, because payment is
+// collected by Razorpay first and Cal.com is only what they are redirected to
+// afterwards. The booking page is also where all three tiers and their current
+// prices live, so this never needs changing when pricing does.
+var CALL_LINK = 'https://arpitamehta.co/booking';
 
 /* One auto-reply per person per this many minutes.
    Someone who takes the quiz, grabs the playbook and then enquires in
