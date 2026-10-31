@@ -14,7 +14,7 @@ Now she works with founders, executives, brides, homemakers, and early-career pr
 
 > "The most powerful thing you can learn is how to walk into any room and be unforgettable, for the right reasons."
 
-Her practice covers image, executive presence, social culture, and AI for branding and business. It is one of the few in the country that genuinely integrates all of it, because she has not just studied these things, she has lived them. She holds a WSET Level 1 in wines, trained as an engineer, and came up through marketing where her entire job was understanding why people choose what they choose. Her clients arrive accomplished. They leave unforgettable.
+Her practice covers image, executive presence, social culture, and AI for branding and business. It is one of the few in the country that genuinely integrates all of it, because she has not just studied these things, she has lived them. She holds a City & Guilds Certificate in Soft Skills from London, a WSET Level 1 Award in Wines, and is a Certified Image Consultant and Train the Trainer through ICBI. She trained as an engineer, and came up through marketing where her entire job was understanding why people choose what they choose. Her clients arrive accomplished. They leave unforgettable.
 
 ![Arpita Mehta, presence consultant, Delhi](https://arpitamehta.co/images/about/portrait.jpg)
 ![Arpita Mehta](https://arpitamehta.co/images/shared/monogram.png)
