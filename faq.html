@@ -133,7 +133,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' cdnjs.cloudflare.com assets.calendly.com www.googletagmanager.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com assets.calendly.com; font-src fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://docs.google.com https://api.anthropic.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; frame-src https://calendly.com">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' cdnjs.cloudflare.com www.googletagmanager.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://docs.google.com https://api.anthropic.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com">
 
 
 <!-- Google Analytics 4: replace G-XK4BZ89809 with your Measurement ID -->
@@ -214,8 +214,13 @@ window.amTrack = function(name, params){ try{ gtag('event', name, params || {});
         },
         {
           "@type": "Question",
+          "name": "What is the video consultation?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Forty-five minutes with Arpita, online, from anywhere in the world. Where the discovery call decides whether to work together, this one does the work: your image, how you read on camera and in a room, and the single gap costing you the most right now. You leave with a direction and the first changes to make. The fee is Rs. 2,049." }
+        },
+        {
+          "@type": "Question",
           "name": "What is the in-person session?",
-          "acceptedAnswer": { "@type": "Answer", "text": "One hour with Arpita in Delhi, face to face. You are read as a room reads you, your image is examined in real light, and you rehearse the first thirty seconds until it changes. You leave with three things to change this month, and a written summary follows within two days. It is a session in its own right, not a consultation for a programme. The fee is Rs. 5,999." }
+          "acceptedAnswer": { "@type": "Answer", "text": "One hour with Arpita in Delhi, face to face. You are read as a room reads you, your image is examined in real light, and you rehearse the first thirty seconds until it changes. You leave with three things to change this month, and a written summary follows within two days. It is a session in its own right, not a consultation for a programme. The fee is Rs. 4,299." }
         },
         {
           "@type": "Question",
@@ -434,6 +439,7 @@ nav.hidden{transform:translateY(-100%)}
 .cta.ghost{background:transparent;color:var(--brown);border-color:var(--border)}
 .cta.ghost:hover{background:var(--ivory);color:var(--brown)}
 .nav-cta{padding:12px 22px;font-size:.8rem;white-space:nowrap}
+.nav-links a.nav-cta{font-size:.8rem;letter-spacing:.18em}
 
 .page-hero{padding:200px 0 70px;border-bottom:1px solid var(--border)}
 .page-hero h1{font-size:clamp(2.2rem,4.8vw,3.6rem);max-width:820px}
@@ -501,21 +507,6 @@ footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
 .foot-brand p{font-size:.92rem;color:var(--panel);max-width:300px;margin-top:16px}
 .foot-base{border-top:1px solid rgba(212,196,174,.18);padding-top:28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.78rem;color:var(--panel)}
 
-.panel-overlay{position:fixed;inset:0;background:rgba(44,32,24,.45);opacity:0;pointer-events:none;transition:opacity .35s;z-index:1500}
-.panel-overlay.open{opacity:1;pointer-events:auto}
-.panel{position:fixed;top:0;right:0;bottom:0;width:min(520px,100%);background:var(--linen);z-index:1600;transform:translateX(100%);transition:transform .45s cubic-bezier(.22,.8,.3,1);display:flex;flex-direction:column;border-left:1px solid var(--border)}
-.panel.open{transform:translateX(0)}
-.panel-head{display:flex;align-items:center;justify-content:space-between;padding:22px 28px;border-bottom:1px solid var(--border)}
-.panel-head .t{font-family:'Cormorant Garamond',serif;font-size:1.2rem}
-.panel-close{background:none;border:none;font-size:1.6rem;color:var(--taupe);cursor:pointer;line-height:1;padding:4px 8px}
-.panel-opts{padding:24px 22px;display:flex;flex-direction:column;gap:16px;overflow-y:auto}
-.p-opt{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 22px;background:var(--ivory);border:1px solid var(--border)}
-.p-opt .d-title{font-family:'Cormorant Garamond',serif;font-size:1.08rem;color:var(--ink)}
-.p-opt .d-sub{font-size:.8rem;color:var(--taupe-lt);margin-top:3px}
-.p-right{text-align:right;flex-shrink:0}
-.d-price{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--brown);margin-bottom:10px}
-.d-cta{padding:11px 20px;font-size:.68rem}
-.panel-note{font-size:.86rem;color:var(--taupe);padding:6px 4px;line-height:1.7}
 
 .rv{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
 .rv.in{opacity:1;transform:none}
@@ -704,13 +695,18 @@ footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
         </div>
 
         <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What is the video consultation?<span class="faq-icon" aria-hidden="true"></span></button>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Forty-five minutes with Arpita, online, from anywhere in the world. Where the discovery call decides whether to work together, this one does the work: your image, how you read on camera and in a room, and the single gap costing you the most right now. You leave with a direction and the first changes to make. The fee is Rs. 2,049.</p></div>
+        </div>
+
+        <div class="faq-item">
           <button class="faq-q" aria-expanded="false">What is the in-person session?<span class="faq-icon" aria-hidden="true"></span></button>
-          <div class="faq-a" role="region"><p class="faq-a-inner">One hour with Arpita in Delhi, face to face. You are read as a room reads you, your image is examined in real light, and you rehearse the first thirty seconds until it changes. You leave with three things to change this month, and a written summary follows within two days. It is a session in its own right, not a consultation attached to a programme. The fee is Rs. 5,999.</p></div>
+          <div class="faq-a" role="region"><p class="faq-a-inner">One hour with Arpita in Delhi, face to face. You are read as a room reads you, your image is examined in real light, and you rehearse the first thirty seconds until it changes. You leave with three things to change this month, and a written summary follows within two days. It is a session in its own right, not a consultation attached to a programme. The fee is Rs. 4,299.</p></div>
         </div>
 
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">Do you work with clients outside Delhi?<span class="faq-icon" aria-hidden="true"></span></button>
-          <div class="faq-a" role="region"><p class="faq-a-inner">Yes. Online sessions are available for clients across India and internationally. For in-person work outside Delhi, the scope and logistics are discussed on the discovery call.</p></div>
+          <div class="faq-a" role="region"><p class="faq-a-inner">Yes. Online sessions are available for clients across India and internationally, most often as the forty-five minute video consultation. For in-person work outside Delhi, the scope and logistics are discussed on the discovery call.</p></div>
         </div>
 
         <div class="faq-item">
@@ -945,37 +941,6 @@ footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
   </div>
 </div>
 
-<div class="panel-overlay" id="panelOverlay"></div>
-<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-label="Book a call with Arpita">
-  <div class="panel-head">
-    <span class="t">Begin Here</span>
-    <button class="panel-close" id="panelClose" aria-label="Close booking panel">&times;</button>
-  </div>
-  <div class="panel-opts">
-    <div class="p-opt">
-      <div>
-        <p class="d-title">The Discovery Call</p>
-        <p class="d-sub">Fifteen minutes, online, from anywhere in the world.</p>
-      </div>
-      <div class="p-right">
-        <p class="d-price">&#8377;339</p>
-        <button class="cta d-cta" data-pay="discovery">Reserve</button>
-      </div>
-    </div>
-    <div class="p-opt">
-      <div>
-        <p class="d-title">The In Person Session</p>
-        <p class="d-sub">One hour with Arpita, face to face in Delhi.</p>
-      </div>
-      <div class="p-right">
-        <p class="d-price">&#8377;5,999</p>
-        <button class="cta d-cta" data-pay="inperson">Reserve</button>
-      </div>
-    </div>
-    <p class="panel-note">Choose a time that suits you. A payment link follows to confirm it, and your slot is held for twenty four hours. Joining from outside Delhi, or outside India? Begin with the discovery call. Every engagement is designed around where you are.</p>
-    <p class="panel-note">Free reschedule with 24h+ notice. No refund with less notice or a no-show. <a href="faq.html#cancellation-policy" style="color:var(--brown);text-decoration:underline">Details</a>.</p>
-  </div>
-</aside>
 
 <script>
 (function(){
@@ -1093,16 +1058,7 @@ fw.forEach(function(w, i){
   s.textContent = w; fq.appendChild(s); fq.appendChild(document.createTextNode(" "));
 });
 
-/* booking panel */
-var panel = document.getElementById("panel"), overlay = document.getElementById("panelOverlay");
-var PAY_LINKS = { discovery:"https://rzp.io/rzp/discovery15", inperson:"https://rzp.io/rzp/sessionf2f" };
-function openPanel(){ panel.classList.add("open"); overlay.classList.add("open"); document.body.style.overflow="hidden"; }
-function closePanel(){ panel.classList.remove("open"); overlay.classList.remove("open"); document.body.style.overflow=""; }
-document.querySelectorAll("[data-calendly]").forEach(function(b){ b.addEventListener("click", function(){ if(window.amTrack) amTrack("booking_panel_open", {page: location.pathname}); openPanel(); }); });
-document.querySelectorAll("[data-pay]").forEach(function(b){ b.addEventListener("click", function(){ if(window.amTrack) amTrack("payment_click", {option: b.dataset.pay}); window.open(PAY_LINKS[b.dataset.pay], "_blank", "noopener"); }); });
-document.getElementById("panelClose").addEventListener("click", closePanel);
-overlay.addEventListener("click", closePanel);
-document.addEventListener("keydown", function(e){ if(e.key==="Escape") closePanel(); }); document.addEventListener("keydown", function(e){ if (e.key==="Escape") closeEnquiry(); });
+document.addEventListener("keydown", function(e){ if (e.key==="Escape") closeEnquiry(); });
 /* ============ GENERAL ENQUIRY MODAL ============ */
 var ENQUIRY_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSfi0a-qHiSgcVllmtYjZdPEyxvdo2I2Ydisp46C-QvYeO273w/formResponse";
 var ENQUIRY_MESSAGE_ENTRY = "entry.420923349";

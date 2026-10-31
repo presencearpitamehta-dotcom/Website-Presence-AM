@@ -137,7 +137,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' cdnjs.cloudflare.com assets.calendly.com www.googletagmanager.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com assets.calendly.com; font-src fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://docs.google.com https://api.anthropic.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; frame-src https://calendly.com">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' cdnjs.cloudflare.com www.googletagmanager.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://docs.google.com https://api.anthropic.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com">
 
 
 <!-- Google Analytics 4: replace G-XK4BZ89809 with your Measurement ID -->
@@ -294,6 +294,7 @@ nav.hidden{transform:translateY(-100%)}
 .cta.ghost{background:transparent;color:var(--brown);border-color:var(--border)}
 .cta.ghost:hover{background:var(--ivory);color:var(--brown)}
 .nav-cta{padding:12px 22px;font-size:.8rem;white-space:nowrap}
+.nav-links a.nav-cta{font-size:.8rem;letter-spacing:.18em}
 
 /* ============ HERO ============ */
 .hero{
@@ -390,8 +391,6 @@ footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
 .foot-base{border-top:1px solid rgba(212,196,174,.18);padding-top:28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.78rem;color:var(--panel)}
 
 /* ============ CALENDLY PANEL ============ */
-.panel-overlay{position:fixed;inset:0;background:rgba(44,32,24,.45);opacity:0;pointer-events:none;transition:opacity .35s;z-index:1500}
-.panel-overlay.open{opacity:1;pointer-events:auto}
 .panel{
   position:fixed;top:0;right:0;bottom:0;width:min(520px,100%);
   background:var(--linen);z-index:1600;transform:translateX(100%);
@@ -527,7 +526,7 @@ footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
 <header class="hero" style="min-height:0;padding:150px 0 40px">
   <div class="wrap hero-inner">
     <h1>Begin Here</h1>
-    <p class="hero-sub" style="opacity:1">Choose a time that suits you. A payment link follows to confirm it, and your slot is held for twenty four hours.</p>
+    <p class="hero-sub" style="opacity:1">Choose a time that suits you. Reserve below, pay to confirm, then pick your slot on the calendar.</p>
   </div>
 </header>
 
@@ -548,7 +547,7 @@ footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
       <div class="p-opt">
         <div>
           <p class="d-title">Video Consultation</p>
-          <p class="d-sub">Forty-five minutes, one-to-one over video &mdash; a full diagnosis of your presence, and a clear plan to act on it.</p>
+          <p class="d-sub">Forty-five minutes, one-to-one over video, a full diagnosis of your presence, and a clear plan to act on it.</p>
         </div>
         <div class="p-right">
           <p class="d-price">&#8377;2,049</p>
@@ -565,7 +564,8 @@ footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
           <button class="cta d-cta" data-pay="inperson">Reserve</button>
         </div>
       </div>
-      <p class="panel-note">Choose a time that suits you. A payment link follows to confirm it, and your slot is held for twenty four hours. Joining from outside Delhi, or outside India? Begin with the discovery call. Every engagement is designed around where you are.</p>
+      <p class="panel-note"><strong>After you pay, please wait a few seconds, you'll be redirected straight to the calendar to pick your time.</strong></p>
+      <p class="panel-note">Reserve above, pay to confirm, then choose your slot on the calendar that follows. Joining from outside Delhi, or outside India? Begin with the discovery call. Every engagement is designed around where you are.</p>
       <p class="panel-note">Free reschedule with 24h+ notice. No refund with less notice or a no-show. <a href="faq.html#cancellation-policy" style="color:var(--brown);text-decoration:underline">Details</a>.</p>
       <p class="panel-note">Not ready to book yet? <a href="assessment.html" style="color:var(--brown);text-decoration:underline">Take the free Presence Quotient assessment</a> first, or <button data-enquiry="General Enquiry" style="background:none;border:none;padding:0;font:inherit;color:var(--brown);text-decoration:underline;cursor:pointer">send a question</button> before you commit.</p>
     </div>
@@ -752,8 +752,8 @@ fw.forEach(function(w, i){
 /* ---------- Reserve buttons (Razorpay / Cal.com) ---------- */
 var PAY_LINKS = {
   discovery: "https://rzp.io/rzp/discovery15",
-  inperson:  "https://rzp.io/rzp/sessionf2f",
-  video:     "https://cal.com/arpita-mehta-presence-consultant/video-consultation"
+  inperson:  "https://rzp.io/rzp/inperson-consultation",
+  video:     "https://rzp.io/rzp/virtual-call"
 };
 document.querySelectorAll("[data-pay]").forEach(function(b){
   b.addEventListener("click", function(){ if(window.amTrack) amTrack("payment_click", {option: b.dataset.pay}); window.open(PAY_LINKS[b.dataset.pay], "_blank", "noopener"); });

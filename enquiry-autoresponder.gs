@@ -176,7 +176,7 @@ function classify(l) {
 function isEmail(s){ return !!s && s.indexOf('@') > 0 && s.indexOf('.') > 0; }
 // Every value below comes from a public form submission, so it is
 // attacker-controllable. Anything going into an HTML email body must
-// pass through this first — otherwise a name like
+// pass through this first, otherwise a name like
 // "<img src=x onerror=...>" renders as live markup in both the
 // visitor's reply and, worse, the notification Arpita herself reads.
 function escapeHtml(s) {
@@ -339,7 +339,7 @@ function ownerBody(l) {
   inner += t;
   if (isEmail(l.email)) {
     // isEmail() only checks for "@" and ".", so a crafted value like
-    // a@b.com" onmouseover="..." still passes it — escape before it
+    // a@b.com" onmouseover="..." still passes it, escape before it
     // goes into the href attribute below.
     inner += button('Reply to ' + firstName(l.name),
       'mailto:' + escapeHtml(l.email) + '?subject=' + encodeURIComponent('Re: ' + (l.prog || 'your enquiry')));

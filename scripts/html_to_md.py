@@ -7,7 +7,7 @@ lists, tables, links.
 Removes: nav, footer, cookie/consent text (none present on this site),
 scripts/styles, buttons/CTAs, forms, ads (none present on this site),
 decorative icons.
-Does not rewrite or summarise any kept sentence — only structural HTML
+Does not rewrite or summarise any kept sentence, only structural HTML
 (nav/footer/button/script wrappers) is removed before conversion.
 """
 import os

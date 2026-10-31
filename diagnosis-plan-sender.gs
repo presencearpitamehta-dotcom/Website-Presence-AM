@@ -1,7 +1,7 @@
 /**
  * DIAGNOSIS & PLAN SENDER + CLIENT FOLDER AUTOMATION  ·  arpitamehta.co
  * =====================================================================
- * Companion script to enquiry-autoresponder.gs — same Sheet, same Apps
+ * Companion script to enquiry-autoresponder.gs, same Sheet, same Apps
  * Script project, same account. Phase 1 of "Arpita's Assistant":
  *
  *   1. You fill in My Read / Habit / Why This Programme / Session Date
@@ -12,12 +12,12 @@
  *      anything), emails the PDF to the client, and timestamps
  *      "Sent At" so a re-check never double-sends.
  *   3. Every client ends up with one Drive folder holding every
- *      document you've ever sent them — the start of the per-client
+ *      document you've ever sent them, the start of the per-client
  *      archive you asked for.
  *
  * WHAT "THE PDF SCORECARD" MEANS HERE
  *   The scorecard your client sees on the website is rendered in
- *   their browser (html2pdf) when they click download — it never
+ *   their browser (html2pdf) when they click download, it never
  *   touches your server or this Sheet, so this script cannot resend
  *   that exact file. The Diagnosis & Plan document already contains
  *   the same score, band, strongest and weakest dimension in its own
@@ -25,12 +25,12 @@
  *   client's original two-page scorecard (with the pattern read and
  *   their lowest-scoring item) attached as a second file, say so and
  *   I'll wire the site to save a copy server-side when it's generated
- *   — that's a separate, slightly bigger change.
+ *, that's a separate, slightly bigger change.
  *
  * NEW COLUMNS THIS NEEDS ON "Presence Quotient Leads (Responses)"
  *   Session Date, My Read 1, My Read 2, My Read 3, Habit,
  *   Why This Programme, Ready to Send, Sent At, Status, Client Folder
- *   — add these as plain columns; make "Ready to Send" a checkbox
+ *, add these as plain columns; make "Ready to Send" a checkbox
  *   (select the column, Insert -> Checkbox).
  *
  * INSTALL
@@ -39,12 +39,12 @@
  *   2. File -> New -> Script -> name it diagnosis-plan-sender
  *   3. Paste all of this, Save
  *   4. Upload Diagnosis-and-Plan-TEMPLATE.docx to Drive (it will
- *      offer to open it as a Google Doc — do that, or right-click ->
+ *      offer to open it as a Google Doc, do that, or right-click ->
  *      Open with -> Google Docs), then copy its file ID from the
  *      address bar (the long string after /d/ in the URL) into
  *      TEMPLATE_DOC_ID below
  *   5. (Optional) Make a Drive folder to hold all client folders,
- *      and paste its ID into CLIENT_FILES_ROOT_ID — otherwise client
+ *      and paste its ID into CLIENT_FILES_ROOT_ID, otherwise client
  *      folders are created at the top level of My Drive
  *   6. Triggers (alarm clock) -> Add Trigger:
  *        Function ....... onEditInstallable
@@ -81,7 +81,7 @@ function onEditInstallable(e) {
     if (val !== true) return;
 
     var data = getRowData(sheet, headers, row);
-    if (data[SENTAT_COL]) return; // already sent — a re-check does nothing
+    if (data[SENTAT_COL]) return; // already sent, a re-check does nothing
 
     var problems = validate(data);
     if (problems.length) {
@@ -126,7 +126,7 @@ function validate(data) {
 function sendDiagnosisPlan(sheet, headers, row, data) {
   var folder = getOrCreateClientFolder(data['Name'], data['Email']);
 
-  var copy = DriveApp.getFileById(TEMPLATE_DOC_ID).makeCopy('Diagnosis & Plan — ' + data['Name'], folder);
+  var copy = DriveApp.getFileById(TEMPLATE_DOC_ID).makeCopy('Diagnosis & Plan for ' + data['Name'], folder);
   var doc = DocumentApp.openById(copy.getId());
   var body = doc.getBody();
 
@@ -149,10 +149,10 @@ function sendDiagnosisPlan(sheet, headers, row, data) {
   doc.saveAndClose();
 
   var pdf = DriveApp.getFileById(copy.getId()).getAs('application/pdf');
-  pdf.setName('Diagnosis & Plan — ' + data['Name'] + '.pdf');
+  pdf.setName('Diagnosis & Plan for ' + data['Name'] + '.pdf');
   folder.createFile(pdf); // standing PDF copy alongside the editable Doc
 
-  GmailApp.sendEmail(data['Email'], 'Your Diagnosis & Plan — Arpita Mehta', 'Your session brief is attached.', {
+  GmailApp.sendEmail(data['Email'], 'Your Diagnosis & Plan, Arpita Mehta', 'Your session brief is attached.', {
     name: 'Arpita Mehta',
     htmlBody: clientEmailBody(data),
     attachments: [pdf],
@@ -198,7 +198,7 @@ function clientEmailBody(data) {
   var C = { linen: '#F8F4EE', parchment: '#DED4CA', ink: '#2A1F14', taupe: '#3D2F1D', white: '#FFFFFF' };
   var firstName = escapeHtml(String(data['Name']).split(' ')[0] || 'there');
   var inner = '<p style="margin:0 0 16px;font-family:\'Jost\',sans-serif;font-size:15px;line-height:1.7;color:' + C.taupe + '">'
-    + 'Dear ' + firstName + ', attached is your session brief from today — your score, where I would begin, '
+    + 'Dear ' + firstName + ', attached is your session brief from today: your score, where I would begin, '
     + 'and the habit we agreed on. Keep it, it is yours.</p>'
     + '<p style="margin:18px 0 0;font-family:Georgia,\'Times New Roman\',serif;font-size:16px;color:' + C.ink + '">Warm regards,<br>Arpita</p>';
   return '<!doctype html><html><body style="margin:0;padding:0;background:' + C.linen + '">'
