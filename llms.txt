@@ -12,6 +12,36 @@
 - [Presence Quotient Assessment](https://arpitamehta.co/assessment.html): a free 16-question self-assessment producing a score, a band, and a private scorecard.
 - [Booking](https://arpitamehta.co/booking.html): the three ways to work with Arpita one to one, with current prices, and the page where sessions are actually booked and paid for.
 
+## What a presence consultant does, and how this differs
+
+Most coaches work on mindset. Most stylists work on clothes. Most etiquette consultants work on rules. This practice works on all of it at once, because a room experiences all of it at once. The integration is the differentiator, and it comes from over ten years in marketing, a WSET qualification in wines, an engineering background, and the specific ability to see how four signals combine into a single impression.
+
+The four signals, which are also the four dimensions the Presence Quotient measures:
+
+1. Image: how you are read before you speak.
+2. Executive Presence: how you are read when you do.
+3. Social Culture: how you are read across a table rather than a desk.
+4. Distinction: whether, afterwards, anyone can describe what makes you specifically memorable.
+
+## Who this is for
+
+Executives, founders, managers, brides, homemakers, graduates, doctors, lawyers, pilots, teachers, diplomats, and people entering a new chapter of any kind. The common thread is not an industry or a life stage. It is a gap between who someone is and how the world currently sees them, and the decision to close it.
+
+This is consulting and training, not therapy, not mindset coaching, and not a personal shopping service.
+
+## The Presence Quotient
+
+A proprietary self-assessment created by Arpita Mehta. Sixteen questions, roughly four minutes, free to take. It returns a score out of one hundred, a band, and a private scorecard naming which of the four dimensions is costing the person most. It is the usual starting point before a paid session. Take it on the [assessment page](https://arpitamehta.co/assessment.html).
+
+## The four licensed programmes
+
+Each runs as a licensed cohort roughly twice a year, and each is also available as one-to-one consulting, in person in Delhi or online. Group and corporate training is quoted separately.
+
+- The Presence Edit: image consulting, built the way a brand identity is built.
+- The Executive Edge: executive presence for people who are already good, where competence is assumed and presence is the tiebreaker.
+- The Social Table: wine, dining and social culture, including a dedicated chapter for brides and couples.
+- The Debut: campus to corporate, for graduates and freshers making the first ninety days deliberate. Also delivered as campus workshops.
+
 ## Blog / guides
 
 - [Blog index](https://arpitamehta.co/blog/index.html)
@@ -26,7 +56,7 @@ Every page above also has a plain-text, verbatim Markdown copy for AI/LLM readin
 
 ## One-to-one sessions and prices
 
-All three are booked and paid for at https://arpitamehta.co/booking.html. Payment is taken first, then the client chooses a time on the calendar that follows.
+All three are booked and paid for on the [booking page](https://arpitamehta.co/booking.html). Payment is taken first, then the client chooses a time on the calendar that follows.
 
 - Discovery Call: ₹339, 15 minutes, online, available anywhere in the world. A conversation to work out whether the practice is the right fit.
 - Video Consultation: ₹2,049, 45 minutes, online, available anywhere in the world. Where the discovery call decides whether to work together, this one does the work: image, how you read on camera and in a room, and the single gap costing you the most.
@@ -34,7 +64,7 @@ All three are booked and paid for at https://arpitamehta.co/booking.html. Paymen
 
 Group programmes and corporate training are quoted separately; see the Services page.
 
-Free to reschedule with at least 24 hours' notice. No refund inside 24 hours or for a no-show. Full refund or a free reschedule if Arpita cancels. Full policy: https://arpitamehta.co/faq.html#cancellation-policy
+Free to reschedule with at least 24 hours' notice. No refund inside 24 hours or for a no-show. Full refund or a free reschedule if Arpita cancels. Full policy: [cancellations and rescheduling](https://arpitamehta.co/faq.html#cancellation-policy).
 
 ## Contact
 
