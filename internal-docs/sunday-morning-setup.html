@@ -223,6 +223,106 @@ td code{background:transparent;border:0;padding:0}
     </div>
   </section>
 
+  <!-- ============ TASK 3 ============ -->
+  <section class="task">
+    <div class="task-head">
+      <div class="task-n">3</div>
+      <div>
+        <h2>Verify the domain in Search Console</h2>
+        <p class="task-sub">10 minutes at GoDaddy, then a wait</p>
+      </div>
+    </div>
+
+    <div class="why">
+      Search Console is the only place either of us can see whether Google has actually crawled your site, and what people typed to find you. Google is asking you to prove you own the domain by putting a record it can read into your DNS. Your DNS is at GoDaddy, so that is where the record goes.
+    </div>
+
+    <ol class="steps">
+      <li><div class="step-body">
+        <p>In the Search Console dialog, click <b>COPY</b> next to the long <code>google-site-verification=</code> string. Do not retype it, one wrong character and it fails with no useful error.</p>
+        <p class="pathline">Then click <b>VERIFY LATER</b>. The property is saved and you can come back to it.</p>
+      </div></li>
+      <li><div class="step-body">
+        <p>Sign in at <b>godaddy.com</b>. Top right, your initials, then <b>My Products</b>.</p>
+      </div></li>
+      <li><div class="step-body">
+        <p>Find <b>arpitamehta.co</b>, open it, and go to <b>DNS</b> or <b>Manage DNS</b>.</p>
+        <p class="pathline">One check before you add anything: if that page shows your nameservers pointing at Netlify rather than GoDaddy, stop. The record belongs in Netlify instead, under Domains, DNS records. Tell me and I will walk you through that version.</p>
+      </div></li>
+      <li><div class="step-body">
+        <p>Click <b>Add New Record</b> and fill it in exactly:</p>
+        <div class="fieldbox">
+          <table>
+            <thead><tr><th>Field</th><th>What to put</th></tr></thead>
+            <tbody>
+              <tr><td>Type</td><td><code>TXT</code></td></tr>
+              <tr><td>Name</td><td><code>@</code></td></tr>
+              <tr><td>Value</td><td>paste the whole copied string</td></tr>
+              <tr><td>TTL</td><td>leave the default</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="pathline">The Name must be a single <code>@</code>, which means the domain itself. Not arpitamehta.co, not www.</p>
+      </div></li>
+      <li><div class="step-body">
+        <p><b>Add</b> the record. Do not delete or edit any TXT record that is already there, several can coexist, and an existing one may be carrying your email settings.</p>
+      </div></li>
+      <li><div class="step-body">
+        <p>Go back to Search Console and press <b>VERIFY</b>.</p>
+        <p class="pathline">If it fails, that is normal. GoDaddy usually publishes within minutes but can take a few hours. Leave the record alone and press Verify again later. Deleting and re-adding it only restarts the clock.</p>
+      </div></li>
+      <li><div class="step-body">
+        <p>Once verified: left menu, <b>Sitemaps</b>, type <code>sitemap.xml</code>, <b>Submit</b>. That is the step that actually tells Google what to crawl.</p>
+      </div></li>
+    </ol>
+
+    <div class="note">
+      <b>If GoDaddy turns into a fight,</b> there is an easier route. In the dialog, click <i>try a URL prefix property instead</i>, choose the HTML tag method, and send me the tag. I will add it to the site and deploy, and you verify with no DNS at all. Slightly narrower coverage, same useful data.
+    </div>
+  </section>
+
+  <!-- ============ TASK 4 ============ -->
+  <section class="task">
+    <div class="task-head">
+      <div class="task-n">4</div>
+      <div>
+        <h2>Point Topmate and LinkedIn at the site</h2>
+        <p class="task-sub">20 minutes, mostly copy and paste</p>
+      </div>
+    </div>
+
+    <div class="why">
+      Worth being straight about what this does. You cannot submit backlinks to Google, and most profile links carry a tag that tells Google not to pass ranking credit. What they genuinely do is three things: they give Google and AI tools a second source confirming who you are and what you do, they get your pages discovered faster, and they send real people who are already interested. The second opinion matters more than it used to, because an AI answering <i>who is a good presence coach in Delhi</i> weighs what other sites say about you, not only what your own site claims.
+    </div>
+
+    <ol class="steps">
+      <li><div class="step-body">
+        <p><b>Topmate.</b> Create the profile if it is not up yet, and put <code>arpitamehta.co</code> in the website field and in the bio text. Mirror your three real tiers so nothing contradicts the site.</p>
+        <p class="pathline">This one doubles as a second bookable storefront, which is why it is first.</p>
+      </div></li>
+      <li><div class="step-body">
+        <p><b>LinkedIn, four places,</b> and most people only do the first:</p>
+        <p class="pathline">Contact info, the Website field, labelled Company. Your About section, written out as arpitamehta.co so it is readable even where it is not clickable. The Featured section, add the site as a link with a real title. Your current Experience entry for the practice.</p>
+      </div></li>
+      <li><div class="step-body">
+        <p><b>Google Business Profile.</b> You already created it. Check the website field points at <code>arpitamehta.co</code>, and add your services. This is the single strongest one for Delhi searches, because the map pack sits above the blue links.</p>
+      </div></li>
+      <li><div class="step-body">
+        <p><b>Instagram bio.</b> One link, pointed at <code>arpitamehta.co/booking</code> rather than the homepage, since that is the page that now does the selling.</p>
+      </div></li>
+      <li><div class="step-body">
+        <p>Keep the wording consistent across all four: same name, same <b>Presence Consultant, Delhi</b> descriptor, same URL format. Search engines and AI tools match entities on exactly this kind of repetition.</p>
+      </div></li>
+      <li><div class="step-body">
+        <p>Once Search Console is verified, paste me the list of what you set up. I can then check which links Google has actually found, under Links in the left menu.</p>
+      </div></li>
+    </ol>
+
+    <div class="note flag">
+      <b>What not to do:</b> paid link packages, directory blasts, or anything offering hundreds of backlinks. They are the one SEO activity that can actively get a site penalised, and for a practice selling trust, a spammy footprint is worse than no footprint.
+    </div>
+  </section>
+
   <p class="handback">
     <b>Already live as of this morning:</b> the smaller Request a Call button, the corrected &#8377;4,299 price on the FAQ, About and homepage schema, and Video Consultation now appearing across the site rather than only on the booking page.
     <br><br>
