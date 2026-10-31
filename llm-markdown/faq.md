@@ -72,10 +72,6 @@ Fifteen minutes, online, from anywhere. A direct conversation about where you ar
 
 One hour with Arpita in Delhi, face to face. You are read as a room reads you, your image is examined in real light, and you rehearse the first thirty seconds until it changes. You leave with three things to change this month, and a written summary follows within two days. It is a session in its own right, not a consultation attached to a programme. The fee is Rs. 5,999.
 
-### What if I need to cancel or reschedule?
-
-Free to reschedule, as long as you let us know at least 24 hours before your scheduled session. Just write to presence.arpitamehta@gmail.com. If you cancel or don't show up with less than 24 hours' notice, the booking can't be refunded, since that slot was held for you alone. If Arpita needs to cancel or reschedule instead, you'll get a full refund, processed within 5 to 7 business days, or a free reschedule, whichever you prefer.
-
 ### Do you work with clients outside Delhi?
 
 Yes. Online sessions are available for clients across India and internationally. For in-person work outside Delhi, the scope and logistics are discussed on the discovery call.
@@ -83,6 +79,16 @@ Yes. Online sessions are available for clients across India and internationally.
 ### Do you do corporate or team training?
 
 Yes. As a certified Train the Trainer and soft skills facilitator, Arpita designs group training for corporates, colleges and schools on presence topics such as executive presence and business dining culture, and on soft skills more broadly: communication, emotional intelligence, public speaking and team dynamics. The session is built around where the group actually needs the work. Write to presence.arpitamehta@gmail.com with the group size and context.
+
+## Cancellations & rescheduling
+
+### What if I need to cancel or reschedule?
+
+Free to reschedule, as long as you let us know at least 24 hours before your scheduled session. Just write to presence.arpitamehta@gmail.com. If you cancel or don't show up with less than 24 hours' notice, the booking can't be refunded, since that slot was held for you alone. If Arpita needs to cancel or reschedule instead, you'll get a full refund, processed within 5 to 7 business days, or a free reschedule, whichever you prefer.
+
+### What if I'm running a few minutes late?
+
+Message presence.arpitamehta@gmail.com as soon as you know. A few minutes is rarely an issue; it's a no-reply, no-show that forfeits the session, not lateness you've flagged in advance.
 
 ## The programmes
 
