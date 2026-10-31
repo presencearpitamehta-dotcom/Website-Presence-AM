@@ -1,0 +1,230 @@
+<title>Sunday Morning Setup</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: two stacked task cards, each a numbered vertical trail with a
+   checkable step list. Palette and type lifted from arpitamehta.co so this
+   reads as part of the same practice, not a generic how-to. */
+:root{
+  --bg:#F8F4EE;
+  --surface:#FBF7F3;
+  --line:#DED4CA;
+  --ink:#2A1F14;
+  --body:#3D2F1D;
+  --muted:#6B5D50;
+  --cognac:#9C5A4C;
+  --gold:#AE957E;
+  --ok:#3F7A5E;
+  --warn:#9C5A4C;
+  --disp:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --ui:'DM Sans',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#1A1510; --surface:#231C15; --line:#3B3027; --ink:#F2EAE0;
+    --body:#DCCFC0; --muted:#A49584; --cognac:#C9826F; --gold:#B99C82;
+    --ok:#6FB391; --warn:#C9826F; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1A1510; --surface:#231C15; --line:#3B3027; --ink:#F2EAE0;
+  --body:#DCCFC0; --muted:#A49584; --cognac:#C9826F; --gold:#B99C82;
+  --ok:#6FB391; --warn:#C9826F; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--body);
+  font-family:var(--ui);font-size:16px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{
+  max-width:720px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:40px 80px;
+}
+h1,h2,h3{font-family:var(--disp);font-weight:500;color:var(--ink);margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(2rem,5vw,2.9rem)}
+h1 em{font-style:italic;color:var(--cognac)}
+.eyebrow{
+  font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);
+  display:flex;align-items:center;gap:14px;margin-bottom:16px;
+}
+.eyebrow::before{content:"";width:34px;height:1px;background:var(--gold);flex:0 0 auto}
+.lede{margin:18px 0 0;color:var(--muted);max-width:60ch}
+.meta{margin-top:10px;font-size:.84rem;color:var(--muted)}
+
+.task{
+  background:var(--surface);border:1px solid var(--line);border-radius:4px;
+  padding:28px 26px;margin-top:34px;
+}
+.task-head{display:flex;gap:16px;align-items:flex-start;margin-bottom:6px}
+.task-n{
+  flex:0 0 auto;width:34px;height:34px;border-radius:50%;
+  border:1px solid var(--cognac);color:var(--cognac);
+  display:grid;place-items:center;font-family:var(--disp);font-size:1.05rem;
+}
+.task-head h2{font-size:1.5rem}
+.task-sub{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.why{
+  border-left:2px solid var(--gold);padding:12px 0 12px 18px;margin:20px 0 26px;
+  color:var(--body);font-size:.95rem;
+}
+.why b{color:var(--ink);font-weight:500}
+
+ol.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+ol.steps>li{
+  counter-increment:s;display:grid;grid-template-columns:28px 1fr;gap:14px;
+  padding-bottom:20px;position:relative;
+}
+ol.steps>li::before{
+  content:counter(s);grid-column:1;
+  width:26px;height:26px;border-radius:50%;background:var(--bg);
+  border:1px solid var(--line);color:var(--cognac);
+  font-family:var(--disp);font-size:.85rem;
+  display:grid;place-items:center;margin-top:1px;
+}
+ol.steps>li:not(:last-child)::after{
+  content:"";position:absolute;left:13px;top:28px;bottom:0;width:1px;background:var(--line);
+}
+.step-body{min-width:0}
+.step-body p{margin:0 0 6px}
+.step-body p:last-child{margin-bottom:0}
+code{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;
+  background:var(--bg);border:1px solid var(--line);border-radius:3px;
+  padding:1px 6px;color:var(--ink);word-break:break-word;
+}
+.pathline{display:block;margin:4px 0 0;font-size:.9rem;color:var(--muted)}
+
+.fieldbox{border:1px solid var(--line);border-radius:3px;overflow-x:auto;margin:6px 0 2px}
+table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:380px}
+th,td{text-align:left;padding:9px 13px;border-bottom:1px solid var(--line)}
+th{font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:400}
+tr:last-child td{border-bottom:0}
+td code{background:transparent;border:0;padding:0}
+
+.note{
+  margin-top:24px;padding:14px 16px;border:1px solid var(--line);border-radius:3px;
+  background:var(--bg);font-size:.9rem;color:var(--muted);
+}
+.note b{color:var(--ink);font-weight:500}
+.flag{border-left:3px solid var(--warn)}
+.done{
+  margin-top:18px;padding:12px 16px;border:1px solid var(--line);border-left:3px solid var(--ok);
+  border-radius:3px;font-size:.9rem;
+}
+.done b{color:var(--ok);font-weight:500}
+.handback{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font-size:.93rem;color:var(--muted)}
+.handback b{color:var(--ink);font-weight:500}
+@media (max-width:460px){
+  .task{padding:22px 18px}
+  .task-head{gap:12px}
+}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,500&family=DM+Sans:wght@400;500&display=swap">
+
+<div class="wrap">
+
+  <p class="eyebrow">Sunday, 1 November</p>
+  <h1>Two jobs, about <em>twenty minutes.</em></h1>
+  <p class="lede">One closes a hole that has been letting people book a paid session without paying. The other unlocks the full score breakdown in the Diagnosis &amp; Plan document.</p>
+  <p class="meta">Both are done in Google, from a laptop. Neither touches the website.</p>
+
+  <!-- ============ TASK 1 ============ -->
+  <section class="task">
+    <div class="task-head">
+      <div class="task-n">1</div>
+      <div>
+        <h2>Update the enquiry autoresponder</h2>
+        <p class="task-sub">5 minutes &middot; do this one first</p>
+      </div>
+    </div>
+
+    <div class="why">
+      The button in your auto-reply said <b>Book the introductory call</b> and sent people straight to Cal.com. Payment is collected by Razorpay <i>first</i>, and Cal.com is only where people land afterwards, so that link let anyone who enquired take a &#8377;339 slot for free. It now points at your booking page instead, which is also where all three prices live, so it will not go stale the next time pricing changes.
+    </div>
+
+    <ol class="steps">
+      <li><div class="step-body">
+        <p>Open the <b>Presence Quotient Leads (Responses)</b> sheet, signed in as presence.arpitamehta@gmail.com.</p>
+      </div></li>
+      <li><div class="step-body">
+        <p>Menu: <b>Extensions</b>, then <b>Apps Script</b>. The script editor opens in a new tab.</p>
+      </div></li>
+      <li><div class="step-body">
+        <p>In the file list on the left, click <code>enquiry-autoresponder.gs</code>.</p>
+      </div></li>
+      <li><div class="step-body">
+        <p>Click once inside the code, select all with <b>Cmd+A</b> (or <b>Ctrl+A</b>), delete it, and paste the whole new file I sent you.</p>
+        <p class="pathline">Prefer a smaller change? Find <b>line 51</b> and replace just that one URL with <code>https://arpitamehta.co/booking</code>. Same result.</p>
+      </div></li>
+      <li><div class="step-body">
+        <p>Click <b>Save</b> (the disk icon).</p>
+      </div></li>
+    </ol>
+
+    <div class="done">
+      <b>That is the whole job.</b> No re-authorising, no trigger changes, no test submission needed. Nothing above line 51 changed, so the emails themselves read exactly as before.
+    </div>
+  </section>
+
+  <!-- ============ TASK 2 ============ -->
+  <section class="task">
+    <div class="task-head">
+      <div class="task-n">2</div>
+      <div>
+        <h2>Add the four score fields</h2>
+        <p class="task-sub">10 minutes &middot; then send me one link</p>
+      </div>
+    </div>
+
+    <div class="why">
+      The assessment already works out all four dimension scores and shows them on the scorecard, but only the <b>overall</b> score, band, strongest and weakest ever reach your sheet. That is the one thing blocking a full score breakdown in the Diagnosis &amp; Plan one-pager. The code to send them is already written and waiting; it needs the four field IDs that only your Form can give.
+    </div>
+
+    <ol class="steps">
+      <li><div class="step-body">
+        <p>Open the Google Form behind that sheet, in <b>edit</b> mode, not the responses view.</p>
+      </div></li>
+      <li><div class="step-body">
+        <p>Add four <b>short answer</b> questions, titled exactly as written here:</p>
+        <div class="fieldbox">
+          <table>
+            <thead><tr><th>Question title</th><th>What lands in it</th></tr></thead>
+            <tbody>
+              <tr><td><code>Score: Image</code></td><td>0 to 100</td></tr>
+              <tr><td><code>Score: Executive Presence</code></td><td>0 to 100</td></tr>
+              <tr><td><code>Score: Social Culture</code></td><td>0 to 100</td></tr>
+              <tr><td><code>Score: Distinction</code></td><td>0 to 100</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="pathline">Leave them all optional. The titles matter because they become your sheet's column headers.</p>
+      </div></li>
+      <li><div class="step-body">
+        <p>Three-dot menu, top right of the editor, then <b>Get pre-filled link</b>.</p>
+      </div></li>
+      <li><div class="step-body">
+        <p>Type <code>50</code> into each of the four new boxes. Any number works; it is only there so each field shows up in the link.</p>
+      </div></li>
+      <li><div class="step-body">
+        <p>Click <b>Get link</b>, then <b>Copy link</b>.</p>
+      </div></li>
+      <li><div class="step-body">
+        <p>Paste that link to me in chat. I will read the four <code>entry.XXXXXXXXXX</code> numbers out of it, put them into the assessment, and show you the change before anything goes live.</p>
+      </div></li>
+    </ol>
+
+    <div class="note flag">
+      <b>Until those IDs are in, nothing changes.</b> The code skips any field with a blank ID, so the assessment behaves exactly as it does today. The sixteen questions and the scoring are untouched, as always.
+    </div>
+  </section>
+
+  <p class="handback">
+    <b>Already live as of this morning:</b> the smaller Request a Call button, the corrected &#8377;4,299 price on the FAQ, About and homepage schema, and Video Consultation now appearing across the site rather than only on the booking page.
+    <br><br>
+    <b>Still waiting on you:</b> the legal page, held back so you can read it properly rather than approve it at three in the morning.
+  </p>
+
+</div>
