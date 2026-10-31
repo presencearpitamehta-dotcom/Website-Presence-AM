@@ -781,13 +781,10 @@ overlay.addEventListener("click", closePanel);
 document.addEventListener("keydown", function(e){ if (e.key === "Escape") closePanel(); }); document.addEventListener("keydown", function(e){ if (e.key==="Escape") closeEnquiry(); });
 /* ============ GENERAL ENQUIRY MODAL ============ */
 var ENQUIRY_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSfi0a-qHiSgcVllmtYjZdPEyxvdo2I2Ydisp46C-QvYeO273w/formResponse";
-var ENQUIRY_MESSAGE_ENTRY = "YOUR_ENQUIRY_MESSAGE_ENTRY_ID";
-var ENQUIRY_SOURCE_ENTRY = "YOUR_ENQUIRY_SOURCE_ENTRY_ID";
-// TODO: add "How did you hear about us?" as a question in the actual Google Form,
-// then replace this with its real entry.XXXXXXXXXX id so answers reach the spreadsheet.
-var ENQUIRY_HEAR_ENTRY = "YOUR_ENQUIRY_HEAR_ENTRY_ID";
-// TODO: same as above, needs the real Google Form entry id for "Which friend referred you?"
-var ENQUIRY_REFERRER_ENTRY = "YOUR_ENQUIRY_REFERRER_ENTRY_ID";
+var ENQUIRY_MESSAGE_ENTRY = "entry.420923349";
+var ENQUIRY_SOURCE_ENTRY = "entry.1177066167";
+var ENQUIRY_HEAR_ENTRY = "entry.1274258667";
+var ENQUIRY_REFERRER_ENTRY = "entry.1901079632";
 var enquiryOverlay = document.getElementById("enquiryOverlay"),
     enquiryFormWrap = document.getElementById("enquiryFormWrap"),
     enquirySuccess = document.getElementById("enquirySuccess"),
