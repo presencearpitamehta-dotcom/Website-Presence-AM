@@ -150,10 +150,12 @@ td code{background:transparent;border:0;padding:0}
         <p>Open the <b>Presence Quotient Leads (Responses)</b> sheet, signed in as presence.arpitamehta@gmail.com.</p>
       </div></li>
       <li><div class="step-body">
-        <p>Menu: <b>Extensions</b>, then <b>Apps Script</b>. The script editor opens in a new tab.</p>
+        <p>From the sheet's own menu bar: <b>Extensions</b>, then <b>Apps Script</b>. The script editor opens in a new tab.</p>
+        <p class="pathline">It has to be opened this way. Going to script.google.com directly gives you a different, empty project.</p>
       </div></li>
       <li><div class="step-body">
         <p>In the file list on the left, click <code>enquiry-autoresponder.gs</code>.</p>
+        <p class="pathline">Check you are in the right project before pasting anything: if the tab says <b>Untitled project</b> and the only file is <code>Code.gs</code> with an empty <code>myFunction()</code>, that is a brand new standalone project, not yours. Close it and reopen from the sheet.</p>
       </div></li>
       <li><div class="step-body">
         <p>Click once inside the code, select all with <b>Cmd+A</b> (or <b>Ctrl+A</b>), delete it, and paste the whole new file I sent you.</p>
