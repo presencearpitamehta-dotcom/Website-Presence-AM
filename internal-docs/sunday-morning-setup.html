@@ -229,12 +229,12 @@ td code{background:transparent;border:0;padding:0}
       <div class="task-n">3</div>
       <div>
         <h2>Verify the domain in Search Console</h2>
-        <p class="task-sub">10 minutes at GoDaddy, then a wait</p>
+        <p class="task-sub">10 minutes in Netlify, then a wait</p>
       </div>
     </div>
 
     <div class="why">
-      Search Console is the only place either of us can see whether Google has actually crawled your site, and what people typed to find you. Google is asking you to prove you own the domain by putting a record it can read into your DNS. Your DNS is at GoDaddy, so that is where the record goes.
+      Search Console is the only place either of us can see whether Google has actually crawled your site, and what people typed to find you. Google is asking you to prove you own the domain by putting a record it can read into your DNS. GoDaddy is only where the domain is registered: the nameservers point at <b>Netlify</b>, so Netlify is what actually answers DNS questions about arpitamehta.co, and a record added at GoDaddy would simply be ignored.
     </div>
 
     <ol class="steps">
@@ -243,33 +243,32 @@ td code{background:transparent;border:0;padding:0}
         <p class="pathline">Then click <b>VERIFY LATER</b>. The property is saved and you can come back to it.</p>
       </div></li>
       <li><div class="step-body">
-        <p>Sign in at <b>godaddy.com</b>. Top right, your initials, then <b>My Products</b>.</p>
+        <p>Go to <code>app.netlify.com/domains</code> and sign in, then click <b>arpitamehta.co</b>.</p>
       </div></li>
       <li><div class="step-body">
-        <p>Find <b>arpitamehta.co</b>, open it, and go to <b>DNS</b> or <b>Manage DNS</b>.</p>
-        <p class="pathline">One check before you add anything: if that page shows your nameservers pointing at Netlify rather than GoDaddy, stop. The record belongs in Netlify instead, under Domains, DNS records. Tell me and I will walk you through that version.</p>
+        <p>Find the <b>DNS records</b> table, the one already listing the records that point the domain at your site, and click <b>Add new record</b>.</p>
       </div></li>
       <li><div class="step-body">
-        <p>Click <b>Add New Record</b> and fill it in exactly:</p>
+        <p>Fill it in exactly:</p>
         <div class="fieldbox">
           <table>
             <thead><tr><th>Field</th><th>What to put</th></tr></thead>
             <tbody>
-              <tr><td>Type</td><td><code>TXT</code></td></tr>
-              <tr><td>Name</td><td><code>@</code></td></tr>
+              <tr><td>Record type</td><td><code>TXT</code></td></tr>
+              <tr><td>Name</td><td>leave it empty</td></tr>
               <tr><td>Value</td><td>paste the whole copied string</td></tr>
               <tr><td>TTL</td><td>leave the default</td></tr>
             </tbody>
           </table>
         </div>
-        <p class="pathline">The Name must be a single <code>@</code>, which means the domain itself. Not arpitamehta.co, not www.</p>
+        <p class="pathline">Netlify wants the Name field <b>blank</b> for the domain itself, unlike GoDaddy which uses <code>@</code>. The form shows arpitamehta.co beside the field as a hint. Typing <code>@</code> here creates a record for @.arpitamehta.co, which will never verify.</p>
       </div></li>
       <li><div class="step-body">
-        <p><b>Add</b> the record. Do not delete or edit any TXT record that is already there, several can coexist, and an existing one may be carrying your email settings.</p>
+        <p><b>Save</b>. Do not delete or edit any record that is already there, several TXT records can coexist and an existing one may be carrying your email settings.</p>
       </div></li>
       <li><div class="step-body">
         <p>Go back to Search Console and press <b>VERIFY</b>.</p>
-        <p class="pathline">If it fails, that is normal. GoDaddy usually publishes within minutes but can take a few hours. Leave the record alone and press Verify again later. Deleting and re-adding it only restarts the clock.</p>
+        <p class="pathline">If it fails, that is normal. Netlify DNS usually publishes within a couple of minutes, but give it longer before worrying. Leave the record alone and press Verify again. Deleting and re-adding it only restarts the clock.</p>
       </div></li>
       <li><div class="step-body">
         <p>Once verified: left menu, <b>Sitemaps</b>, type <code>sitemap.xml</code>, <b>Submit</b>. That is the step that actually tells Google what to crawl.</p>
@@ -277,7 +276,7 @@ td code{background:transparent;border:0;padding:0}
     </ol>
 
     <div class="note">
-      <b>If GoDaddy turns into a fight,</b> there is an easier route. In the dialog, click <i>try a URL prefix property instead</i>, choose the HTML tag method, and send me the tag. I will add it to the site and deploy, and you verify with no DNS at all. Slightly narrower coverage, same useful data.
+      <b>If this turns into a fight,</b> there is an easier route. In the dialog, click <i>try a URL prefix property instead</i>, choose the HTML tag method, and send me the tag. I will add it to the site and deploy, and you verify with no DNS at all. Slightly narrower coverage, same useful data.
     </div>
   </section>
 
