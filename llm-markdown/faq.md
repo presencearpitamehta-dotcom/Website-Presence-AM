@@ -74,7 +74,7 @@ One hour with Arpita in Delhi, face to face. You are read as a room reads you, y
 
 ### What if I need to cancel or reschedule?
 
-Free to reschedule, any time up to twenty four hours before your session — just reply to your confirmation email. Inside twenty four hours, or a no-show, the booking cannot be refunded, since that slot was held for you alone. If a session needs to move from Arpita's end instead, you get a full refund or a free reschedule, whichever you prefer.
+Free to reschedule up to 24 hours before your session — just write to presence.arpitamehta@gmail.com. Within 24 hours of your session, or in case of a no-show, the booking can't be refunded. If a session needs to move from Arpita's side instead, you'll get a full refund or a free reschedule, whichever you prefer.
 
 ### Do you work with clients outside Delhi?
 
@@ -172,4 +172,4 @@ One hour with Arpita, face to face in Delhi.
 
 Choose a time that suits you. A payment link follows to confirm it, and your slot is held for twenty four hours. Joining from outside Delhi, or outside India? Begin with the discovery call. Every engagement is designed around where you are.
 
-Free reschedule 24h+ before. [Full policy](https://arpitamehta.co/faq.html#cancellation-policy).
+Free reschedule up to 24h before. No refund within 24h or for a no-show. [Details](https://arpitamehta.co/faq.html#cancellation-policy).
