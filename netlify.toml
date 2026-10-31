@@ -3,6 +3,17 @@
   publish = "."
   command = "node update-sitemap-date.js"
 
+# internal-docs/ holds business files kept in git for history only (the
+# diagnosis-plan template/example, the recovery guide, the automation
+# plan, the site log). They must never be reachable on the live site,
+# so block the whole path with a hard 404 rather than relying on the
+# fact that nothing links to it.
+[[redirects]]
+  from = "/internal-docs/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
 # Security headers (brief section 9) applied to every page
 [[headers]]
   for = "/*"
