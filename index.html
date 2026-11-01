@@ -1170,14 +1170,26 @@ enquiryForm.addEventListener("submit", function(e){
 })();
 </script>
 <script>
-/* Testimonial rail. Drop numbered photos into images/testimonials/ (1.jpg, 2.jpg, 3.png ...)
-   and they join the strip automatically, evenly spaced between the quotes.
-   No photos found means the grid below stays exactly as it is. */
+/* Proof rail. Each folder below is drop-in: add 1.jpg, 2.jpg, 3.jpg and they
+   join the strip automatically, evenly spaced between the quotes. No photos
+   found means the grid below stays exactly as it is.
+
+   Numbering must not skip. The loader tries 1, then 2, then 3, and stops at
+   the first number missing in every extension, so a gap hides everything
+   after it. Delete one from the middle and renumber the rest.
+
+   To move a set to another page later, delete its line from SOURCES here and
+   add the same line to that page's rail. Nothing else needs changing. */
 (function(){
   var grid = document.querySelector('.testi-grid');
   if(!grid) return;
   var sessionFig = document.querySelector('.testi-session');
   var MAX = 24, EXT = ['jpg','jpeg','png','webp'];
+
+  var SOURCES = [
+    { dir: 'images/testimonials/', alt: 'A client of Arpita Mehta, presence consultant in Delhi' },
+    { dir: 'images/sessions/',     alt: 'Arpita Mehta facilitating a presence consulting session' }
+  ];
 
   function probe(url){
     return new Promise(function(res){
@@ -1188,17 +1200,22 @@ enquiryForm.addEventListener("submit", function(e){
     });
   }
   function findPhotos(done){
-    var found = [], i = 1;
-    (function nextIndex(){
-      if(i > MAX) return done(found);
-      var e = 0;
-      (function nextExt(){
-        if(e >= EXT.length) return done(found);
-        var u = 'images/testimonials/' + i + '.' + EXT[e];
-        probe(u).then(function(ok){
-          if(ok){ found.push(u); i++; nextIndex(); }
-          else { e++; nextExt(); }
-        });
+    var found = [], si = 0;
+    (function nextSource(){
+      if(si >= SOURCES.length) return done(found);
+      var src = SOURCES[si], i = 1;
+      (function nextIndex(){
+        if(i > MAX){ si++; return nextSource(); }
+        var e = 0;
+        (function nextExt(){
+          /* every extension tried and none found: this folder has run out */
+          if(e >= EXT.length){ si++; return nextSource(); }
+          var u = src.dir + i + '.' + EXT[e];
+          probe(u).then(function(ok){
+            if(ok){ found.push({ src: u, alt: src.alt }); i++; nextIndex(); }
+            else { e++; nextExt(); }
+          });
+        })();
       })();
     })();
   }
@@ -1223,17 +1240,17 @@ enquiryForm.addEventListener("submit", function(e){
       var g = document.createElement('div');
       g.className = 'rail-grp';
       items.forEach(function(it){
-        if(typeof it === 'string'){
+        if(it && it.nodeType){
+          g.appendChild(it.cloneNode(true));
+        } else {
           var box = document.createElement('div');
           box.className = 'rail-shot';
           var im = document.createElement('img');
-          im.src = it;
-          im.alt = 'Arpita Mehta facilitating a session';
+          im.src = it.src;
+          im.alt = it.alt;
           im.loading = 'lazy';
           box.appendChild(im);
           g.appendChild(box);
-        } else {
-          g.appendChild(it.cloneNode(true));
         }
       });
       return g;

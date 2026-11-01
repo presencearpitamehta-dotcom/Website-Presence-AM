@@ -73,8 +73,14 @@ li{margin-bottom:8px}
     <thead><tr><th>What</th><th>Folder</th><th>Naming</th><th>Add new without code?</th></tr></thead>
     <tbody>
       <tr>
-        <td><b>Client testimonials &amp; session photos</b></td>
+        <td><b>Client testimonial photos</b></td>
         <td><code>images/testimonials/</code></td>
+        <td><code>1.jpg</code>, <code>2.jpg</code>, <code>3.jpg</code> and so on</td>
+        <td class="yes">Yes, freely</td>
+      </tr>
+      <tr>
+        <td><b>Sessions, workshops, 1:1s</b></td>
+        <td><code>images/sessions/</code></td>
         <td><code>1.jpg</code>, <code>2.jpg</code>, <code>3.jpg</code> and so on</td>
         <td class="yes">Yes, freely</td>
       </tr>
@@ -119,13 +125,17 @@ li{margin-bottom:8px}
   </div>
 
   <div class="box ok">
-    <p><b>The short version.</b> Testimonials are the one folder you can keep adding to forever. Everywhere else, swapping a picture for a better one is free as long as the filename is identical, because the page is already pointing at that name. A genuinely new picture in a new place needs a line of code, so send it to me.</p>
+    <p><b>The short version.</b> Testimonials and sessions are the two folders you can keep adding to forever. Both feed the moving strip on the homepage, woven in between the written quotes, and they number separately: each folder starts again at <code>1</code>. Everywhere else, swapping a picture for a better one is free as long as the filename is identical, because the page is already pointing at that name. A genuinely new picture in a new place needs a line of code, so send it to me.</p>
+  </div>
+
+  <div class="box">
+    <p><b>Moving sessions to the Programmes page later.</b> Both folders are listed together in one place in the homepage code, so relocating a set is a single line moved from one page to the other rather than a rebuild. Say the word when you want it.</p>
   </div>
 
   <h2>The two rules that break things</h2>
 
-  <h3>1. Testimonial numbers cannot skip</h3>
-  <p>The page looks for <code>1</code>, then <code>2</code>, then <code>3</code>, and <b>stops at the first number it cannot find</b>. A gap hides everything after it.</p>
+  <h3>1. Numbers cannot skip</h3>
+  <p>True of <code>testimonials/</code> and <code>sessions/</code> alike. The page looks for <code>1</code>, then <code>2</code>, then <code>3</code>, and <b>stops at the first number it cannot find</b>. A gap hides everything after it.</p>
   <span class="good">1.jpg  2.jpg  3.jpg  4.jpg   all four appear</span>
   <span class="bad">1.jpg  2.jpg  4.jpg          only two appear, 4 is invisible</span>
   <p>So when you delete one from the middle, renumber the rest to close the gap. The limit is 24, which you will not reach soon.</p>
@@ -142,7 +152,7 @@ li{margin-bottom:8px}
   <table>
     <thead><tr><th>Picture type</th><th>Size to export</th><th>Shape</th><th>Aim for under</th></tr></thead>
     <tbody>
-      <tr><td>Testimonial / session photo</td><td>1400 x 733</td><td>wide landscape</td><td>150 KB</td></tr>
+      <tr><td>Testimonial or session photo</td><td>1400 x 733</td><td>wide landscape</td><td>150 KB</td></tr>
       <tr><td>Your portrait</td><td>800 x 1000</td><td>upright</td><td>80 KB</td></tr>
       <tr><td>Programme photo</td><td>1600 x 800</td><td>wide landscape</td><td>220 KB</td></tr>
       <tr><td>Homepage pillar</td><td>1600 x 582</td><td>very wide strip</td><td>180 KB</td></tr>
