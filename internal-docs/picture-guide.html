@@ -148,12 +148,17 @@ li{margin-bottom:8px}
 
   <p>Every image on the site today, added together, is under 3 MB. That is the reason pages feel instant, and it is worth protecting. A single unresized phone photo is often 4 to 8 MB on its own.</p>
 
+  <div class="box warn">
+    <p><b>Why these numbers are bigger than they look.</b> Phone and laptop screens pack two or three pixels into every one the page measures in, so a picture needs roughly <b>twice</b> its displayed size to look sharp rather than soft. The sizes below already account for that. The portrait on the homepage is a live example of getting it wrong: it is displayed 700 wide from an 800 wide file, which is barely 1x, so it is already slightly soft on a good laptop screen.</p>
+  </div>
+
   <div class="tablewrap">
   <table>
     <thead><tr><th>Picture type</th><th>Size to export</th><th>Shape</th><th>Aim for under</th></tr></thead>
     <tbody>
-      <tr><td>Testimonial or session photo</td><td>1400 x 733</td><td>wide landscape</td><td>150 KB</td></tr>
-      <tr><td>Your portrait</td><td>800 x 1000</td><td>upright</td><td>80 KB</td></tr>
+      <tr><td>Testimonial or session photo</td><td>1600 x 840</td><td>wide landscape</td><td>200 KB</td></tr>
+      <tr><td>Your portrait, About page</td><td>1200 x 1500</td><td>upright</td><td>250 KB</td></tr>
+      <tr><td>Your portrait, Home page</td><td>1600 x 1067</td><td>wide, crops hard</td><td>250 KB</td></tr>
       <tr><td>Programme photo</td><td>1600 x 800</td><td>wide landscape</td><td>220 KB</td></tr>
       <tr><td>Homepage pillar</td><td>1600 x 582</td><td>very wide strip</td><td>180 KB</td></tr>
       <tr><td>Blog header</td><td>1600 x 900</td><td>wide landscape</td><td>230 KB</td></tr>
@@ -164,8 +169,30 @@ li{margin-bottom:8px}
   <p>Use JPG for photographs. PNG only for the logo and anything needing a transparent background, because photographs saved as PNG come out several times larger for no visible gain.</p>
 
   <div class="box">
+    <p><b>Two notes for a professional shoot.</b> Ask for full-resolution JPEGs rather than web exports, keep those as your archive, and resize copies down for the site. Large to small looks excellent; small to large is impossible.</p>
+    <p>And the homepage portrait slot is <b>wide</b>, not upright: an upright photo gets cropped hard to fit. Shoot something with room around you for that one, or pick a frame that survives losing its top and bottom.</p>
+  </div>
+
+  <div class="box">
     <p><b>Resizing without software:</b> <code>squoosh.app</code> runs in the browser, is free, and shows you the before and after weight as you drag the quality slider. Drop the photo in, set the width from the table above, pull quality down until the file is under the target, and download. Quality around 75 is usually indistinguishable from the original.</p>
   </div>
+
+  <h2>How many is too many</h2>
+
+  <p>The code stops looking after <code>24</code> in each folder, but that is not the number to aim for. Every photo in the strip loads on the homepage, and the strip is drawn twice so it can loop seamlessly. The homepage carries about 940 KB of images today.</p>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Photos in the strip</th><th>Added to the homepage</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td>8 to 12</td><td>around 1.2 to 1.8 MB</td><td class="yes">The sweet spot</td></tr>
+      <tr><td>24</td><td>around 3.5 MB</td><td>Noticeably slower on mobile data</td></tr>
+      <tr><td>48, both folders full</td><td>around 7 MB</td><td class="no">Allowed, but a mistake</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>So <b>eight to twelve per folder</b> is the target. When you have more good photographs than that, the answer is not a longer strip: rotate the strongest ones in and keep the rest in your own archive. A visitor judges the first three they see, not the twentieth.</p>
 
   <h2>How to upload, without touching code</h2>
 
