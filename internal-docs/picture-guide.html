@@ -1,0 +1,193 @@
+<title>Picture Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,500&family=DM+Sans:wght@400;500&display=swap">
+<style>
+/* Reference sheet. Palette and type from arpitamehta.co so it reads as part
+   of the practice. Layout: one column, a folder table that does the real
+   work, then the two rules that actually break things. */
+:root{
+  --paper:#F3EEE5; --card:#FAF6EF; --rule:#DDD4C6; --rule-soft:#E8E1D6;
+  --ink:#1F1A14; --body:#413830; --faint:#857A6C;
+  --cognac:#9C5A4C; --gold:#AE957E; --ok:#3F7A5E; --warn:#B5543F;
+  --disp:'Cormorant Garamond',Georgia,serif;
+  --ui:'DM Sans',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#15120E; --card:#1E1913; --rule:#3A3228; --rule-soft:#2A241C;
+    --ink:#F4EDE2; --body:#D8CCBC; --faint:#9B8E7E;
+    --cognac:#CC8471; --gold:#B99C82; --ok:#6FB391; --warn:#D98571;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#15120E; --card:#1E1913; --rule:#3A3228; --rule-soft:#2A241C;
+  --ink:#F4EDE2; --body:#D8CCBC; --faint:#9B8E7E;
+  --cognac:#CC8471; --gold:#B99C82; --ok:#6FB391; --warn:#D98571;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--body);font-family:var(--ui);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:780px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:44px 90px}
+h1,h2,h3{font-family:var(--disp);font-weight:500;color:var(--ink);margin:0;line-height:1.15;text-wrap:balance}
+h1{font-size:clamp(2.1rem,5.5vw,3rem)}
+h1 em{font-style:italic;color:var(--cognac)}
+h2{font-size:clamp(1.45rem,3.6vw,1.9rem);margin-top:46px;padding-top:22px;border-top:1px solid var(--rule)}
+h3{font-size:1.08rem;margin-top:26px;color:var(--cognac)}
+.eyebrow{font-size:.6rem;letter-spacing:.32em;text-transform:uppercase;color:var(--faint);display:flex;align-items:center;gap:13px;margin-bottom:15px}
+.eyebrow::before{content:"";width:32px;height:1px;background:var(--gold);flex:0 0 auto}
+.lede{margin:18px 0 0;color:var(--faint);max-width:60ch}
+p{margin:0 0 14px}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--card);border:1px solid var(--rule-soft);border-radius:2px;padding:1px 6px;color:var(--ink);word-break:break-word}
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);border-radius:3px;margin:18px 0}
+table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:540px;background:var(--card)}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+th{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);font-weight:400}
+tr:last-child td{border-bottom:0}
+td code{background:transparent;border:0;padding:0}
+.yes{color:var(--ok);font-weight:500}
+.no{color:var(--warn);font-weight:500}
+.box{border:1px solid var(--rule);border-left:3px solid var(--gold);background:var(--card);border-radius:3px;padding:16px 18px;margin:20px 0}
+.box.warn{border-left-color:var(--warn)}
+.box.ok{border-left-color:var(--ok)}
+.box p:last-child{margin-bottom:0}
+.box b{color:var(--ink);font-weight:500}
+ol,ul{margin:0 0 16px;padding-left:22px}
+li{margin-bottom:8px}
+.good,.bad{font-family:ui-monospace,Menlo,monospace;font-size:.85rem;display:block;margin:3px 0}
+.good::before{content:"correct   ";color:var(--ok);letter-spacing:.08em}
+.bad::before{content:"breaks    ";color:var(--warn);letter-spacing:.08em}
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">arpitamehta.co</p>
+  <h1>Where the <em>pictures</em> go</h1>
+  <p class="lede">Which folder takes what, the sizes that keep the site fast, and the two rules that quietly break things if you miss them. Nothing here needs code.</p>
+
+  <h2>The folders</h2>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>What</th><th>Folder</th><th>Naming</th><th>Add new without code?</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>Client testimonials &amp; session photos</b></td>
+        <td><code>images/testimonials/</code></td>
+        <td><code>1.jpg</code>, <code>2.jpg</code>, <code>3.jpg</code> and so on</td>
+        <td class="yes">Yes, freely</td>
+      </tr>
+      <tr>
+        <td><b>Your portrait</b> (About page)</td>
+        <td><code>images/about/</code></td>
+        <td>must stay <code>portrait.jpg</code></td>
+        <td>Replace only</td>
+      </tr>
+      <tr>
+        <td><b>Your portrait</b> (Home page)</td>
+        <td><code>images/home/</code></td>
+        <td>must stay <code>portrait.jpg</code></td>
+        <td>Replace only</td>
+      </tr>
+      <tr>
+        <td><b>Programme photos</b></td>
+        <td><code>images/programmes/</code></td>
+        <td>keep the existing filename exactly</td>
+        <td>Replace only</td>
+      </tr>
+      <tr>
+        <td><b>Homepage pillar images</b></td>
+        <td><code>images/home/</code></td>
+        <td>keep the existing filename exactly</td>
+        <td>Replace only</td>
+      </tr>
+      <tr>
+        <td><b>Blog article images</b></td>
+        <td><code>images/blog/</code></td>
+        <td>keep the existing filename exactly</td>
+        <td>Replace only</td>
+      </tr>
+      <tr>
+        <td><b>Logo and monogram</b></td>
+        <td><code>images/shared/</code></td>
+        <td>leave these alone</td>
+        <td class="no">Ask me first</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="box ok">
+    <p><b>The short version.</b> Testimonials are the one folder you can keep adding to forever. Everywhere else, swapping a picture for a better one is free as long as the filename is identical, because the page is already pointing at that name. A genuinely new picture in a new place needs a line of code, so send it to me.</p>
+  </div>
+
+  <h2>The two rules that break things</h2>
+
+  <h3>1. Testimonial numbers cannot skip</h3>
+  <p>The page looks for <code>1</code>, then <code>2</code>, then <code>3</code>, and <b>stops at the first number it cannot find</b>. A gap hides everything after it.</p>
+  <span class="good">1.jpg  2.jpg  3.jpg  4.jpg   all four appear</span>
+  <span class="bad">1.jpg  2.jpg  4.jpg          only two appear, 4 is invisible</span>
+  <p>So when you delete one from the middle, renumber the rest to close the gap. The limit is 24, which you will not reach soon.</p>
+
+  <h3>2. Replacing means the same name, exactly</h3>
+  <p>Case and extension both count. <code>Portrait.JPG</code> is a different file from <code>portrait.jpg</code> as far as the site is concerned, and the page will show nothing.</p>
+  <p>Your About page is built to survive this: if the portrait is missing it quietly shows the monogram instead of a broken image. Useful, but it also means a failed upload looks deliberate rather than broken, so check the page afterwards.</p>
+
+  <h2>Sizes that keep the site fast</h2>
+
+  <p>Every image on the site today, added together, is under 3 MB. That is the reason pages feel instant, and it is worth protecting. A single unresized phone photo is often 4 to 8 MB on its own.</p>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Picture type</th><th>Size to export</th><th>Shape</th><th>Aim for under</th></tr></thead>
+    <tbody>
+      <tr><td>Testimonial / session photo</td><td>1400 x 733</td><td>wide landscape</td><td>150 KB</td></tr>
+      <tr><td>Your portrait</td><td>800 x 1000</td><td>upright</td><td>80 KB</td></tr>
+      <tr><td>Programme photo</td><td>1600 x 800</td><td>wide landscape</td><td>220 KB</td></tr>
+      <tr><td>Homepage pillar</td><td>1600 x 582</td><td>very wide strip</td><td>180 KB</td></tr>
+      <tr><td>Blog header</td><td>1600 x 900</td><td>wide landscape</td><td>230 KB</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>Use JPG for photographs. PNG only for the logo and anything needing a transparent background, because photographs saved as PNG come out several times larger for no visible gain.</p>
+
+  <div class="box">
+    <p><b>Resizing without software:</b> <code>squoosh.app</code> runs in the browser, is free, and shows you the before and after weight as you drag the quality slider. Drop the photo in, set the width from the table above, pull quality down until the file is under the target, and download. Quality around 75 is usually indistinguishable from the original.</p>
+  </div>
+
+  <h2>How to upload, without touching code</h2>
+
+  <p>The pictures live in the same GitHub repository as the site, which sounds technical but the browser does all of it. You never see any code.</p>
+
+  <ol>
+    <li>Go to <code>github.com/presencearpitamehta-dotcom/Website-Presence-AM</code></li>
+    <li>Click into the <code>images</code> folder, then the folder you need from the table above</li>
+    <li><b>Add file</b> (top right), then <b>Upload files</b></li>
+    <li>Drag your pictures in, correctly named and sized</li>
+    <li>Scroll down, write one line saying what you added, click <b>Commit changes</b></li>
+  </ol>
+
+  <p>The site rebuilds itself and the pictures are live in about a minute. Replacing works identically: upload a file with the same name and it overwrites the old one.</p>
+
+  <div class="box warn">
+    <p><b>Upload in batches, not one at a time.</b> Every commit triggers a rebuild, and the hosting plan allows a limited number each month. Five pictures uploaded together is one rebuild. Five uploaded separately is five. Gather them up, then do one upload.</p>
+  </div>
+
+  <h2>Before you upload a client photo</h2>
+
+  <p>Not a technical point, but the one with actual consequences.</p>
+
+  <ul>
+    <li><b>Get written permission</b> for any identifiable client, and say where it will appear. A message saying yes is enough; keep it.</li>
+    <li><b>Permission is specific.</b> Someone agreeing to a photo in a private report has not agreed to the homepage.</li>
+    <li><b>Faces are personal data.</b> Your privacy policy covers what you collect through the site, not publishing a client's face, which needs their consent regardless.</li>
+    <li><b>Keep the original files</b> somewhere safe. The versions on the site are compressed for speed and are not archive copies.</li>
+  </ul>
+
+  <div class="box">
+    <p><b>When to send them to me instead:</b> a new picture somewhere that has none today, a new section or page, anything where the shape is wrong and needs cropping decisions, or a batch of client photos you want woven into the testimonial rail alongside quotes. Those need a code change, and they are quick.</p>
+  </div>
+
+</div>
