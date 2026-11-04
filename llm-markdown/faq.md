@@ -54,6 +54,28 @@ Yes. The return to visible professional or social life after stepping back is on
 
 Yes. The work is for anyone with a gap between who they are and how the world sees them. Wardrobe architecture, executive presence and social fluency have no gender. Many of the most significant transformations in the practice have been with men navigating high-stakes professional rooms, social introductions or a new chapter.
 
+## The rooms people ask about
+
+### My husband has a work event and his clients will be there. I am dreading it.
+
+That dread is rarely about clothes. It is about walking into a room where everyone else already has context you do not, and being read without a role that explains why you are there. The useful thing to know is that a room reads ease long before it reads anything else, and most of what you are rehearsing is invisible to everyone but you. The work covers entering a room where you know nobody, holding an introduction with warmth rather than performance, and what to do in the stretches when the conversation is not yours.
+
+### I am meeting my partner's friends or family for the first time and I am nervous.
+
+Reasonable, and these rooms are genuinely harder than work rooms. At work you have a title that explains why you are there. Here you have none, and you are being read in relation to someone else, which is a different kind of exposure. What helps is knowing what is actually being assessed, which is almost never the thing people rehearse for, and arriving with two or three things you can speak about easily rather than a script you have to remember.
+
+### Can this help with dating, or a first meeting?
+
+Yes, though not in the way people expect. Nothing here is about becoming someone else for an evening. First meetings are read quickly and largely unconsciously: how you enter, whether you hold attention without reaching for it, whether your warmth makes it across the table or stays behind your nerves. Those are learnable, and the work is the same whether the meeting is a date, an arranged introduction, or a first conversation with a client.
+
+### I get nervous walking into a room where I know nobody, especially when it matters.
+
+Most people do, including the ones who look entirely at ease doing it. The nerves are not the problem. What matters is what they do to how you carry yourself in the first moments, because that is when a room forms its impression and it rarely revises it later. The work covers entering with intent rather than apology, making a short introduction land, and knowing where to put your attention before you have anything to say. It is a learnable sequence, not a personality trait.
+
+### I am about to be in a room with far more senior or influential people than me, for the first time.
+
+The instinct in that room is to make yourself smaller, and it is the one thing that will cost you. Influential rooms do not read deference as respect. They read it as uncertainty about whether you belong there. What they do read is whether you are settled: how you enter, whether you hold eye contact through a greeting, whether you can be brief. The work covers arriving composed rather than impressive, saying less and meaning more by it, and holding your place in a conversation without competing for it.
+
 ## How to begin
 
 ### What is the Presence Quotient and should I start there?
