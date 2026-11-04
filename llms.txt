@@ -59,6 +59,7 @@ Each runs as a licensed cohort roughly twice a year, and each is also available 
 - [Image Confidence Guide](https://arpitamehta.co/blog/image-confidence-guide.html)
 - [Campus to Corporate](https://arpitamehta.co/blog/campus-to-corporate.html)
 - [Wine & Dining Etiquette in India](https://arpitamehta.co/blog/wine-etiquette-india.html)
+- [The Rooms Nobody Prepares You For](https://arpitamehta.co/blog/rooms-nobody-prepares-you-for.html): a partner's work event, meeting their friends, an arranged introduction, a first date, and what is actually read in rooms you enter because of someone else.
 
 ## Clean Markdown mirror (for AI tools)
 

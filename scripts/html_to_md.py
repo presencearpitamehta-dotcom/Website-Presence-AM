@@ -33,6 +33,7 @@ PAGES = [
     ("blog/image-confidence-guide.html", BASE + "blog/image-confidence-guide.html"),
     ("blog/campus-to-corporate.html", BASE + "blog/campus-to-corporate.html"),
     ("blog/wine-etiquette-india.html", BASE + "blog/wine-etiquette-india.html"),
+    ("blog/rooms-nobody-prepares-you-for.html", BASE + "blog/rooms-nobody-prepares-you-for.html"),
 ]
 
 REMOVE_TAGS = ["script", "style", "noscript", "nav", "footer", "form", "button", "svg", "iframe", "template"]

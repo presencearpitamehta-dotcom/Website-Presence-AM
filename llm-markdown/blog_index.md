@@ -38,6 +38,15 @@ The Debut
 The fresher's complete guide to first impressions: the interview chair, the first ninety days, the unwritten rules of Indian offices nobody puts in the offer letter.
 
 11 minute read](https://arpitamehta.co/blog/campus-to-corporate.html)
+[![Walking into a room where you know nobody](https://arpitamehta.co/images/blog/new-rooms-hero.jpg)
+
+Social Culture
+
+### The Rooms Nobody Prepares You For
+
+A partner's work event, meeting their friends, an arranged introduction, a first date. Why these rooms feel harder than anything at work, and what is actually being read in them.
+
+5 minute read](https://arpitamehta.co/blog/rooms-nobody-prepares-you-for.html)
 [![Wine etiquette guide](https://arpitamehta.co/images/blog/wine-infographic-v2.jpg)
 
 Social Culture
