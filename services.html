@@ -328,6 +328,14 @@ h1 em,h2 em,h3 em{font-style:italic;color:var(--brown)}
 img{max-width:100%}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+/* Plain-language descriptor inside a heading: keeps the brand phrase
+   visually dominant while putting the term people actually search
+   inside the <h2> element itself. Styled to match .eyebrow. */
+.h2-plain{
+  display:block;font-family:'DM Sans',sans-serif;font-size:.66rem;
+  letter-spacing:.26em;text-transform:uppercase;color:var(--taupe-lt);
+  font-weight:400;font-style:normal;margin-top:14px;line-height:1.7;
+}
 .eyebrow{
   font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.3em;
   text-transform:uppercase;color:var(--taupe-lt);font-weight:400;
@@ -631,7 +639,7 @@ footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
       <div class="prog-grid">
         <div class="prog-intro">
           <p class="roman">01</p>
-          <h2>The Presence Edit</h2>
+          <h2>The Presence Edit <span class="h2-plain">Image consulting in Delhi</span></h2>
           <p>Image consulting, done the way a brand identity is built. Your appearance is the first sentence of your story, and until now someone else has been writing it: habit, hurry, an old version of you.</p>
           <p>The Edit rebuilds it deliberately. What you wear, how you groom, how you photograph, how you enter. By the end, the mirror and the room finally agree.</p>
           <p class="formats">Licensed cohort, launched approximately twice a year. Also available as one to one consulting, in person in Delhi or online</p>
@@ -664,7 +672,7 @@ footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
       <div class="prog-grid">
         <div class="prog-intro">
           <p class="roman">02</p>
-          <h2>The Executive Edge</h2>
+          <h2>The Executive Edge <span class="h2-plain">Executive presence coaching</span></h2>
           <p>Executive presence coaching for people who are already good. The promotion, the funding, the client: each one is decided in rooms where competence is assumed and presence is the tiebreaker.</p>
           <p>The Edge works on what the room actually reads: voice, posture, pause, the ability to disagree gracefully and to hold attention without raising it.</p>
           <p class="formats">Licensed cohort, launched approximately twice a year. Also available as one to one consulting, in person in Delhi or online</p>
@@ -697,7 +705,7 @@ footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
       <div class="prog-grid">
         <div class="prog-intro">
           <p class="roman">03</p>
-          <h2>The Social Table</h2>
+          <h2>The Social Table <span class="h2-plain">Dining, wine and etiquette training</span></h2>
           <p>Wine, dining and social culture. Careers and alliances are not decided across desks. They are decided across tables, and the table has rules nobody hands you in writing.</p>
           <p>The Social Table makes you fluent: the wine list, the toast, the seating, the conversation that flows and the one that should end. Includes a dedicated chapter for brides and couples.</p>
           <p class="formats">Licensed cohort, launched approximately twice a year. Also available as one to one consulting, in person in Delhi or online</p>
@@ -730,7 +738,7 @@ footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
       <div class="prog-grid">
         <div class="prog-intro">
           <p class="roman">04</p>
-          <h2>The Debut</h2>
+          <h2>The Debut <span class="h2-plain">Campus to corporate training</span></h2>
           <p>Campus to corporate. The first impression of a career is made in the first ninety days, usually by accident. The Debut makes it deliberate.</p>
           <p>For graduates and freshers who want to arrive already looking, sounding and behaving like they belong in the building, while their batchmates are still finding the cafeteria. Also delivered as campus workshops.</p>
           <p class="formats">Licensed cohort, launched approximately twice a year. Also available as one to one consulting, in person in Delhi or online</p>

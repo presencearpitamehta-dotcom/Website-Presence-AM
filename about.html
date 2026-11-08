@@ -239,6 +239,14 @@ h1 em,h2 em,h3 em{font-style:italic;color:var(--brown)}
 img{max-width:100%}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+/* Plain-language descriptor inside a heading: keeps the brand phrase
+   visually dominant while putting the term people actually search
+   inside the <h2> element itself. Styled to match .eyebrow. */
+.h2-plain{
+  display:block;font-family:'DM Sans',sans-serif;font-size:.66rem;
+  letter-spacing:.26em;text-transform:uppercase;color:var(--taupe-lt);
+  font-weight:400;font-style:normal;margin-top:14px;line-height:1.7;
+}
 .eyebrow{
   font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.3em;
   text-transform:uppercase;color:var(--taupe-lt);font-weight:400;
@@ -496,7 +504,7 @@ footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
   <div class="wrap">
     <div class="sec-head rv">
       <p class="eyebrow">How to Begin</p>
-      <h2>Four doors. <em>All of them open.</em></h2>
+      <h2>Four doors. <em>All of them open.</em><span class="h2-plain">Work with an image and presence consultant in Delhi</span></h2>
     </div>
     <div class="engage-grid rv">
       <div class="engage">
