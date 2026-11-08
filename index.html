@@ -242,18 +242,10 @@ window.amTrack = function(name, params){ try{ gtag('event', name, params || {});
 }
 </script>
 
-<script type="application/ld+json" id="insight-schema">
-{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Today's note on presence",
-  "author": { "@type": "Person", "name": "Arpita Mehta", "url": "https://arpitamehta.co/about.html" },
-  "publisher": { "@type": "Organization", "name": "Arpita Mehta, Presence Consultant", "logo": { "@type": "ImageObject", "url": "https://arpitamehta.co/images/shared/logo.png" } },
-  "mainEntityOfPage": "https://arpitamehta.co/",
-  "datePublished": "2026-06-11",
-  "dateModified": "2026-06-11"
-}
-</script>
+<!-- The daily note deliberately carries NO Article schema and no date.
+     A rotating quote is not a newly published article, and declaring one
+     made Google print a date beside the homepage in search results.
+     Freshness dates belong on the blog posts, where they are real. -->
 
 <style>
 /* ============ THE ATELIER DESIGN SYSTEM ============ */
@@ -673,7 +665,6 @@ footer{background:var(--ink);color:var(--parchment);padding:90px 0 40px}
 <section class="insight">
   <div class="wrap rv">
     <p class="eyebrow" style="justify-content:center" id="insightPillar">Today's Note on Presence</p>
-    <p class="insight-date" id="insightDate"></p>
     <blockquote class="quote" id="insightText">Rooms remember how you made them feel, not what you wore. But what you wore decided how they felt.</blockquote>
     <button class="share-btn" id="shareBtn">Share This</button>
   </div>
@@ -1021,16 +1012,8 @@ var doy = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
 var todays = insights[doy % insights.length];
 document.getElementById("insightText").textContent = todays.t;
 document.getElementById("insightPillar").textContent = "Today's Note on " + todays.p;
-document.getElementById("insightDate").textContent = now.toLocaleDateString("en-GB", {day:"numeric", month:"long", year:"numeric"});
-try {
-  var sch = document.getElementById("insight-schema");
-  var data = JSON.parse(sch.textContent);
-  var iso = now.toISOString().split("T")[0];
-  data.headline = todays.t;
-  data.datePublished = iso;
-  data.dateModified = iso;
-  sch.textContent = JSON.stringify(data);
-} catch(e){}
+/* No date is rendered and no schema is stamped: see the note beside the
+   daily-insight section. The quote still rotates once per day. */
 
 /* ---------- WOW 11: quote share ---------- */
 document.getElementById("shareBtn").addEventListener("click", function(){
